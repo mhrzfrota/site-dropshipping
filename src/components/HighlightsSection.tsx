@@ -61,7 +61,7 @@ const highlightItems: ProductHighlight[] = [
 
 const HighlightsSection: React.FC = () => {
   return (
-    <section id="novidades" className="bg-white">
+    <section id="novidades" className="bg-white scroll-mt-28">
       <div className="mx-auto max-w-6xl px-4 py-16">
         <div className="max-w-3xl space-y-2">
           <p className="text-sm font-semibold uppercase tracking-[0.15em] text-brand-deep">Novidades da loja</p>
