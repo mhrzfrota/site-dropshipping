@@ -46,12 +46,12 @@ const TopBar: React.FC = () => {
         setActiveLink(null)
       }}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-1.5">
-        <div className="flex items-center gap-3">
+      <div className="mx-auto flex w-full max-w-6xl items-center gap-6 px-2 md:px-6 py-1.5">
+        <div className="flex items-center gap-2 shrink-0">
           <img
             src="/images/logo.svg"
             alt="Logo do site"
-            className={`h-20 w-auto transition-opacity duration-300 ${logoError ? 'opacity-0' : 'opacity-100'}`}
+            className={`h-11 w-auto transition-opacity duration-300 ${logoError ? 'opacity-0' : 'opacity-100'}`}
             onError={() => setLogoError(true)}
           />
           {logoError && (
@@ -61,13 +61,13 @@ const TopBar: React.FC = () => {
           )}
         </div>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-4 md:flex">
           {navLinks.map((item) => (
             <button
               key={item.label}
               type="button"
               onClick={() => setActiveLink((prev) => (prev === item.label ? null : item.label))}
-              className={`relative pb-2 text-[13px] font-semibold uppercase tracking-[0.08em] transition-colors duration-200 ${
+              className={`relative pb-2 text-[12px] leading-[1.2] font-semibold tracking-[0.01em] transition-colors duration-200 ${
                 item.accent ? 'text-brand-ocean hover:text-brand-deep' : `${baseTextColor} hover:text-brand-deep`
               }`}
             >
@@ -82,24 +82,7 @@ const TopBar: React.FC = () => {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            aria-label="Buscar"
-            className={`flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-stone-100 ${iconTone}`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.7"
-            >
-              <circle cx="11" cy="11" r="6" />
-              <path d="m15.5 15.5 3 3" />
-            </svg>
-          </button>
+        <div className="ml-auto flex items-center gap-2">
           <button
             type="button"
             aria-label="Lista de desejos"
@@ -141,14 +124,14 @@ const TopBar: React.FC = () => {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
-              className="h-6 w-6"
+              className="h-7 w-7"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.7"
             >
-              <path d="M7.2 8.5h9.6l-.9 10a1.5 1.5 0 0 1-1.49 1.35H9.59A1.5 1.5 0 0 1 8.1 18.5Z" />
-              <path d="M9 8V6.5a3 3 0 1 1 6 0V8" />
-              <path d="M10 12h4" />
+              <path d="M6.75 9.25h10.5l-.9 9.3a1.45 1.45 0 0 1-1.42 1.3H9.07a1.45 1.45 0 0 1-1.42-1.3Z" />
+              <path d="M9.25 9.25V7.4a2.75 2.75 0 0 1 5.5 0v1.85" />
+              <path d="M9.5 11.5h5" />
             </svg>
           </button>
 

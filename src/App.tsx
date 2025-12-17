@@ -1,6 +1,7 @@
 import React from 'react'
 import HeroSection from './components/HeroSection'
 import HighlightsSection from './components/HighlightsSection'
+import NewArrivalsSection from './components/NewArrivalsSection'
 import TopBar from './components/TopBar'
 
 const App: React.FC = () => {
@@ -10,6 +11,7 @@ const App: React.FC = () => {
       <main className="flex-1">
         <HeroSection />
         <HighlightsSection />
+        <NewArrivalsSection />
       </main>
     </div>
   )
