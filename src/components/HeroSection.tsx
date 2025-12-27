@@ -1,13 +1,13 @@
-import React from 'react'
+﻿import React from 'react'
 
 const HeroSection: React.FC = () => {
-  // Salve o banner oficial em public/images/home-hero.png; o fallback mantém a home enquanto o arquivo não é enviado
+  // Salve o banner oficial em public/images/home-hero.png; o fallback mantém a home enquanto o arquivo não é enviado.
   const heroImage = '/images/home-hero.png'
   const fallbackHero =
     'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80'
 
   return (
-    <section id="vitrine" className="relative isolate min-h-[80vh] overflow-hidden">
+    <section id="vitrine" className="relative isolate min-h-[80vh] overflow-hidden scroll-mt-28">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${heroImage}), url(${fallbackHero})` }}

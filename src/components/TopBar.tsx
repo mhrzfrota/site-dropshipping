@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+﻿import React, { useEffect, useMemo, useState } from 'react'
 
 type NavLink = {
   label: string
@@ -9,12 +9,12 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
   { label: 'Vitrine', href: '#vitrine', items: ['Coleções', 'Revista'] },
-  { label: 'Lançamentos', href: '#novidades', items: ['Alto Verão', 'Edição cápsula', 'Novos tecidos'] },
-  { label: 'Biquínis', href: '#novidades', items: ['Cortininha', 'Meia-taça', 'Hot pants', 'Top faixa'] },
-  { label: 'Maiôs', href: '#novidades', items: ['Clássicos', 'Recortes', 'Tomara que caia'] },
-  { label: 'Roupas', href: '#novidades', items: ['Vestidos', 'Bodies', 'Saídas de praia'] },
-  { label: 'Acessórios', href: '#novidades', items: ['Bolsas', 'Chapéus', 'Óculos'] },
-  { label: 'Sale', href: '#novidades', accent: true, items: ['Últimas peças', 'Compre 2 leve 3'] },
+  { label: 'Lançamentos', href: '#lancamentos', items: ['Alto Verão', 'Edição cápsula', 'Novos tecidos'] },
+  { label: 'Biquínis', href: '#categorias', items: ['Cortininha', 'Meia-taça', 'Hot pants', 'Top faixa'] },
+  { label: 'Maiôs', href: '#categorias', items: ['Clássicos', 'Recortes', 'Tomara que caia'] },
+  { label: 'Roupas', href: '#categorias', items: ['Vestidos', 'Bodies', 'Saídas de praia'] },
+  { label: 'Acessórios', href: '#categorias', items: ['Bolsas', 'Chapéus', 'Óculos'] },
+  { label: 'Sale', href: '#lancamentos', accent: true, items: ['Últimas peças', 'Compre 2 leve 3'] },
 ]
 
 const TopBar: React.FC = () => {
@@ -26,6 +26,7 @@ const TopBar: React.FC = () => {
 
   const baseTextColor = 'text-stone-700'
   const iconTone = 'text-stone-700 hover:text-brand-deep'
+  const mobileMenuId = 'mobile-menu'
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -46,7 +47,7 @@ const TopBar: React.FC = () => {
         setActiveLink(null)
       }}
     >
-      <div className="mx-auto flex w-full max-w-6xl items-center gap-6 px-2 md:px-6 py-1.5">
+      <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-2 py-1.5 md:gap-6 md:px-6">
         <div className="flex items-center gap-2 shrink-0">
           <img
             src="/images/logo.svg"
@@ -56,7 +57,7 @@ const TopBar: React.FC = () => {
           />
           {logoError && (
             <span className={`font-display text-4xl font-black tracking-tight ${baseTextColor}`}>
-              Marca &amp; Mov
+              Mar&amp;Mov
             </span>
           )}
         </div>
@@ -139,6 +140,8 @@ const TopBar: React.FC = () => {
             type="button"
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             aria-label="Menu"
+            aria-controls={mobileMenuId}
+            aria-expanded={isMobileMenuOpen}
             className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 text-sm font-semibold uppercase text-stone-700 transition hover:bg-stone-100 md:hidden"
           >
             {isMobileMenuOpen ? 'Fechar' : 'Menu'}
@@ -181,7 +184,7 @@ const TopBar: React.FC = () => {
       )}
 
       {isMobileMenuOpen && (
-        <div className="md:hidden">
+        <div className="md:hidden" id={mobileMenuId}>
           <div className="border-t border-stone-200 bg-white shadow-xl">
             <div className="space-y-1 px-6 py-4">
               {navLinks.map((item) => (

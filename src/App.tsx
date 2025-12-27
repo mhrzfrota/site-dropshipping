@@ -2,6 +2,7 @@ import React from 'react'
 import HeroSection from './components/HeroSection'
 import HighlightsSection from './components/HighlightsSection'
 import NewArrivalsSection from './components/NewArrivalsSection'
+import BrandsSection from './components/BrandsSection'
 import TopBar from './components/TopBar'
 
 const App: React.FC = () => {
@@ -12,6 +13,7 @@ const App: React.FC = () => {
         <HeroSection />
         <HighlightsSection />
         <NewArrivalsSection />
+        <BrandsSection />
       </main>
     </div>
   )
