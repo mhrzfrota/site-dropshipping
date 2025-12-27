@@ -13,6 +13,7 @@ export type Product = {
   category: ProductCategory
   price: number
   image: string
+  images?: string[]
   available: boolean
   variants: ProductVariant
 }
@@ -24,7 +25,7 @@ export const categoryMeta: Record<ProductCategory, { label: string; image: strin
   },
   maios: {
     label: 'Maiôs',
-    image: '/images/cat-maios.jpg',
+    image: '/images/cat-roupas.jpg',
   },
   roupas: {
     label: 'Roupas',
@@ -45,6 +46,7 @@ const products: Product[] = [
     category: 'biquinis',
     price: 289.9,
     image: '/images/cat-biquinis.jpg',
+    images: ['/images/cat-biquinis.jpg', '/images/home-hero.png', '/images/cat-roupas.jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G'],
@@ -58,7 +60,8 @@ const products: Product[] = [
     brand: 'Cocci',
     category: 'biquinis',
     price: 319.9,
-    image: '/images/launch-1.jpg',
+    image: '/images/home-hero.png',
+    images: ['/images/home-hero.png', '/images/cat-biquinis.jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G'],
@@ -72,7 +75,8 @@ const products: Product[] = [
     brand: 'Atlântica',
     category: 'maios',
     price: 399.9,
-    image: '/images/launch-2.jpg',
+    image: '/images/cat-biquinis.jpg',
+    images: ['/images/cat-biquinis.jpg', '/images/cat-roupas.jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G'],
@@ -86,7 +90,8 @@ const products: Product[] = [
     brand: 'Onda',
     category: 'maios',
     price: 419.9,
-    image: '/images/launch-3.jpg',
+    image: '/images/cat-roupas.jpg',
+    images: ['/images/cat-roupas.jpg', '/images/home-hero.png'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G'],
@@ -101,6 +106,7 @@ const products: Product[] = [
     category: 'roupas',
     price: 529.0,
     image: '/images/cat-roupas.jpg',
+    images: ['/images/cat-roupas.jpg', '/images/home-hero.png'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G', 'GG'],
@@ -109,12 +115,13 @@ const products: Product[] = [
   },
   {
     id: 'prod-06',
-    slug: 'saia-pareo-duna',
-    name: 'Saia Pareô Duna',
+    slug: 'saida-pareo-duna',
+    name: 'Saída Pareô Duna',
     brand: 'Mar&Mov',
     category: 'roupas',
     price: 249.9,
     image: '/images/cat-roupas.jpg',
+    images: ['/images/cat-roupas.jpg', '/images/cat-acessorios.jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G', 'GG'],
@@ -129,6 +136,7 @@ const products: Product[] = [
     category: 'roupas',
     price: 359.9,
     image: '/images/cat-roupas.jpg',
+    images: ['/images/cat-roupas.jpg', '/images/home-hero.png'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G', 'GG'],
@@ -143,6 +151,7 @@ const products: Product[] = [
     category: 'acessorios',
     price: 189.9,
     image: '/images/cat-acessorios.jpg',
+    images: ['/images/cat-acessorios.jpg', '/images/cat-roupas.jpg'],
     available: true,
     variants: {
       sizes: [],
@@ -157,10 +166,11 @@ const products: Product[] = [
     category: 'acessorios',
     price: 149.9,
     image: '/images/cat-acessorios.jpg',
+    images: ['/images/cat-acessorios.jpg'],
     available: true,
     variants: {
       sizes: [],
-      colors: ['Areia'],
+      colors: [],
     },
   },
   {
@@ -171,6 +181,7 @@ const products: Product[] = [
     category: 'acessorios',
     price: 219.9,
     image: '/images/cat-acessorios.jpg',
+    images: ['/images/cat-acessorios.jpg', '/images/home-hero.png'],
     available: true,
     variants: {
       sizes: [],

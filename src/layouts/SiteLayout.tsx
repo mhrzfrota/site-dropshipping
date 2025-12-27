@@ -1,5 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import CartDrawer from '../components/CartDrawer'
 import Footer from '../components/Footer'
 import TopBar from '../components/TopBar'
 
@@ -10,6 +11,7 @@ const SiteLayout: React.FC = () => {
       <main className="flex-1 pt-20 md:pt-24">
         <Outlet />
       </main>
+      <CartDrawer />
       <Footer />
     </div>
   )

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { useCart } from '../context/CartContext'
 
 type NavSubItem = {
   label: string
@@ -83,6 +84,7 @@ const TopBar: React.FC = () => {
   const [activeLink, setActiveLink] = useState<string | null>(null)
   const [logoError, setLogoError] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { totalItems, toggleCart } = useCart()
 
   const activeItem = useMemo(() => navLinks.find((item) => item.label === activeLink), [activeLink])
 
@@ -189,7 +191,8 @@ const TopBar: React.FC = () => {
           <button
             type="button"
             aria-label="Carrinho"
-            className={`flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-stone-100 ${iconTone}`}
+            onClick={toggleCart}
+            className={`relative flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-stone-100 ${iconTone}`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -203,6 +206,11 @@ const TopBar: React.FC = () => {
               <path d="M9.25 9.25V7.4a2.75 2.75 0 0 1 5.5 0v1.85" />
               <path d="M9.5 11.5h5" />
             </svg>
+            {totalItems > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-brand-deep px-1 text-[10px] font-bold text-white">
+                {totalItems}
+              </span>
+            )}
           </button>
 
           <button
