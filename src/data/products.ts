@@ -1,160 +1,207 @@
-export type Category = {
-  slug: string
-  label: string
-  image: string
-}
+export type ProductCategory = 'biquinis' | 'maios' | 'roupas' | 'acessorios'
 
-export type Brand = {
-  slug: string
-  label: string
+export type ProductVariant = {
+  sizes: string[]
+  colors: string[]
 }
 
 export type Product = {
   id: string
   slug: string
-  title: string
-  description: string
-  price: string
-  installment: string
-  image: string
-  category: string
+  name: string
   brand: string
-  brandSlug: string
-  isNew?: boolean
+  category: ProductCategory
+  price: number
+  image: string
+  available: boolean
+  variants: ProductVariant
 }
 
-export const categories: Category[] = [
-  {
-    slug: 'biquinis',
+export const categoryMeta: Record<ProductCategory, { label: string; image: string }> = {
+  biquinis: {
     label: 'Biquínis',
     image: '/images/cat-biquinis.jpg',
   },
-  {
-    slug: 'maios',
+  maios: {
     label: 'Maiôs',
     image: '/images/cat-maios.jpg',
   },
-  {
-    slug: 'roupas',
+  roupas: {
     label: 'Roupas',
     image: '/images/cat-roupas.jpg',
   },
-  {
-    slug: 'acessorios',
+  acessorios: {
     label: 'Acessórios',
     image: '/images/cat-acessorios.jpg',
   },
-]
+}
 
-export const brands: Brand[] = [
-  { slug: 'mar-mov', label: 'Mar&Mov' },
-  { slug: 'brisa', label: 'Brisa' },
-  { slug: 'atlantica', label: 'Atlântica' },
-  { slug: 'onda', label: 'Onda' },
-  { slug: 'vento', label: 'Vento' },
-  { slug: 'marina', label: 'Marina' },
-]
-
-export const products: Product[] = [
+const products: Product[] = [
   {
-    id: 'look-01',
-    slug: 'biquini-faixa-perolas',
-    title: 'Biquíni Sutiã Faixa Pérolas',
-    description: 'Top faixa com brilho suave e acabamento artesanal.',
-    price: 'R$ 499,00',
-    installment: 'ou 2x de R$ 249,50',
-    image: '/images/launch-1.jpg',
+    id: 'prod-01',
+    slug: 'biquini-sol-areia',
+    name: 'Biquíni Sol Areia',
+    brand: 'Lupo',
     category: 'biquinis',
-    brand: 'Mar&Mov',
-    brandSlug: 'mar-mov',
-    isNew: true,
-  },
-  {
-    id: 'look-02',
-    slug: 'maio-alca-perolas',
-    title: 'Maiô Alça Pérolas',
-    description: 'Maiô elegante com alças delicadas e modelagem firme.',
-    price: 'R$ 799,00',
-    installment: 'ou 4x de R$ 199,75',
-    image: '/images/launch-2.jpg',
-    category: 'maios',
-    brand: 'Atlântica',
-    brandSlug: 'atlantica',
-    isNew: true,
-  },
-  {
-    id: 'look-03',
-    slug: 'biquini-cortininha-alongado',
-    title: 'Biquíni Sutiã Cortininha Alongado',
-    description: 'Cortininha alongado para ajuste perfeito e leveza.',
-    price: 'R$ 349,00',
-    installment: 'ou 2x de R$ 174,50',
-    image: '/images/launch-3.jpg',
-    category: 'biquinis',
-    brand: 'Brisa',
-    brandSlug: 'brisa',
-    isNew: true,
-  },
-  {
-    id: 'look-04',
-    slug: 'vestido-curto-leme-preto',
-    title: 'Vestido Curto Leme Preto',
-    description: 'Vestido leve para praia e cidade, com caimento fluido.',
-    price: 'R$ 1.299,00',
-    installment: 'ou 6x de R$ 216,50',
-    image: '/images/launch-4.jpg',
-    category: 'roupas',
-    brand: 'Marina',
-    brandSlug: 'marina',
-    isNew: true,
-  },
-  {
-    id: 'look-05',
-    slug: 'maio-recorte-minimal',
-    title: 'Maiô Recorte Minimal',
-    description: 'Recortes minimalistas e tecido com toque macio.',
-    price: 'R$ 729,00',
-    installment: 'ou 3x de R$ 243,00',
-    image: '/images/launch-5.jpg',
-    category: 'maios',
-    brand: 'Onda',
-    brandSlug: 'onda',
-    isNew: true,
-  },
-  {
-    id: 'look-06',
-    slug: 'saida-linho-brisa',
-    title: 'Saída de Linho Brisa',
-    description: 'Saída ampla em linho com detalhes de amarração.',
-    price: 'R$ 459,00',
-    installment: 'ou 3x de R$ 153,00',
-    image: '/images/cat-roupas.jpg',
-    category: 'roupas',
-    brand: 'Vento',
-    brandSlug: 'vento',
-  },
-  {
-    id: 'look-07',
-    slug: 'bolsa-palha-areia',
-    title: 'Bolsa de Palha Areia',
-    description: 'Acessório artesanal perfeito para a rotina de praia.',
-    price: 'R$ 189,00',
-    installment: 'ou 2x de R$ 94,50',
-    image: '/images/cat-acessorios.jpg',
-    category: 'acessorios',
-    brand: 'Brisa',
-    brandSlug: 'brisa',
-  },
-  {
-    id: 'look-08',
-    slug: 'biquini-tomara-que-caia',
-    title: 'Biquíni Tomara que Caia',
-    description: 'Modelagem clean com sustentação e conforto.',
-    price: 'R$ 389,00',
-    installment: 'ou 2x de R$ 194,50',
+    price: 289.9,
     image: '/images/cat-biquinis.jpg',
+    available: true,
+    variants: {
+      sizes: ['P', 'M', 'G'],
+      colors: ['Areia', 'Azul', 'Preto'],
+    },
+  },
+  {
+    id: 'prod-02',
+    slug: 'biquini-brisa-viva',
+    name: 'Biquíni Brisa Viva',
+    brand: 'Cocci',
     category: 'biquinis',
+    price: 319.9,
+    image: '/images/launch-1.jpg',
+    available: true,
+    variants: {
+      sizes: ['P', 'M', 'G'],
+      colors: ['Coral', 'Verde', 'Off-white'],
+    },
+  },
+  {
+    id: 'prod-03',
+    slug: 'maio-lagoa-preto',
+    name: 'Maiô Lagoa Preto',
+    brand: 'Atlântica',
+    category: 'maios',
+    price: 399.9,
+    image: '/images/launch-2.jpg',
+    available: true,
+    variants: {
+      sizes: ['P', 'M', 'G'],
+      colors: ['Preto', 'Grafite'],
+    },
+  },
+  {
+    id: 'prod-04',
+    slug: 'maio-costas-cruzadas',
+    name: 'Maiô Costas Cruzadas',
+    brand: 'Onda',
+    category: 'maios',
+    price: 419.9,
+    image: '/images/launch-3.jpg',
+    available: true,
+    variants: {
+      sizes: ['P', 'M', 'G'],
+      colors: ['Azul', 'Vinho'],
+    },
+  },
+  {
+    id: 'prod-05',
+    slug: 'vestido-areia-linho',
+    name: 'Vestido Areia de Linho',
+    brand: 'Marina',
+    category: 'roupas',
+    price: 529.0,
+    image: '/images/cat-roupas.jpg',
+    available: true,
+    variants: {
+      sizes: ['P', 'M', 'G', 'GG'],
+      colors: ['Areia', 'Branco'],
+    },
+  },
+  {
+    id: 'prod-06',
+    slug: 'saia-pareo-duna',
+    name: 'Saia Pareô Duna',
     brand: 'Mar&Mov',
-    brandSlug: 'mar-mov',
+    category: 'roupas',
+    price: 249.9,
+    image: '/images/cat-roupas.jpg',
+    available: true,
+    variants: {
+      sizes: ['P', 'M', 'G', 'GG'],
+      colors: ['Off-white', 'Azul claro'],
+    },
+  },
+  {
+    id: 'prod-07',
+    slug: 'kimono-brisa-off',
+    name: 'Kimono Brisa Off',
+    brand: 'Lenny',
+    category: 'roupas',
+    price: 359.9,
+    image: '/images/cat-roupas.jpg',
+    available: true,
+    variants: {
+      sizes: ['P', 'M', 'G', 'GG'],
+      colors: ['Off-white', 'Bege'],
+    },
+  },
+  {
+    id: 'prod-08',
+    slug: 'bolsa-palha-areia',
+    name: 'Bolsa Palha Areia',
+    brand: 'Arezzo',
+    category: 'acessorios',
+    price: 189.9,
+    image: '/images/cat-acessorios.jpg',
+    available: true,
+    variants: {
+      sizes: [],
+      colors: ['Areia', 'Caramelo'],
+    },
+  },
+  {
+    id: 'prod-09',
+    slug: 'chapeu-palha-costa',
+    name: 'Chapéu de Palha Costa',
+    brand: 'Cocci',
+    category: 'acessorios',
+    price: 149.9,
+    image: '/images/cat-acessorios.jpg',
+    available: true,
+    variants: {
+      sizes: [],
+      colors: ['Areia'],
+    },
+  },
+  {
+    id: 'prod-10',
+    slug: 'oculos-luna-preto',
+    name: 'Óculos Luna Preto',
+    brand: 'Zahara',
+    category: 'acessorios',
+    price: 219.9,
+    image: '/images/cat-acessorios.jpg',
+    available: true,
+    variants: {
+      sizes: [],
+      colors: ['Preto', 'Tartaruga'],
+    },
   },
 ]
+
+const priceFormatter = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+})
+
+export const formatPrice = (price: number) => priceFormatter.format(price)
+
+export const normalizeSlug = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/&/g, ' ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
+export const getAllProducts = () => [...products]
+
+export const getProductBySlug = (slug: string) =>
+  products.find((product) => normalizeSlug(product.slug) === normalizeSlug(slug))
+
+export const getProductsByCategory = (slug: string) =>
+  products.filter((product) => normalizeSlug(product.category) === normalizeSlug(slug))
+
+export const getProductsByBrand = (slug: string) =>
+  products.filter((product) => normalizeSlug(product.brand) === normalizeSlug(slug))

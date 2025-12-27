@@ -1,19 +1,10 @@
 import React from 'react'
-import ProductCard, { ProductHighlight } from './ProductCard'
-import { Product } from '../data/products'
+import ProductCard from './ProductCard'
+import type { Product } from '../data/products'
 
 type ProductGridProps = {
   items: Product[]
 }
-
-const mapToHighlight = (product: Product): ProductHighlight => ({
-  slug: product.slug,
-  brand: product.brand,
-  title: product.title,
-  description: product.description,
-  price: product.price,
-  image: product.image,
-})
 
 const ProductGrid: React.FC<ProductGridProps> = ({ items }) => {
   if (!items.length) {
@@ -27,7 +18,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ items }) => {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((product) => (
-        <ProductCard key={product.id} item={mapToHighlight(product)} />
+        <ProductCard key={product.id} product={product} />
       ))}
     </div>
   )

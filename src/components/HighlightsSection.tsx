@@ -1,10 +1,16 @@
-﻿import React from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { categories } from '../data/products'
+import { categoryMeta } from '../data/products'
 
 const fallbackImage = '/images/cat-roupas.jpg'
 
 const HighlightsSection: React.FC = () => {
+  const categories = Object.entries(categoryMeta).map(([slug, meta]) => ({
+    slug,
+    label: meta.label,
+    image: meta.image,
+  }))
+
   return (
     <section id="categorias" className="bg-[#f3e8dc] scroll-mt-28">
       <div className="mx-auto max-w-6xl px-4 py-14">

@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { categories, products } from '../data/products'
+import { categoryMeta, formatPrice, getProductBySlug, normalizeSlug } from '../data/products'
 
 const fallbackImage = '/images/cat-roupas.jpg'
 
 const ProductDetailPage: React.FC = () => {
   const { slug } = useParams()
-  const product = products.find((item) => item.slug === slug)
-  const category = categories.find((item) => item.slug === product?.category)
+  const product = slug ? getProductBySlug(slug) : undefined
+  const categoryInfo = product ? categoryMeta[product.category] : undefined
 
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
     const target = event.currentTarget
@@ -40,7 +40,7 @@ const ProductDetailPage: React.FC = () => {
         <div className="overflow-hidden rounded-3xl bg-white shadow-lg">
           <img
             src={product.image}
-            alt={product.title}
+            alt={product.name}
             className="h-full w-full object-cover"
             onError={handleImageError}
           />
@@ -49,15 +49,15 @@ const ProductDetailPage: React.FC = () => {
         <div className="space-y-6">
           <div className="space-y-2">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Produto</p>
-            <h1 className="font-display text-3xl font-black text-stone-800 sm:text-4xl">{product.title}</h1>
+            <h1 className="font-display text-3xl font-black text-stone-800 sm:text-4xl">{product.name}</h1>
             <div className="flex flex-wrap items-center gap-3 text-sm text-stone-500">
-              <Link to={`/marca/${product.brandSlug}`} className="font-semibold text-brand-deep">
+              <Link to={`/marca/${normalizeSlug(product.brand)}`} className="font-semibold text-brand-deep">
                 {product.brand}
               </Link>
               <span aria-hidden="true">•</span>
-              {category ? (
-                <Link to={`/categoria/${category.slug}`} className="font-semibold text-stone-600">
-                  {category.label}
+              {categoryInfo ? (
+                <Link to={`/categoria/${product.category}`} className="font-semibold text-stone-600">
+                  {categoryInfo.label}
                 </Link>
               ) : (
                 <span className="font-semibold text-stone-600">Categoria especial</span>
@@ -65,11 +65,26 @@ const ProductDetailPage: React.FC = () => {
             </div>
           </div>
 
-          <p className="text-base text-stone-600">{product.description}</p>
+          <p className="text-base text-stone-600">
+            Peça selecionada com acabamento premium e conforto para acompanhar sua rotina.
+          </p>
 
           <div className="space-y-1">
-            <p className="text-2xl font-extrabold text-stone-900">{product.price}</p>
-            <p className="text-sm text-stone-500">{product.installment}</p>
+            <p className="text-2xl font-extrabold text-stone-900">{formatPrice(product.price)}</p>
+            <p className="text-sm text-stone-500">Pagamento em até 6x sem juros.</p>
+          </div>
+
+          <div className="rounded-2xl border border-stone-200 bg-white/70 px-5 py-4 text-sm text-stone-600">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-semibold">Tamanhos:</span>
+              <span>
+                {product.variants.sizes.length ? product.variants.sizes.join(', ') : 'Tamanho único'}
+              </span>
+            </div>
+            <div className="mt-2 flex flex-wrap items-center gap-2">
+              <span className="font-semibold">Cores:</span>
+              <span>{product.variants.colors.join(', ')}</span>
+            </div>
           </div>
 
           <div className="flex flex-wrap gap-3">

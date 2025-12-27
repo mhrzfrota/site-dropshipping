@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { products } from '../data/products'
+import { formatPrice, getAllProducts } from '../data/products'
 
 const fallbackImage = '/images/cat-biquinis.jpg'
 
@@ -10,7 +10,7 @@ const NewArrivalsSection: React.FC = () => {
   const [dragStart, setDragStart] = useState(0)
   const [scrollStart, setScrollStart] = useState(0)
 
-  const newArrivals = products.filter((item) => item.isNew)
+  const newArrivals = useMemo(() => getAllProducts().slice(0, 6), [])
 
   const scrollByAmount = (direction: 'left' | 'right') => {
     if (!trackRef.current) return
@@ -83,7 +83,7 @@ const NewArrivalsSection: React.FC = () => {
                   <div className="overflow-hidden rounded-t-lg bg-stone-50">
                     <img
                       src={item.image}
-                      alt={item.title}
+                      alt={item.name}
                       className="h-[320px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[380px]"
                       onError={handleImageError}
                       draggable={false}
@@ -91,10 +91,10 @@ const NewArrivalsSection: React.FC = () => {
                   </div>
                 </Link>
                 <div className="space-y-3 px-4 py-4 text-center">
-                  <p className="text-sm font-semibold text-stone-700">{item.title}</p>
+                  <p className="text-sm font-semibold text-stone-700">{item.name}</p>
                   <div className="space-y-1">
-                    <p className="text-base font-extrabold text-stone-900">{item.price}</p>
-                    <p className="text-xs text-stone-500">{item.installment}</p>
+                    <p className="text-base font-extrabold text-stone-900">{formatPrice(item.price)}</p>
+                    <p className="text-xs text-stone-500">{item.brand}</p>
                   </div>
                   <Link
                     to={`/produto/${item.slug}`}

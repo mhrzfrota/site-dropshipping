@@ -1,8 +1,10 @@
 import React from 'react'
 import ProductGrid from '../components/ProductGrid'
-import { products } from '../data/products'
+import { getAllProducts } from '../data/products'
 
 const ProductsPage: React.FC = () => {
+  const items = getAllProducts()
+
   return (
     <section className="bg-brand-sand py-12">
       <div className="mx-auto max-w-6xl px-4">
@@ -13,7 +15,7 @@ const ProductsPage: React.FC = () => {
             Seleção completa com moda praia, fitness e acessórios.
           </p>
         </div>
-        <ProductGrid items={products} />
+        <ProductGrid items={items} />
       </div>
     </section>
   )
