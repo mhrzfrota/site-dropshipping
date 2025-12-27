@@ -15,9 +15,9 @@ const ProductsPage: React.FC = () => {
     <section className="bg-brand-sand py-12">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-8 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Produtos</p>
+          <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">Produtos</p>
           <h1 className="mt-3 font-display text-3xl font-black text-stone-800 sm:text-4xl">Todos os produtos</h1>
-          <p className="mt-2 text-sm text-stone-500">
+          <p className="mt-2 text-sm text-stone-600">
             Curadoria completa com moda praia, fitness e acessórios.
           </p>
         </div>

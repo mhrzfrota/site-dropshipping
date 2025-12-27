@@ -42,12 +42,12 @@ const ProductDetailPage: React.FC = () => {
     return (
       <section className="bg-brand-sand py-12">
         <div className="mx-auto max-w-4xl px-4 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Produto</p>
+          <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">Produto</p>
           <h1 className="mt-3 font-display text-3xl font-black text-stone-800">Produto não encontrado</h1>
-          <p className="mt-2 text-sm text-stone-500">Confira outras opções na vitrine completa.</p>
+          <p className="mt-2 text-sm text-stone-600">Confira outras opções na vitrine completa.</p>
           <Link
             to="/produtos"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-deep px-5 py-2 text-sm font-semibold text-white transition hover:bg-brand-ocean"
+            className="btn-primary mt-6 inline-flex items-center gap-2"
           >
             Ver todos os produtos
           </Link>
@@ -89,7 +89,7 @@ const ProductDetailPage: React.FC = () => {
   return (
     <section className="bg-brand-sand pb-16 pt-10">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-6 flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
+        <div className="mb-6 flex flex-wrap items-center gap-2 text-xs font-semibold tracking-[0.12em] text-stone-600">
           <Link to="/" className="transition hover:text-stone-700">
             Home
           </Link>
@@ -143,7 +143,7 @@ const ProductDetailPage: React.FC = () => {
 
           <div className="space-y-6">
             <div className="space-y-3">
-              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]">
+              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold tracking-[0.12em]">
                 <span
                   className={`rounded-full px-3 py-1 ${
                     product.available ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'
@@ -154,7 +154,7 @@ const ProductDetailPage: React.FC = () => {
                 {isBikini && <span className="rounded-full bg-brand-deep/10 px-3 py-1 text-brand-deep">Conjunto</span>}
               </div>
               <h1 className="font-display text-3xl font-black text-stone-800 sm:text-4xl">{product.name}</h1>
-              <div className="flex flex-wrap items-center gap-3 text-sm text-stone-500">
+              <div className="flex flex-wrap items-center gap-3 text-sm text-stone-600">
                 <Link to={`/marca/${normalizeSlug(product.brand)}`} className="font-semibold text-brand-deep">
                   {product.brand}
                 </Link>
@@ -171,56 +171,85 @@ const ProductDetailPage: React.FC = () => {
 
             <div className="rounded-2xl border border-stone-200 bg-white/90 px-5 py-4">
               <p className="text-3xl font-extrabold text-stone-900">{formatPrice(product.price)}</p>
-              <p className="text-sm text-stone-500">Pagamento em até 6x sem juros.</p>
+              <p className="text-sm text-stone-600">Pagamento em até 6x sem juros.</p>
             </div>
 
-            <p className="text-base text-stone-600">
-              {isBikini
-                ? 'Conjunto premium com acabamento impecável e conforto para acompanhar sua rotina.'
-                : 'Peça premium com acabamento impecável e conforto para acompanhar sua rotina.'}
-            </p>
+            <div className="space-y-3">
+              <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">Descrição</p>
+              <p className="text-base text-stone-700">
+                {isBikini
+                  ? 'Conjunto premium com acabamento impecável para valorizar a silhueta e garantir conforto o dia inteiro.'
+                  : 'Peça premium com acabamento impecável para valorizar a silhueta e garantir conforto o dia inteiro.'}
+              </p>
+              <ul className="space-y-2 text-sm text-stone-600">
+                <li className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-brand-aqua/70" aria-hidden="true" />
+                  Modelagem pensada para vestir bem e acompanhar o movimento.
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-brand-aqua/70" aria-hidden="true" />
+                  Toque macio e tecido leve para dias de sol ou treino.
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-brand-aqua/70" aria-hidden="true" />
+                  Acabamento premium e cores que permanecem vibrantes.
+                </li>
+              </ul>
+            </div>
 
             {hasVariants && (
               <div className="rounded-2xl border border-stone-200 bg-white/90 px-5 py-5">
-                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-stone-500">Variantes</h2>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <h2 className="text-sm font-semibold tracking-[0.12em] text-stone-600">Escolha suas opções</h2>
+                <div className="mt-4 space-y-5">
                   {hasSizes && (
-                    <label className="space-y-2 text-sm font-semibold text-stone-700">
-                      Tamanho
-                      <select
-                        value={selectedSize}
-                        onChange={(event) => setSelectedSize(event.target.value)}
-                        className={`w-full rounded-xl border bg-white px-3 py-3 text-sm font-semibold text-stone-700 shadow-sm focus:border-brand-deep focus:outline-none focus:ring-2 focus:ring-brand-aqua/40 ${
-                          warningText && missingSize ? 'border-rose-300' : 'border-stone-200'
-                        }`}
-                      >
-                        <option value="">Selecione</option>
-                        {product.variants.sizes.map((size) => (
-                          <option key={size} value={size}>
-                            {size}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
+                    <div>
+                      <p className="text-sm font-semibold text-stone-700">Tamanho</p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {product.variants.sizes.map((size) => {
+                          const isSelected = selectedSize === size
+                          return (
+                            <button
+                              key={size}
+                              type="button"
+                              onClick={() => setSelectedSize(size)}
+                              aria-pressed={isSelected}
+                              className={`min-w-[56px] rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                                isSelected
+                                  ? 'border-brand-deep bg-brand-deep text-white shadow-soft'
+                                  : 'border-stone-200 bg-white text-stone-700 hover:border-brand-deep'
+                              } ${warningText && missingSize ? 'border-rose-300' : ''} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40`}
+                            >
+                              {size}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
                   )}
                   {hasColors && (
-                    <label className="space-y-2 text-sm font-semibold text-stone-700">
-                      Cor
-                      <select
-                        value={selectedColor}
-                        onChange={(event) => setSelectedColor(event.target.value)}
-                        className={`w-full rounded-xl border bg-white px-3 py-3 text-sm font-semibold text-stone-700 shadow-sm focus:border-brand-deep focus:outline-none focus:ring-2 focus:ring-brand-aqua/40 ${
-                          warningText && missingColor ? 'border-rose-300' : 'border-stone-200'
-                        }`}
-                      >
-                        <option value="">Selecione</option>
-                        {product.variants.colors.map((color) => (
-                          <option key={color} value={color}>
-                            {color}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
+                    <div>
+                      <p className="text-sm font-semibold text-stone-700">Cor</p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {product.variants.colors.map((color) => {
+                          const isSelected = selectedColor === color
+                          return (
+                            <button
+                              key={color}
+                              type="button"
+                              onClick={() => setSelectedColor(color)}
+                              aria-pressed={isSelected}
+                              className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                                isSelected
+                                  ? 'border-brand-deep bg-brand-deep text-white shadow-soft'
+                                  : 'border-stone-200 bg-white text-stone-700 hover:border-brand-deep'
+                              } ${warningText && missingColor ? 'border-rose-300' : ''} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40`}
+                            >
+                              {color}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
                   )}
                 </div>
                 {warningText && (
@@ -236,26 +265,72 @@ const ProductDetailPage: React.FC = () => {
                 type="button"
                 onClick={handleAddToCart}
                 disabled={!canAddToCart}
-                className="rounded-full bg-brand-deep px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-ocean disabled:cursor-not-allowed disabled:opacity-60"
+                className="btn-primary disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Adicionar ao carrinho
               </button>
               <Link
                 to="/produtos"
-                className="rounded-full border border-stone-300 px-6 py-3 text-sm font-semibold text-stone-700 transition hover:border-stone-500 hover:text-stone-900"
+                className="btn-secondary"
               >
                 Continuar navegando
               </Link>
             </div>
 
-            <div className="grid gap-3 rounded-2xl border border-stone-200 bg-white/70 px-5 py-4 text-sm text-stone-600 sm:grid-cols-2">
-              <div>
-                <p className="font-semibold text-stone-700">Entrega rápida</p>
-                <p>Receba em casa ou retire na loja física.</p>
+            <div className="grid gap-3 rounded-2xl border border-stone-200 bg-white/70 px-5 py-4 text-sm text-stone-600 sm:grid-cols-3">
+              <div className="flex items-start gap-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-aqua/20 text-brand-deep">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+                    <path
+                      d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <p className="font-semibold text-stone-700">Envio para todo Brasil</p>
+                  <p>Receba em casa ou retire na loja.</p>
+                </div>
               </div>
-              <div>
-                <p className="font-semibold text-stone-700">Troca facilitada</p>
-                <p>Até 7 dias para trocar ou devolver.</p>
+              <div className="flex items-start gap-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-aqua/20 text-brand-deep">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+                    <path
+                      d="M4 12a7 7 0 0 1 12-4l2-2v6h-6l2-2"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <p className="font-semibold text-stone-700">Troca garantida</p>
+                  <p>Até 7 dias para trocar ou devolver.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-aqua/20 text-brand-deep">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+                    <path
+                      d="M4 5h16v11a2 2 0 0 1-2 2H8l-4 4V7a2 2 0 0 1 2-2Z"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <p className="font-semibold text-stone-700">Atendimento via WhatsApp</p>
+                  <p>Fale com nossa equipe quando quiser.</p>
+                </div>
               </div>
             </div>
           </div>

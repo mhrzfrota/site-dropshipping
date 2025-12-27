@@ -19,24 +19,21 @@ const CategoryPage: React.FC = () => {
     <section className="bg-brand-sand py-12">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-8 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Categoria</p>
+          <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">Categoria</p>
           <h1 className="mt-3 font-display text-3xl font-black text-stone-800 sm:text-4xl">
             {categoryInfo ? categoryInfo.label : 'Categoria não encontrada'}
           </h1>
-          <p className="mt-2 text-sm text-stone-500">
+          <p className="mt-2 text-sm text-stone-600">
             {categoryInfo
               ? `Confira os produtos selecionados em ${categoryInfo.label.toLowerCase()}.`
               : 'Escolha outra categoria para continuar explorando.'}
           </p>
-          <div className="mt-4 flex items-center justify-center gap-3 text-sm">
-            <Link to="/produtos" className="font-semibold text-brand-deep transition hover:text-brand-ocean">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm">
+            <Link to="/produtos" className="btn-primary">
               Ver todos os produtos
             </Link>
             {categoryInfo && (
-              <Link
-                to="/"
-                className="rounded-full border border-stone-300 px-3 py-1 text-xs font-semibold text-stone-600 transition hover:border-stone-500 hover:text-stone-800"
-              >
+              <Link to="/" className="btn-secondary">
                 Voltar para a home
               </Link>
             )}

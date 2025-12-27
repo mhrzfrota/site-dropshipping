@@ -54,11 +54,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({ items, isLoading = false, ske
             />
           </svg>
         </span>
-        <h3 className="mt-4 text-lg font-semibold text-stone-700">Nenhum produto por aqui</h3>
-        <p className="mt-2 text-sm text-stone-500">
+        <h3 className="mt-4 text-lg font-semibold text-stone-800">Nenhum produto por aqui</h3>
+        <p className="mt-2 text-sm text-stone-600">
           Ajuste os filtros ou explore a coleção completa da Mar&Mov.
         </p>
-        <Link to="/produtos" className="mt-5 inline-flex items-center justify-center btn-primary">
+        <Link to="/produtos" className="btn-primary mt-5 inline-flex items-center justify-center">
           Ver coleção completa
         </Link>
       </div>

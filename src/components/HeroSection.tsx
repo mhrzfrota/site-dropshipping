@@ -14,21 +14,30 @@ const HeroSection: React.FC = () => {
         style={{ backgroundImage: `url(${heroImage}), url(${fallbackHero})` }}
         aria-hidden="true"
       />
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-brand-deep/85 via-brand-deep/55 to-transparent"
+        aria-hidden="true"
+      />
       <div className="relative z-10">
         <div className="mx-auto flex max-w-6xl flex-col items-start px-4 py-16 md:py-24 lg:py-28">
-          <h1 className="mt-2 max-w-3xl font-display text-4xl font-black leading-tight text-[#0a2345] drop-shadow md:text-5xl lg:text-6xl">
-            Sua moda em movimento, do mar à cidade
-          </h1>
+          <div className="max-w-xl rounded-3xl bg-white/10 p-6 backdrop-blur-sm shadow-soft sm:p-8">
+            <p className="text-xs font-semibold tracking-[0.2em] text-white/80">Mar&Mov</p>
+            <h1 className="mt-4 font-display text-4xl font-black leading-tight text-white md:text-5xl lg:text-6xl">
+              Moda praia e fitness para o seu ritmo.
+            </h1>
 
-          <p className="mt-4 max-w-2xl text-lg text-white/90">
-            A Mar&Mov traz as novidades da loja física para o online: peças confortáveis, autênticas, modernas e
-            elegantes que acompanham seu ritmo, da praia ao dia a dia.
-          </p>
+            <p className="mt-4 text-base text-white/90 md:text-lg">
+              Peças premium direto da loja física. Compre online e receba em todo o Brasil.
+            </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Link to="/produtos" className="btn-primary">
-              Ver coleção Verão 2025
-            </Link>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <Link to="/produtos" className="btn-primary">
+                Comprar agora
+              </Link>
+              <Link to="/produtos" className="btn-secondary">
+                Ver coleção
+              </Link>
+            </div>
           </div>
         </div>
       </div>

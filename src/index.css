@@ -32,9 +32,9 @@ a {
 }
 
 .btn-primary {
-  @apply rounded-full bg-brand-deep px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-brand-ocean hover:shadow-soft;
+  @apply inline-flex min-h-[44px] items-center justify-center rounded-full bg-brand-deep px-6 text-sm font-semibold text-white shadow-soft transition-all duration-300 hover:bg-brand-ocean focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
 }
 
 .btn-secondary {
-  @apply rounded-full border border-white/70 bg-white/20 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/30 hover:text-ink;
+  @apply inline-flex min-h-[44px] items-center justify-center rounded-full border border-brand-deep/25 bg-white/80 px-6 text-sm font-semibold text-brand-deep transition-all duration-300 hover:border-brand-deep/45 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
 }

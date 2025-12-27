@@ -111,14 +111,10 @@ const CartDrawer: React.FC = () => {
       <aside className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-white shadow-2xl">
         <div className="flex items-center justify-between border-b border-stone-200 px-6 py-5">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Carrinho</p>
+            <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">Carrinho</p>
             <h2 className="text-xl font-bold text-stone-800">Seu carrinho</h2>
           </div>
-          <button
-            type="button"
-            onClick={handleCloseDrawer}
-            className="rounded-full border border-stone-200 px-3 py-2 text-xs font-semibold uppercase text-stone-500 transition hover:border-stone-400 hover:text-stone-700"
-          >
+          <button type="button" onClick={handleCloseDrawer} className="btn-secondary px-4">
             Fechar
           </button>
         </div>
@@ -146,14 +142,14 @@ const CartDrawer: React.FC = () => {
                   />
                 </svg>
               </span>
-              <p className="mt-3 text-sm font-semibold text-stone-700">Seu carrinho está vazio.</p>
-              <p className="mt-2 text-sm text-stone-500">
+              <p className="mt-3 text-sm font-semibold text-stone-800">Seu carrinho está vazio.</p>
+              <p className="mt-2 text-sm text-stone-600">
                 Que tal começar pelos lançamentos mais desejados da Mar&Mov?
               </p>
               <Link
                 to="/produtos"
                 onClick={handleCloseDrawer}
-                className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-deep px-5 py-2 text-sm font-semibold text-white transition hover:bg-brand-ocean"
+                className="btn-secondary mt-4"
               >
                 Explorar produtos
               </Link>
@@ -207,7 +203,7 @@ const CartDrawer: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => removeItem(item.id)}
-                          className="text-xs font-semibold uppercase text-rose-500 transition hover:text-rose-700"
+                          className="text-xs font-semibold text-rose-500 transition hover:text-rose-700"
                         >
                           Remover
                         </button>
@@ -224,13 +220,13 @@ const CartDrawer: React.FC = () => {
           )}
         </div>
 
-        <div className="border-t border-stone-200 px-6 py-5">
+        <div className="border-t border-stone-200 bg-stone-50/80 px-6 py-5">
           <div className="flex items-center justify-between text-sm text-stone-600">
             <span>Itens ({totalItems})</span>
             <button
               type="button"
               onClick={clearCart}
-              className="text-xs font-semibold uppercase text-stone-500 transition hover:text-stone-700"
+              className="text-xs font-semibold text-stone-500 transition hover:text-stone-700"
               disabled={items.length === 0}
             >
               Limpar carrinho
@@ -238,21 +234,18 @@ const CartDrawer: React.FC = () => {
           </div>
           <div className="mt-3 flex items-center justify-between text-lg font-bold text-stone-800">
             <span>Subtotal</span>
-            <span>{formatPrice(subtotal)}</span>
+            <span className="text-brand-deep">{formatPrice(subtotal)}</span>
           </div>
           <button
             type="button"
             onClick={handleOpenCheckout}
-            className={`mt-4 inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-semibold uppercase tracking-[0.08em] transition ${
-              items.length
-                ? 'bg-emerald-500 text-white hover:bg-emerald-600'
-                : 'cursor-not-allowed bg-stone-200 text-stone-500'
-            }`}
+            className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60"
             aria-disabled={items.length === 0}
             disabled={items.length === 0}
           >
-            Finalizar no WhatsApp
+            Finalizar pedido pelo WhatsApp
           </button>
+          <p className="mt-3 text-xs text-stone-600">Você será atendido por nossa equipe via WhatsApp.</p>
         </div>
       </aside>
       {isCheckoutOpen && (
@@ -271,16 +264,12 @@ const CartDrawer: React.FC = () => {
           >
             <div className="flex items-start justify-between border-b border-stone-200 px-6 py-5">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">WhatsApp</p>
+                <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">WhatsApp</p>
                 <h3 id="checkout-title" className="text-lg font-bold text-stone-800">
                   Finalizar pedido
                 </h3>
               </div>
-              <button
-                type="button"
-                onClick={handleCloseCheckout}
-                className="rounded-full border border-stone-200 px-3 py-2 text-xs font-semibold uppercase text-stone-500 transition hover:border-stone-400 hover:text-stone-700"
-              >
+              <button type="button" onClick={handleCloseCheckout} className="btn-secondary px-4">
                 Fechar
               </button>
             </div>
@@ -332,13 +321,13 @@ const CartDrawer: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleCloseCheckout}
-                  className="inline-flex flex-1 items-center justify-center rounded-full border border-stone-200 px-5 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-stone-500 transition hover:border-stone-400 hover:text-stone-700"
+                  className="btn-secondary flex-1"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="inline-flex flex-1 items-center justify-center rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition hover:bg-emerald-600"
+                  className="btn-primary flex-1"
                 >
                   Enviar no WhatsApp
                 </button>

@@ -33,24 +33,21 @@ const BrandPage: React.FC = () => {
     <section className="bg-brand-sand py-12">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-8 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Marca</p>
+          <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">Marca</p>
           <h1 className="mt-3 font-display text-3xl font-black text-stone-800 sm:text-4xl">
             {brandLabel ?? 'Marca não encontrada'}
           </h1>
-          <p className="mt-2 text-sm text-stone-500">
+          <p className="mt-2 text-sm text-stone-600">
             {brandLabel
               ? `Descubra o estilo da marca ${brandLabel} em nossa curadoria.`
               : 'Tente outra marca para continuar navegando.'}
           </p>
-          <div className="mt-4 flex items-center justify-center gap-3 text-sm">
-            <Link to="/produtos" className="font-semibold text-brand-deep transition hover:text-brand-ocean">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm">
+            <Link to="/produtos" className="btn-primary">
               Ver todos os produtos
             </Link>
             {brandLabel && (
-              <Link
-                to="/"
-                className="rounded-full border border-stone-300 px-3 py-1 text-xs font-semibold text-stone-600 transition hover:border-stone-500 hover:text-stone-800"
-              >
+              <Link to="/" className="btn-secondary">
                 Voltar para a home
               </Link>
             )}
@@ -61,7 +58,7 @@ const BrandPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setSelectedCategory('all')}
-              className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition ${
+              className={`rounded-full border px-4 py-2 text-xs font-semibold tracking-[0.12em] transition ${
                 selectedCategory === 'all'
                   ? 'border-brand-deep bg-brand-deep text-white'
                   : 'border-white/70 bg-white/70 text-stone-600 hover:border-brand-deep hover:text-brand-deep'
@@ -74,7 +71,7 @@ const BrandPage: React.FC = () => {
                 key={category}
                 type="button"
                 onClick={() => setSelectedCategory(category)}
-                className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition ${
+                className={`rounded-full border px-4 py-2 text-xs font-semibold tracking-[0.12em] transition ${
                   selectedCategory === category
                     ? 'border-brand-deep bg-brand-deep text-white'
                     : 'border-white/70 bg-white/70 text-stone-600 hover:border-brand-deep hover:text-brand-deep'

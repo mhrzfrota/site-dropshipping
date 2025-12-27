@@ -45,17 +45,18 @@ const NewArrivalsSection: React.FC = () => {
   }
 
   return (
-    <section id="lancamentos" className="bg-white py-14 scroll-mt-28">
+    <section id="lancamentos" className="bg-white py-16 scroll-mt-28">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-8 flex items-center justify-between">
           <h2 className="flex-1 text-center font-display text-3xl font-black text-stone-800">
-            Novidades que acabaram de chegar
+            Lançamentos do momento
           </h2>
           <Link
             to="/produtos"
-            className="hidden items-center gap-2 rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-700 transition hover:border-stone-500 hover:text-stone-900 sm:inline-flex"
+            className="btn-secondary hidden items-center gap-2 sm:inline-flex"
           >
-            Ver coleção completa <span aria-hidden="true">&rarr;</span>
+            Ver coleção
+            <span aria-hidden="true">&rarr;</span>
           </Link>
         </div>
 
@@ -79,14 +80,17 @@ const NewArrivalsSection: React.FC = () => {
             {newArrivals.map((item) => (
               <div
                 key={item.id}
-                className="group relative min-w-[220px] max-w-[320px] snap-start flex-1 rounded-lg border border-stone-100 bg-white shadow-sm transition hover:-translate-y-1 sm:min-w-[260px]"
+                className="group card-hover relative min-w-[220px] max-w-[320px] snap-start flex-1 rounded-2xl border border-stone-100 bg-white shadow-sm sm:min-w-[260px]"
               >
                 <Link to={`/produto/${item.slug}`} className="block">
-                  <div className="overflow-hidden rounded-t-lg bg-stone-50">
+                  <span className="absolute left-4 top-4 z-10 rounded-full bg-brand-deep px-3 py-1 text-[10px] font-semibold text-white shadow-sm">
+                    Lançamento
+                  </span>
+                  <div className="aspect-[4/5] overflow-hidden rounded-t-2xl bg-stone-50">
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="h-[320px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[380px]"
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                       onError={handleImageError}
                       draggable={false}
                       loading="lazy"
@@ -94,17 +98,17 @@ const NewArrivalsSection: React.FC = () => {
                     />
                   </div>
                 </Link>
-                <div className="space-y-3 px-4 py-4 text-center">
-                  <p className="text-sm font-semibold text-stone-700">{item.name}</p>
-                  <div className="space-y-1">
-                    <p className="text-base font-extrabold text-stone-900">{formatPrice(item.price)}</p>
-                    <p className="text-xs text-stone-500">{item.brand}</p>
-                  </div>
+                <div className="space-y-3 px-5 py-5 text-center">
+                  <p className="text-xs font-semibold tracking-[0.12em] text-brand-deep/80">
+                    {item.brand}
+                  </p>
+                  <p className="text-sm font-semibold text-stone-800">{item.name}</p>
+                  <p className="text-lg font-extrabold text-stone-900">{formatPrice(item.price)}</p>
                   <Link
                     to={`/produto/${item.slug}`}
-                    className="inline-flex w-full items-center justify-center rounded-md bg-brand-deep px-4 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition hover:bg-brand-ocean"
+                    className="btn-primary w-full"
                   >
-                    Ver detalhes
+                    Comprar
                   </Link>
                 </div>
               </div>

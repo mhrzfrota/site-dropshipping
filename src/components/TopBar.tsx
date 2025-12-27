@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { useToast } from '../context/ToastContext'
 
 type NavSubItem = {
   label: string
@@ -85,12 +86,17 @@ const TopBar: React.FC = () => {
   const [logoError, setLogoError] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { totalItems, toggleCart } = useCart()
+  const { showToast } = useToast()
 
   const activeItem = useMemo(() => navLinks.find((item) => item.label === activeLink), [activeLink])
 
   const baseTextColor = 'text-stone-700'
   const iconTone = 'text-stone-700 hover:text-brand-deep'
   const mobileMenuId = 'mobile-menu'
+
+  const handleSoon = (label: string) => {
+    showToast(`${label} em breve.`)
+  }
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -160,6 +166,7 @@ const TopBar: React.FC = () => {
           <button
             type="button"
             aria-label="Lista de desejos"
+            onClick={() => handleSoon('Favoritos')}
             className={`flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-stone-100 ${iconTone}`}
           >
             <svg
@@ -176,6 +183,7 @@ const TopBar: React.FC = () => {
           <button
             type="button"
             aria-label="Perfil"
+            onClick={() => handleSoon('Perfil')}
             className={`flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-stone-100 ${iconTone}`}
           >
             <svg
@@ -221,7 +229,7 @@ const TopBar: React.FC = () => {
             aria-label="Menu"
             aria-controls={mobileMenuId}
             aria-expanded={isMobileMenuOpen}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 text-sm font-semibold uppercase text-stone-700 transition hover:bg-stone-100 md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 text-sm font-semibold text-stone-700 transition hover:bg-stone-100 md:hidden"
           >
             {isMobileMenuOpen ? 'Fechar' : 'Menu'}
           </button>
@@ -232,7 +240,7 @@ const TopBar: React.FC = () => {
         <div className="border-t border-stone-200 bg-white/98 text-stone-700 shadow-[0_16px_32px_rgba(0,0,0,0.12)] backdrop-blur">
           <div className="mx-auto flex max-w-6xl flex-wrap gap-10 px-6 py-6">
             <div className="min-w-[12rem] space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-stone-500">{activeItem.label}</p>
+              <p className="text-xs font-semibold tracking-[0.12em] text-stone-500">{activeItem.label}</p>
               <div className="space-y-2">
                 {activeItem.items.map((subItem) => (
                   <Link
@@ -253,7 +261,7 @@ const TopBar: React.FC = () => {
               </p>
               <Link
                 to={activeItem.href}
-                className="inline-flex items-center gap-2 rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-700 transition hover:border-brand-deep hover:text-brand-deep"
+                className="btn-secondary gap-2"
                 onClick={() => setActiveLink(null)}
               >
                 Ver todos em {activeItem.label}
@@ -267,29 +275,68 @@ const TopBar: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden" id={mobileMenuId}>
           <div className="border-t border-stone-200 bg-white shadow-xl">
-            <div className="space-y-1 px-6 py-4">
+            <div className="space-y-3 px-6 py-4">
               {navLinks.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  className={`block rounded-lg px-3 py-3 text-sm font-semibold transition ${
-                    item.accent
-                      ? 'text-brand-ocean hover:bg-brand-ocean/10'
-                      : 'text-stone-700 hover:bg-stone-100'
-                  }`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
+                <div key={item.label} className="space-y-2">
+                  <Link
+                    to={item.href}
+                    className={`block rounded-lg px-3 py-3 text-sm font-semibold transition ${
+                      item.accent
+                        ? 'text-brand-ocean hover:bg-brand-ocean/10'
+                        : 'text-stone-700 hover:bg-stone-100'
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                  {item.items && (
+                    <div className="flex flex-wrap gap-2 pl-3">
+                      {item.items.map((subItem) => (
+                        <Link
+                          key={subItem.label}
+                          to={subItem.href}
+                          className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-semibold text-stone-600 transition hover:border-brand-deep hover:text-brand-deep"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {subItem.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
 
-              <div className="mt-3 flex items-center gap-3 rounded-xl bg-stone-50 px-3 py-3">
-                <span className="text-xs font-semibold uppercase tracking-[0.08em] text-stone-500">Atalhos</span>
-                <div className="flex flex-1 items-center justify-end gap-3 text-stone-700">
-                  <span>Buscar</span>
-                  <span>Favoritos</span>
-                  <span>Perfil</span>
-                  <span>Carrinho</span>
+              <div className="mt-2 rounded-xl bg-stone-50 px-3 py-3">
+                <p className="text-xs font-semibold tracking-[0.08em] text-stone-500">Atalhos rápidos</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleSoon('Busca')}
+                    className="rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-semibold text-stone-700 transition hover:border-brand-deep hover:text-brand-deep"
+                  >
+                    Buscar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSoon('Favoritos')}
+                    className="rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-semibold text-stone-700 transition hover:border-brand-deep hover:text-brand-deep"
+                  >
+                    Favoritos
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSoon('Perfil')}
+                    className="rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-semibold text-stone-700 transition hover:border-brand-deep hover:text-brand-deep"
+                  >
+                    Perfil
+                  </button>
+                  <button
+                    type="button"
+                    onClick={toggleCart}
+                    className="rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-semibold text-stone-700 transition hover:border-brand-deep hover:text-brand-deep"
+                  >
+                    Carrinho
+                  </button>
                 </div>
               </div>
             </div>

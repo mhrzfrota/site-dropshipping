@@ -9,12 +9,12 @@ const NotFoundPage: React.FC = () => {
         <h1 className="mt-3 font-display text-3xl font-black text-stone-800 sm:text-4xl">
           Página não encontrada
         </h1>
-        <p className="mt-2 text-sm text-stone-500">
+        <p className="mt-2 text-sm text-stone-600">
           O conteúdo que você procura não está disponível. Explore nossa vitrine completa.
         </p>
         <Link
           to="/"
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-deep px-5 py-2 text-sm font-semibold text-white transition hover:bg-brand-ocean"
+          className="btn-primary mt-6 inline-flex items-center gap-2"
         >
           Voltar para a home
         </Link>
