@@ -27,7 +27,7 @@ const HeroSection: React.FC = () => {
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link to="/produtos" className="btn-primary">
-              Ver Coleção Verão 2025
+              Ver coleção Verão 2025
             </Link>
           </div>
         </div>

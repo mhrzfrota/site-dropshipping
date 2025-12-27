@@ -20,12 +20,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="group card-hover h-full overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-brand-aqua/15">
       <div className="relative aspect-[4/5] overflow-hidden">
-        {/* Troque o placeholder abaixo pela foto real do produto/cole??o */}
         <img
           src={product.image}
           alt={product.name}
           className="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-105"
           onError={handleImageError}
+          loading="lazy"
+          decoding="async"
         />
         <span className="chip absolute left-3 top-3 bg-white/90 text-brand-deep shadow-sm">{product.brand}</span>
       </div>
@@ -40,7 +41,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           to={`/produto/${product.slug}`}
           className="mt-auto inline-flex w-full justify-center rounded-xl bg-brand-deep px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-ocean"
         >
-          Comprar
+          Ver detalhes
         </Link>
       </div>
     </div>

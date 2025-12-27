@@ -126,14 +126,36 @@ const CartDrawer: React.FC = () => {
         <div className="flex-1 space-y-4 overflow-y-auto px-6 py-5">
           {items.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-stone-200 bg-stone-50 px-5 py-8 text-center">
-              <p className="text-sm font-semibold text-stone-700">Seu carrinho está vazio.</p>
-              <p className="mt-2 text-sm text-stone-500">Explore os produtos e adicione seus favoritos.</p>
+              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-aqua/20 text-brand-deep">
+                <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
+                  <path
+                    d="M6 7h12l-1 12a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7Z"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M9 7V5a3 3 0 0 1 6 0v2"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+              <p className="mt-3 text-sm font-semibold text-stone-700">Seu carrinho está vazio.</p>
+              <p className="mt-2 text-sm text-stone-500">
+                Que tal começar pelos lançamentos mais desejados da Mar&Mov?
+              </p>
               <Link
                 to="/produtos"
                 onClick={handleCloseDrawer}
                 className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-deep px-5 py-2 text-sm font-semibold text-white transition hover:bg-brand-ocean"
               >
-                Ver produtos
+                Explorar produtos
               </Link>
             </div>
           ) : (
@@ -153,6 +175,8 @@ const CartDrawer: React.FC = () => {
                       alt={item.name}
                       className="h-16 w-16 rounded-xl object-cover"
                       onError={handleImageError}
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="flex flex-1 flex-col gap-2">
                       <div>

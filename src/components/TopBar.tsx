@@ -118,6 +118,8 @@ const TopBar: React.FC = () => {
             alt="Logo do site"
             className={`h-11 w-auto transition-opacity duration-300 ${logoError ? 'opacity-0' : 'opacity-100'}`}
             onError={() => setLogoError(true)}
+            loading="eager"
+            decoding="async"
           />
           {logoError && (
             <span className={`font-display text-4xl font-black tracking-tight ${baseTextColor}`}>

@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductGrid from '../components/ProductGrid'
 import { getAllProducts } from '../data/products'
 
 const ProductsPage: React.FC = () => {
   const items = getAllProducts()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsLoading(false), 350)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   return (
     <section className="bg-brand-sand py-12">
@@ -12,10 +18,10 @@ const ProductsPage: React.FC = () => {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Produtos</p>
           <h1 className="mt-3 font-display text-3xl font-black text-stone-800 sm:text-4xl">Todos os produtos</h1>
           <p className="mt-2 text-sm text-stone-500">
-            Seleção completa com moda praia, fitness e acessórios.
+            Curadoria completa com moda praia, fitness e acessórios.
           </p>
         </div>
-        <ProductGrid items={items} />
+        <ProductGrid items={items} isLoading={isLoading} />
       </div>
     </section>
   )

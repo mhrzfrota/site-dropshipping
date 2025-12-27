@@ -48,12 +48,14 @@ const NewArrivalsSection: React.FC = () => {
     <section id="lancamentos" className="bg-white py-14 scroll-mt-28">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="flex-1 text-center font-display text-3xl font-black text-stone-800">Lançamentos</h2>
+          <h2 className="flex-1 text-center font-display text-3xl font-black text-stone-800">
+            Novidades que acabaram de chegar
+          </h2>
           <Link
             to="/produtos"
             className="hidden items-center gap-2 rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-700 transition hover:border-stone-500 hover:text-stone-900 sm:inline-flex"
           >
-            Ver mais <span aria-hidden="true">&rarr;</span>
+            Ver coleção completa <span aria-hidden="true">&rarr;</span>
           </Link>
         </div>
 
@@ -87,6 +89,8 @@ const NewArrivalsSection: React.FC = () => {
                       className="h-[320px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[380px]"
                       onError={handleImageError}
                       draggable={false}
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 </Link>
@@ -98,9 +102,9 @@ const NewArrivalsSection: React.FC = () => {
                   </div>
                   <Link
                     to={`/produto/${item.slug}`}
-                    className="inline-flex w-full items-center justify-center rounded-md bg-black px-4 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition hover:bg-stone-900"
+                    className="inline-flex w-full items-center justify-center rounded-md bg-brand-deep px-4 py-3 text-sm font-semibold uppercase tracking-[0.08em] text-white transition hover:bg-brand-ocean"
                   >
-                    Comprar
+                    Ver detalhes
                   </Link>
                 </div>
               </div>

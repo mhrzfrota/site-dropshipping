@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { useToast } from '../context/ToastContext'
 import { categoryMeta, formatPrice, getProductBySlug, normalizeSlug } from '../data/products'
 
 const fallbackImage = '/images/cat-roupas.jpg'
@@ -10,6 +11,7 @@ const ProductDetailPage: React.FC = () => {
   const product = slug ? getProductBySlug(slug) : undefined
   const categoryInfo = product ? categoryMeta[product.category] : undefined
   const { addItem, openCart } = useCart()
+  const { showToast } = useToast()
 
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
@@ -76,7 +78,12 @@ const ProductDetailPage: React.FC = () => {
   const handleAddToCart = () => {
     if (!canAddToCart) return
     addItem(product, selectedSize || undefined, selectedColor || undefined)
-    openCart()
+    showToast('Produto adicionado ao carrinho.', {
+      action: {
+        label: 'Ver carrinho',
+        onClick: openCart,
+      },
+    })
   }
 
   return (
@@ -102,6 +109,8 @@ const ProductDetailPage: React.FC = () => {
                 alt={product.name}
                 className="h-full w-full object-cover"
                 onError={handleImageError}
+                loading="eager"
+                decoding="async"
               />
             </div>
             {galleryImages.length > 1 && (
@@ -123,6 +132,8 @@ const ProductDetailPage: React.FC = () => {
                       alt="Miniatura do produto"
                       className="h-full w-full object-cover"
                       onError={handleImageError}
+                      loading="lazy"
+                      decoding="async"
                     />
                   </button>
                 ))}
@@ -165,8 +176,8 @@ const ProductDetailPage: React.FC = () => {
 
             <p className="text-base text-stone-600">
               {isBikini
-                ? 'Conjunto selecionado com acabamento premium e conforto para acompanhar sua rotina.'
-                : 'Peça selecionada com acabamento premium e conforto para acompanhar sua rotina.'}
+                ? 'Conjunto premium com acabamento impecável e conforto para acompanhar sua rotina.'
+                : 'Peça premium com acabamento impecável e conforto para acompanhar sua rotina.'}
             </p>
 
             {hasVariants && (
@@ -233,7 +244,7 @@ const ProductDetailPage: React.FC = () => {
                 to="/produtos"
                 className="rounded-full border border-stone-300 px-6 py-3 text-sm font-semibold text-stone-700 transition hover:border-stone-500 hover:text-stone-900"
               >
-                Continuar comprando
+                Continuar navegando
               </Link>
             </div>
 

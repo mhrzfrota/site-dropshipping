@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import ProductGrid from '../components/ProductGrid'
 import { categoryMeta, getProductsByCategory } from '../data/products'
@@ -7,6 +7,13 @@ const CategoryPage: React.FC = () => {
   const { slug } = useParams()
   const items = slug ? getProductsByCategory(slug) : []
   const categoryInfo = slug ? categoryMeta[slug as keyof typeof categoryMeta] : undefined
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setIsLoading(true)
+    const timer = window.setTimeout(() => setIsLoading(false), 350)
+    return () => window.clearTimeout(timer)
+  }, [slug])
 
   return (
     <section className="bg-brand-sand py-12">
@@ -35,7 +42,7 @@ const CategoryPage: React.FC = () => {
             )}
           </div>
         </div>
-        <ProductGrid items={items} />
+        <ProductGrid items={items} isLoading={isLoading} />
       </div>
     </section>
   )

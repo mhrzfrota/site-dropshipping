@@ -8,9 +8,16 @@ const BrandPage: React.FC = () => {
   const items = slug ? getProductsByBrand(slug) : []
   const brandLabel = items[0]?.brand
   const [selectedCategory, setSelectedCategory] = useState<'all' | ProductCategory>('all')
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     setSelectedCategory('all')
+  }, [slug])
+
+  useEffect(() => {
+    setIsLoading(true)
+    const timer = window.setTimeout(() => setIsLoading(false), 350)
+    return () => window.clearTimeout(timer)
   }, [slug])
 
   const categories = useMemo(
@@ -78,7 +85,7 @@ const BrandPage: React.FC = () => {
             ))}
           </div>
         )}
-        <ProductGrid items={filteredItems} />
+        <ProductGrid items={filteredItems} isLoading={isLoading} />
       </div>
     </section>
   )
