@@ -1,13 +1,13 @@
-﻿import React from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 export type ProductHighlight = {
-  id: string
+  slug: string
   brand: string
   title: string
   description: string
   price: string
   image: string
-  link?: string
 }
 
 type ProductCardProps = {
@@ -41,12 +41,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
         <h3 className="font-display text-lg font-bold text-ink">{item.title}</h3>
         <p className="text-sm leading-relaxed text-ink/70">{item.description}</p>
         <p className="text-lg font-extrabold text-brand-deep">{item.price}</p>
-        <a
-          href={item.link ?? `/produto/${item.id}`}
+        <Link
+          to={`/produto/${item.slug}`}
           className="mt-auto inline-flex w-full justify-center rounded-xl bg-brand-deep px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-ocean"
         >
           Comprar
-        </a>
+        </Link>
       </div>
     </div>
   )

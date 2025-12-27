@@ -1,4 +1,5 @@
-﻿import React from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const HeroSection: React.FC = () => {
   // Salve o banner oficial em public/images/home-hero.png; o fallback mantém a home enquanto o arquivo não é enviado.
@@ -25,12 +26,9 @@ const HeroSection: React.FC = () => {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <a
-              href="/colecao/verao-2025" // Substitua pelo link real da coleção
-              className="btn-primary"
-            >
+            <Link to="/produtos" className="btn-primary">
               Ver Coleção Verão 2025
-            </a>
+            </Link>
           </div>
         </div>
       </div>

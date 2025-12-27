@@ -1,11 +1,12 @@
-﻿import React, { useState } from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const navLinks = [
-  { label: 'Novidades', href: '#lancamentos' },
-  { label: 'Moda Praia', href: '#categorias' },
-  { label: 'Moda Íntima', href: '#categorias' },
-  { label: 'Marcas', href: '#marcas' },
-  { label: 'Promoções', href: '#lancamentos' },
+  { label: 'Novidades', href: '/produtos' },
+  { label: 'Moda Praia', href: '/categoria/biquinis' },
+  { label: 'Moda Íntima', href: '/categoria/maios' },
+  { label: 'Marcas', href: '/marca/mar-mov' },
+  { label: 'Promoções', href: '/produtos' },
 ]
 
 const Navbar: React.FC = () => {
@@ -14,22 +15,22 @@ const Navbar: React.FC = () => {
   return (
     <header className="sticky top-0 z-30 border-b border-brand-aqua/15 bg-white/90 backdrop-blur-lg shadow-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <div className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
           <div className="flex flex-col leading-tight">
             <span className="font-display text-2xl font-extrabold tracking-tight text-brand-deep">Mar&Mov</span>
             <span className="text-xs uppercase tracking-[0.18em] text-ink/60">Sua moda em movimento</span>
           </div>
-        </div>
+        </Link>
 
         <nav className="hidden items-center gap-6 lg:flex">
           {navLinks.map((item) => (
-            <a
+            <Link
               key={item.label}
-              href={item.href}
+              to={item.href}
               className="text-sm font-semibold text-ink/80 transition hover:text-brand-deep"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -82,7 +83,6 @@ const Navbar: React.FC = () => {
               <path d="M9.25 9.25V7.4a2.75 2.75 0 0 1 5.5 0v1.85" />
               <path d="M9.5 11.5h5" />
             </svg>
-            {/* Troque o valor abaixo pelo contador real do carrinho quando conectar ao backend */}
             <span className="absolute -right-1 -top-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-brand-deep px-1 text-[10px] font-bold text-white">
               2
             </span>
@@ -103,13 +103,13 @@ const Navbar: React.FC = () => {
           <div className="border-t border-brand-aqua/20 bg-white shadow-md">
             <div className="space-y-3 px-4 py-4">
               {navLinks.map((item) => (
-                <a
+                <Link
                   key={item.label}
-                  href={item.href}
+                  to={item.href}
                   className="block rounded-xl border border-brand-aqua/20 px-4 py-3 text-sm font-semibold text-ink/80 transition hover:border-brand-deep hover:text-brand-deep"
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
               <div className="flex items-center gap-3 pt-2">
                 <button className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-brand-aqua/30 px-4 py-3 font-semibold text-ink/80 transition hover:border-brand-deep hover:text-brand-deep">

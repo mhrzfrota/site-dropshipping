@@ -1,6 +1,6 @@
 import React from 'react'
-
-const brands = ['Mar&Mov', 'Brisa', 'Onda', 'Atlântica', 'Solar', 'Costa', 'Vento', 'Marina']
+import { Link } from 'react-router-dom'
+import { brands } from '../data/products'
 
 const BrandsSection: React.FC = () => {
   return (
@@ -14,12 +14,13 @@ const BrandsSection: React.FC = () => {
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {brands.map((brand) => (
-            <div
-              key={brand}
-              className="flex items-center justify-center rounded-full border border-white/70 bg-white/70 px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-stone-600"
+            <Link
+              key={brand.slug}
+              to={`/marca/${brand.slug}`}
+              className="flex items-center justify-center rounded-full border border-white/70 bg-white/70 px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-stone-600 transition hover:border-brand-deep hover:text-brand-deep"
             >
-              {brand}
-            </div>
+              {brand.label}
+            </Link>
           ))}
         </div>
       </div>

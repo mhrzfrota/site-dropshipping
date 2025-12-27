@@ -1,20 +1,82 @@
-﻿import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 
-type NavLink = {
+type NavSubItem = {
+  label: string
+  href: string
+}
+
+type NavLinkItem = {
   label: string
   href: string
   accent?: boolean
-  items?: string[]
+  items?: NavSubItem[]
 }
 
-const navLinks: NavLink[] = [
-  { label: 'Vitrine', href: '#vitrine', items: ['Coleções', 'Revista'] },
-  { label: 'Lançamentos', href: '#lancamentos', items: ['Alto Verão', 'Edição cápsula', 'Novos tecidos'] },
-  { label: 'Biquínis', href: '#categorias', items: ['Cortininha', 'Meia-taça', 'Hot pants', 'Top faixa'] },
-  { label: 'Maiôs', href: '#categorias', items: ['Clássicos', 'Recortes', 'Tomara que caia'] },
-  { label: 'Roupas', href: '#categorias', items: ['Vestidos', 'Bodies', 'Saídas de praia'] },
-  { label: 'Acessórios', href: '#categorias', items: ['Bolsas', 'Chapéus', 'Óculos'] },
-  { label: 'Sale', href: '#lancamentos', accent: true, items: ['Últimas peças', 'Compre 2 leve 3'] },
+const navLinks: NavLinkItem[] = [
+  {
+    label: 'Vitrine',
+    href: '/',
+    items: [
+      { label: 'Coleções', href: '/produtos' },
+      { label: 'Revista', href: '/produtos' },
+    ],
+  },
+  {
+    label: 'Lançamentos',
+    href: '/produtos',
+    items: [
+      { label: 'Alto Verão', href: '/categoria/biquinis' },
+      { label: 'Edição cápsula', href: '/categoria/roupas' },
+      { label: 'Novos tecidos', href: '/categoria/maios' },
+    ],
+  },
+  {
+    label: 'Biquínis',
+    href: '/categoria/biquinis',
+    items: [
+      { label: 'Cortininha', href: '/categoria/biquinis' },
+      { label: 'Meia-taça', href: '/categoria/biquinis' },
+      { label: 'Hot pants', href: '/categoria/biquinis' },
+      { label: 'Top faixa', href: '/categoria/biquinis' },
+    ],
+  },
+  {
+    label: 'Maiôs',
+    href: '/categoria/maios',
+    items: [
+      { label: 'Clássicos', href: '/categoria/maios' },
+      { label: 'Recortes', href: '/categoria/maios' },
+      { label: 'Tomara que caia', href: '/categoria/maios' },
+    ],
+  },
+  {
+    label: 'Roupas',
+    href: '/categoria/roupas',
+    items: [
+      { label: 'Vestidos', href: '/categoria/roupas' },
+      { label: 'Bodies', href: '/categoria/roupas' },
+      { label: 'Saídas de praia', href: '/categoria/roupas' },
+    ],
+  },
+  {
+    label: 'Acessórios',
+    href: '/categoria/acessorios',
+    items: [
+      { label: 'Bolsas', href: '/categoria/acessorios' },
+      { label: 'Chapéus', href: '/categoria/acessorios' },
+      { label: 'Óculos', href: '/categoria/acessorios' },
+    ],
+  },
+  {
+    label: 'Sale',
+    href: '/produtos',
+    accent: true,
+    items: [
+      { label: 'Últimas peças', href: '/produtos' },
+      { label: 'Compre 2 leve 3', href: '/produtos' },
+    ],
+  },
 ]
 
 const TopBar: React.FC = () => {
@@ -48,7 +110,7 @@ const TopBar: React.FC = () => {
       }}
     >
       <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-2 py-1.5 md:gap-6 md:px-6">
-        <div className="flex items-center gap-2 shrink-0">
+        <Link to="/" className="flex items-center gap-2 shrink-0">
           <img
             src="/images/logo.svg"
             alt="Logo do site"
@@ -57,20 +119,27 @@ const TopBar: React.FC = () => {
           />
           {logoError && (
             <span className={`font-display text-4xl font-black tracking-tight ${baseTextColor}`}>
-              Mar&amp;Mov
+              Mar&Mov
             </span>
           )}
-        </div>
+        </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-4 md:flex">
           {navLinks.map((item) => (
-            <button
+            <NavLink
               key={item.label}
-              type="button"
-              onClick={() => setActiveLink((prev) => (prev === item.label ? null : item.label))}
-              className={`relative pb-2 text-[12px] leading-[1.2] font-semibold tracking-[0.01em] transition-colors duration-200 ${
-                item.accent ? 'text-brand-ocean hover:text-brand-deep' : `${baseTextColor} hover:text-brand-deep`
-              }`}
+              to={item.href}
+              end={item.href === '/'}
+              onMouseEnter={() => setActiveLink(item.label)}
+              onFocus={() => setActiveLink(item.label)}
+              onClick={() => setActiveLink(null)}
+              className={({ isActive }) =>
+                `relative pb-2 text-[12px] leading-[1.2] font-semibold tracking-[0.01em] transition-colors duration-200 ${
+                  item.accent
+                    ? 'text-brand-ocean hover:text-brand-deep'
+                    : `${baseTextColor} hover:text-brand-deep ${isActive ? 'text-brand-deep' : ''}`
+                }`
+              }
             >
               {item.label}
               <span
@@ -79,7 +148,7 @@ const TopBar: React.FC = () => {
                 }`}
                 aria-hidden="true"
               />
-            </button>
+            </NavLink>
           ))}
         </nav>
 
@@ -156,13 +225,14 @@ const TopBar: React.FC = () => {
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-stone-500">{activeItem.label}</p>
               <div className="space-y-2">
                 {activeItem.items.map((subItem) => (
-                  <a
-                    key={subItem}
-                    href={activeItem.href}
+                  <Link
+                    key={subItem.label}
+                    to={subItem.href}
                     className="block text-base font-semibold text-stone-700 transition hover:text-brand-deep"
+                    onClick={() => setActiveLink(null)}
                   >
-                    {subItem}
-                  </a>
+                    {subItem.label}
+                  </Link>
                 ))}
               </div>
             </div>
@@ -171,13 +241,14 @@ const TopBar: React.FC = () => {
               <p className="text-sm text-stone-500">
                 Destaques em <span className="font-semibold text-stone-800">{activeItem.label}</span>
               </p>
-              <a
-                href={activeItem.href}
+              <Link
+                to={activeItem.href}
                 className="inline-flex items-center gap-2 rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-700 transition hover:border-brand-deep hover:text-brand-deep"
+                onClick={() => setActiveLink(null)}
               >
                 Ver todos em {activeItem.label}
                 <span aria-hidden="true">&rarr;</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -188,9 +259,9 @@ const TopBar: React.FC = () => {
           <div className="border-t border-stone-200 bg-white shadow-xl">
             <div className="space-y-1 px-6 py-4">
               {navLinks.map((item) => (
-                <a
+                <Link
                   key={item.label}
-                  href={item.href}
+                  to={item.href}
                   className={`block rounded-lg px-3 py-3 text-sm font-semibold transition ${
                     item.accent
                       ? 'text-brand-ocean hover:bg-brand-ocean/10'
@@ -199,7 +270,7 @@ const TopBar: React.FC = () => {
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
 
               <div className="mt-3 flex items-center gap-3 rounded-xl bg-stone-50 px-3 py-3">
