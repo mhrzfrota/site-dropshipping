@@ -1,12 +1,26 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import ProductGrid from '../components/ProductGrid'
-import { getProductsByBrand } from '../data/products'
+import { categoryMeta, getProductsByBrand, type ProductCategory } from '../data/products'
 
 const BrandPage: React.FC = () => {
   const { slug } = useParams()
   const items = slug ? getProductsByBrand(slug) : []
   const brandLabel = items[0]?.brand
+  const [selectedCategory, setSelectedCategory] = useState<'all' | ProductCategory>('all')
+
+  useEffect(() => {
+    setSelectedCategory('all')
+  }, [slug])
+
+  const categories = useMemo(
+    () => Array.from(new Set(items.map((item) => item.category))),
+    [items],
+  )
+  const filteredItems = useMemo(() => {
+    if (selectedCategory === 'all') return items
+    return items.filter((item) => item.category === selectedCategory)
+  }, [items, selectedCategory])
 
   return (
     <section className="bg-brand-sand py-12">
@@ -35,7 +49,36 @@ const BrandPage: React.FC = () => {
             )}
           </div>
         </div>
-        <ProductGrid items={items} />
+        {brandLabel && categories.length > 1 && (
+          <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
+            <button
+              type="button"
+              onClick={() => setSelectedCategory('all')}
+              className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition ${
+                selectedCategory === 'all'
+                  ? 'border-brand-deep bg-brand-deep text-white'
+                  : 'border-white/70 bg-white/70 text-stone-600 hover:border-brand-deep hover:text-brand-deep'
+              }`}
+            >
+              Todas
+            </button>
+            {categories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setSelectedCategory(category)}
+                className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition ${
+                  selectedCategory === category
+                    ? 'border-brand-deep bg-brand-deep text-white'
+                    : 'border-white/70 bg-white/70 text-stone-600 hover:border-brand-deep hover:text-brand-deep'
+                }`}
+              >
+                {categoryMeta[category]?.label ?? category}
+              </button>
+            ))}
+          </div>
+        )}
+        <ProductGrid items={filteredItems} />
       </div>
     </section>
   )

@@ -19,7 +19,7 @@ const BrandsSection: React.FC = () => {
         <div className="mb-8 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Marcas</p>
           <h2 className="mt-3 font-display text-3xl font-black text-stone-800">Marcas em destaque</h2>
-          <p className="mt-2 text-sm text-stone-500">Sele??o de marcas parceiras e exclusivas da Mar&Mov.</p>
+          <p className="mt-2 text-sm text-stone-500">Seleção de marcas parceiras e exclusivas da Mar&Mov.</p>
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
