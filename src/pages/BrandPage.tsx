@@ -1,7 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import ProductGrid from '../components/ProductGrid'
-import { categoryMeta, getProductsByBrand, type ProductCategory } from '../data/products'
+import {
+  categoryMeta,
+  getProductsByBrand,
+  productSortOptions,
+  sortProducts,
+  type ProductCategory,
+  type ProductSortKey,
+} from '../data/products'
 
 const BrandPage: React.FC = () => {
   const { slug } = useParams()
@@ -9,9 +16,11 @@ const BrandPage: React.FC = () => {
   const brandLabel = items[0]?.brand
   const [selectedCategory, setSelectedCategory] = useState<'all' | ProductCategory>('all')
   const [isLoading, setIsLoading] = useState(true)
+  const [sortBy, setSortBy] = useState<ProductSortKey>('destaques')
 
   useEffect(() => {
     setSelectedCategory('all')
+    setSortBy('destaques')
   }, [slug])
 
   useEffect(() => {
@@ -28,6 +37,7 @@ const BrandPage: React.FC = () => {
     if (selectedCategory === 'all') return items
     return items.filter((item) => item.category === selectedCategory)
   }, [items, selectedCategory])
+  const sortedItems = useMemo(() => sortProducts(filteredItems, sortBy), [filteredItems, sortBy])
 
   return (
     <section className="bg-brand-sand py-12">
@@ -58,6 +68,7 @@ const BrandPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setSelectedCategory('all')}
+              aria-pressed={selectedCategory === 'all'}
               className={`btn-secondary px-4 text-xs ${
                 selectedCategory === 'all' ? 'border-brand-deep bg-brand-deep text-white hover:text-white' : ''
               }`}
@@ -69,6 +80,7 @@ const BrandPage: React.FC = () => {
                 key={category}
                 type="button"
                 onClick={() => setSelectedCategory(category)}
+                aria-pressed={selectedCategory === category}
                 className={`btn-secondary px-4 text-xs ${
                   selectedCategory === category
                     ? 'border-brand-deep bg-brand-deep text-white hover:text-white'
@@ -80,7 +92,27 @@ const BrandPage: React.FC = () => {
             ))}
           </div>
         )}
-        <ProductGrid items={filteredItems} isLoading={isLoading} />
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3 text-sm text-stone-600">
+          <span>{sortedItems.length} produtos</span>
+          <div className="flex items-center gap-2">
+            <label htmlFor="sort-brand" className="text-xs font-semibold tracking-[0.08em] text-stone-600">
+              Ordenar por
+            </label>
+            <select
+              id="sort-brand"
+              value={sortBy}
+              onChange={(event) => setSortBy(event.target.value as ProductSortKey)}
+              className="rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-semibold text-stone-700 shadow-sm focus:border-brand-ocean focus:outline-none focus:ring-2 focus:ring-brand-ocean/30"
+            >
+              {productSortOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <ProductGrid items={sortedItems} isLoading={isLoading} />
       </div>
     </section>
   )

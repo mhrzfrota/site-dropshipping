@@ -5,6 +5,15 @@ export type ProductVariant = {
   colors: string[]
 }
 
+export type ProductSortKey = 'destaques' | 'recentes' | 'preco-asc' | 'preco-desc'
+
+export const productSortOptions: { value: ProductSortKey; label: string }[] = [
+  { value: 'destaques', label: 'Destaques' },
+  { value: 'recentes', label: 'Mais recentes' },
+  { value: 'preco-asc', label: 'Menor preço' },
+  { value: 'preco-desc', label: 'Maior preço' },
+]
+
 export type Product = {
   id: string
   slug: string
@@ -21,19 +30,19 @@ export type Product = {
 export const categoryMeta: Record<ProductCategory, { label: string; image: string }> = {
   biquinis: {
     label: 'Biquínis',
-    image: '/images/cat-biquinis.jpg',
+    image: '/images/biquinis.jpg',
   },
   maios: {
     label: 'Maiôs',
-    image: '/images/cat-roupas.jpg',
+    image: '/images/maio-1.jpg',
   },
   roupas: {
     label: 'Roupas',
-    image: '/images/cat-roupas.jpg',
+    image: '/images/academia-3.jpg',
   },
   acessorios: {
     label: 'Acessórios',
-    image: '/images/cat-acessorios.jpg',
+    image: '/images/meias-acessorios.jpg',
   },
 }
 
@@ -45,8 +54,8 @@ const products: Product[] = [
     brand: 'Lupo',
     category: 'biquinis',
     price: 289.9,
-    image: '/images/cat-biquinis.jpg',
-    images: ['/images/cat-biquinis.jpg', '/images/home-hero.png', '/images/cat-roupas.jpg'],
+    image: '/images/biquini-2.jpg',
+    images: ['/images/biquini-2.jpg', '/images/home-hero.png', '/images/biquinis.jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G'],
@@ -60,8 +69,8 @@ const products: Product[] = [
     brand: 'Cocci',
     category: 'biquinis',
     price: 319.9,
-    image: '/images/home-hero.png',
-    images: ['/images/home-hero.png', '/images/cat-biquinis.jpg'],
+    image: '/images/biquinis.jpg',
+    images: ['/images/biquinis.jpg', '/images/academia-1.jpg', '/images/biquini-2.jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G'],
@@ -75,8 +84,8 @@ const products: Product[] = [
     brand: 'Atlântica',
     category: 'maios',
     price: 399.9,
-    image: '/images/cat-biquinis.jpg',
-    images: ['/images/cat-biquinis.jpg', '/images/cat-roupas.jpg'],
+    image: '/images/maio-1.jpg',
+    images: ['/images/maio-1.jpg', '/images/home-hero.png', '/images/academia-4.jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G'],
@@ -90,8 +99,8 @@ const products: Product[] = [
     brand: 'Onda',
     category: 'maios',
     price: 419.9,
-    image: '/images/cat-roupas.jpg',
-    images: ['/images/cat-roupas.jpg', '/images/home-hero.png'],
+    image: '/images/academia-4.jpg',
+    images: ['/images/academia-4.jpg', '/images/academia-3.jpg', '/images/maio-1.jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G'],
@@ -105,8 +114,8 @@ const products: Product[] = [
     brand: 'Marina',
     category: 'roupas',
     price: 529.0,
-    image: '/images/cat-roupas.jpg',
-    images: ['/images/cat-roupas.jpg', '/images/home-hero.png'],
+    image: '/images/blusa-1.jpg',
+    images: ['/images/blusa-1.jpg', '/images/academia-3.jpg', '/images/short-masc-4.jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G', 'GG'],
@@ -120,8 +129,8 @@ const products: Product[] = [
     brand: 'Mar&Mov',
     category: 'roupas',
     price: 249.9,
-    image: '/images/cat-roupas.jpg',
-    images: ['/images/cat-roupas.jpg', '/images/cat-acessorios.jpg'],
+    image: '/images/short-masc.jpg',
+    images: ['/images/short-masc.jpg', '/images/home-hero.png', '/images/short-masc-3.jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G', 'GG'],
@@ -135,8 +144,8 @@ const products: Product[] = [
     brand: 'Lenny',
     category: 'roupas',
     price: 359.9,
-    image: '/images/cat-roupas.jpg',
-    images: ['/images/cat-roupas.jpg', '/images/home-hero.png'],
+    image: '/images/short-masc-2.jpg',
+    images: ['/images/short-masc-2.jpg', '/images/academia-3.jpg', '/images/blusa-1.jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G', 'GG'],
@@ -150,8 +159,8 @@ const products: Product[] = [
     brand: 'Arezzo',
     category: 'acessorios',
     price: 189.9,
-    image: '/images/cat-acessorios.jpg',
-    images: ['/images/cat-acessorios.jpg', '/images/cat-roupas.jpg'],
+    image: '/images/bolsa-1.jpg',
+    images: ['/images/bolsa-1.jpg', '/images/meias-acessorios.jpg', '/images/bolsa-2.jpg'],
     available: true,
     variants: {
       sizes: [],
@@ -165,8 +174,8 @@ const products: Product[] = [
     brand: 'Cocci',
     category: 'acessorios',
     price: 149.9,
-    image: '/images/cat-acessorios.jpg',
-    images: ['/images/cat-acessorios.jpg'],
+    image: '/images/bolsa-2.jpg',
+    images: ['/images/bolsa-2.jpg', '/images/meias-acessorios.jpg', '/images/meias.jpg'],
     available: true,
     variants: {
       sizes: [],
@@ -180,8 +189,8 @@ const products: Product[] = [
     brand: 'Zahara',
     category: 'acessorios',
     price: 219.9,
-    image: '/images/cat-acessorios.jpg',
-    images: ['/images/cat-acessorios.jpg', '/images/home-hero.png'],
+    image: '/images/meias-3.jpg',
+    images: ['/images/meias-3.jpg', '/images/meias.jpg', '/images/bolsa-1.jpg'],
     available: true,
     variants: {
       sizes: [],
@@ -216,3 +225,20 @@ export const getProductsByCategory = (slug: string) =>
 
 export const getProductsByBrand = (slug: string) =>
   products.filter((product) => normalizeSlug(product.brand) === normalizeSlug(slug))
+
+const getProductIndex = (product: Product) => Number(product.id.split('-')[1]) || 0
+
+export const sortProducts = (items: Product[], sortBy: ProductSortKey) => {
+  const sorted = [...items]
+
+  switch (sortBy) {
+    case 'recentes':
+      return sorted.sort((a, b) => getProductIndex(b) - getProductIndex(a))
+    case 'preco-asc':
+      return sorted.sort((a, b) => a.price - b.price)
+    case 'preco-desc':
+      return sorted.sort((a, b) => b.price - a.price)
+    default:
+      return sorted
+  }
+}

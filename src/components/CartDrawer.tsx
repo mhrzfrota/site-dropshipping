@@ -221,31 +221,38 @@ const CartDrawer: React.FC = () => {
         </div>
 
         <div className="border-t border-stone-200 bg-stone-50/80 px-6 py-5">
-          <div className="flex items-center justify-between text-sm text-stone-600">
-            <span>Itens ({totalItems})</span>
+          <div className="rounded-2xl border border-stone-200 bg-white px-4 py-4">
+            <div className="flex items-center justify-between text-sm text-stone-600">
+              <span>Itens ({totalItems})</span>
+              <button
+                type="button"
+                onClick={clearCart}
+                className="text-xs font-semibold text-stone-600 transition hover:text-stone-800"
+                disabled={items.length === 0}
+              >
+                Limpar carrinho
+              </button>
+            </div>
+            <div className="mt-3 flex items-center justify-between text-lg font-bold text-stone-800">
+              <span>Subtotal</span>
+              <span className="text-brand-deep">{formatPrice(subtotal)}</span>
+            </div>
+          </div>
+
+          <div className="mt-4 rounded-2xl border border-stone-200 bg-white px-4 py-4">
             <button
               type="button"
-              onClick={clearCart}
-              className="text-xs font-semibold text-stone-600 transition hover:text-stone-800"
+              onClick={handleOpenCheckout}
+              className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60"
+              aria-disabled={items.length === 0}
               disabled={items.length === 0}
             >
-              Limpar carrinho
+              Finalizar pedido pelo WhatsApp
             </button>
+            <p className="mt-3 text-xs text-stone-600">
+              Você finalizará seu pedido diretamente com nossa equipe no WhatsApp.
+            </p>
           </div>
-          <div className="mt-3 flex items-center justify-between text-lg font-bold text-stone-800">
-            <span>Subtotal</span>
-            <span className="text-brand-deep">{formatPrice(subtotal)}</span>
-          </div>
-          <button
-            type="button"
-            onClick={handleOpenCheckout}
-            className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60"
-            aria-disabled={items.length === 0}
-            disabled={items.length === 0}
-          >
-            Finalizar pedido pelo WhatsApp
-          </button>
-          <p className="mt-3 text-xs text-stone-600">Você será atendido por nossa equipe via WhatsApp.</p>
         </div>
       </aside>
       {isCheckoutOpen && (

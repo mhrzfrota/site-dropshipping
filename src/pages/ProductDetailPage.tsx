@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useToast } from '../context/ToastContext'
-import { categoryMeta, formatPrice, getProductBySlug, normalizeSlug } from '../data/products'
+import { categoryMeta, formatPrice, getProductBySlug, normalizeSlug, type ProductCategory } from '../data/products'
 
-const fallbackImage = '/images/cat-roupas.jpg'
+const fallbackImage = '/images/blusa-1.jpg'
 
 const ProductDetailPage: React.FC = () => {
   const { slug } = useParams()
@@ -38,6 +38,10 @@ const ProductDetailPage: React.FC = () => {
     target.src = fallbackImage
   }
 
+  const handleSelectImage = (image: string) => {
+    setSelectedImage(image)
+  }
+
   if (!product) {
     return (
       <section className="bg-brand-sand py-12">
@@ -64,6 +68,38 @@ const ProductDetailPage: React.FC = () => {
   const canAddToCart = !(missingSize || missingColor)
   const isBikini = product.category === 'biquinis'
   const statusLabel = product.available ? 'Disponível' : 'Esgotado'
+  const categoryLabelMap: Record<ProductCategory, string> = {
+    biquinis: 'Biquíni conjunto',
+    maios: 'Maiô',
+    roupas: 'Roupa casual',
+    acessorios: 'Acessório',
+  }
+  const materialMap: Record<ProductCategory, string> = {
+    biquinis: 'Poliamida com elastano para toque macio.',
+    maios: 'Poliamida com elastano de toque confortável.',
+    roupas: 'Malha leve com elastano.',
+    acessorios: 'Materiais mistos com acabamento premium.',
+  }
+  const fitMap: Record<ProductCategory, string> = {
+    biquinis: 'Modelagem confortável com ajuste suave.',
+    maios: 'Modelagem confortável que acompanha o movimento.',
+    roupas: 'Caimento leve e confortável para o dia a dia.',
+    acessorios: 'Acabamento confortável para uso prolongado.',
+  }
+  const shortDescription = (() => {
+    switch (product.category) {
+      case 'biquinis':
+        return `${product.name} é um conjunto pensado para praia e piscina, com visual elegante e toque confortável. Ideal para dias de sol e momentos de lazer à beira-mar.`
+      case 'maios':
+        return `${product.name} combina cobertura elegante com estilo beach-to-casual. Perfeito para praia e também para usar como body em produções casuais.`
+      case 'roupas':
+        return `${product.name} é uma peça leve para pós-praia, treinos leves e looks casuais do dia a dia. Caimento fluido que acompanha o movimento.`
+      case 'acessorios':
+        return `${product.name} finaliza o look com personalidade em dias de praia e momentos casuais. Um detalhe prático que eleva qualquer produção.`
+      default:
+        return `${product.name} traz estilo e conforto para compor produções versáteis em diferentes ocasiões.`
+    }
+  })()
 
   const warningMessage = () => {
     if (!hasVariants || canAddToCart) return null
@@ -103,11 +139,11 @@ const ProductDetailPage: React.FC = () => {
 
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr]">
           <div className="space-y-4">
-            <div className="overflow-hidden rounded-3xl bg-white shadow-lg">
+            <div className="group overflow-hidden rounded-3xl bg-white shadow-lg">
               <img
                 src={selectedImage}
                 alt={product.name}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 onError={handleImageError}
                 loading="eager"
                 decoding="async"
@@ -119,7 +155,9 @@ const ProductDetailPage: React.FC = () => {
                   <button
                     key={image}
                     type="button"
-                    onClick={() => setSelectedImage(image)}
+                    onClick={() => handleSelectImage(image)}
+                    onMouseEnter={() => handleSelectImage(image)}
+                    onFocus={() => handleSelectImage(image)}
                     className={`h-20 w-20 overflow-hidden rounded-2xl border bg-white shadow-sm transition ${
                       selectedImage === image
                         ? 'border-brand-deep ring-2 ring-brand-aqua/40'
@@ -175,27 +213,60 @@ const ProductDetailPage: React.FC = () => {
               <p className="text-sm text-stone-600">Pagamento em até 6x sem juros.</p>
             </div>
 
-            <div className="space-y-3">
+            <div className="rounded-2xl border border-stone-200 bg-white/90 px-5 py-5">
               <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Descrição</p>
-              <p className="text-base text-stone-700">
-                {isBikini
-                  ? 'Conjunto premium com acabamento impecável para valorizar a silhueta e garantir conforto o dia inteiro.'
-                  : 'Peça premium com acabamento impecável para valorizar a silhueta e garantir conforto o dia inteiro.'}
-              </p>
-              <ul className="space-y-2 text-sm text-stone-600">
-                <li className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-brand-aqua/70" aria-hidden="true" />
-                  Modelagem pensada para vestir bem e acompanhar o movimento.
+              <p className="mt-3 text-base text-stone-700">{shortDescription}</p>
+            </div>
+
+            <div className="rounded-2xl border border-stone-200 bg-white/90 px-5 py-5">
+              <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Detalhes do produto</p>
+              <ul className="mt-4 space-y-2 text-sm text-stone-700">
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-brand-aqua/70" aria-hidden="true" />
+                  <span>
+                    <span className="font-semibold text-stone-800">Material:</span> {materialMap[product.category]}
+                  </span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-brand-aqua/70" aria-hidden="true" />
-                  Toque macio e tecido leve para dias de sol ou treino.
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-brand-aqua/70" aria-hidden="true" />
+                  <span>
+                    <span className="font-semibold text-stone-800">Conforto e modelagem:</span>{' '}
+                    {fitMap[product.category]}
+                  </span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-brand-aqua/70" aria-hidden="true" />
-                  Acabamento premium e cores que permanecem vibrantes.
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-brand-aqua/70" aria-hidden="true" />
+                  <span>
+                    <span className="font-semibold text-stone-800">Categoria:</span>{' '}
+                    {categoryLabelMap[product.category]}
+                  </span>
                 </li>
               </ul>
+            </div>
+
+            <div className="rounded-2xl border border-stone-200 bg-white/90 px-5 py-5">
+              <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Guia de tamanho</p>
+              <div className="mt-4 overflow-hidden rounded-2xl border border-stone-200">
+                <table className="w-full text-center text-xs text-stone-700 sm:text-sm">
+                  <thead className="bg-stone-50 text-stone-600">
+                    <tr>
+                      <th className="px-3 py-3 font-semibold">P</th>
+                      <th className="px-3 py-3 font-semibold">M</th>
+                      <th className="px-3 py-3 font-semibold">G</th>
+                      <th className="px-3 py-3 font-semibold">GG</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="bg-white">
+                      <td className="px-3 py-3">Regular</td>
+                      <td className="px-3 py-3">Regular</td>
+                      <td className="px-3 py-3">Regular</td>
+                      <td className="px-3 py-3">Regular</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-3 text-xs text-stone-600">Modelagem padrão.</p>
             </div>
 
             {hasVariants && (

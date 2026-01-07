@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { formatPrice, getAllProducts } from '../data/products'
 
-const fallbackImage = '/images/cat-biquinis.jpg'
+const fallbackImage = '/images/biquini-2.jpg'
 
 const NewArrivalsSection: React.FC = () => {
   const trackRef = useRef<HTMLDivElement | null>(null)
@@ -77,42 +77,48 @@ const NewArrivalsSection: React.FC = () => {
             onMouseLeave={stopDragging}
             onMouseUp={stopDragging}
           >
-            {newArrivals.map((item) => (
-              <div
-                key={item.id}
-                className="group card-surface card-hover relative min-w-[220px] max-w-[320px] snap-start flex-1 sm:min-w-[260px]"
-              >
-                <Link to={`/produto/${item.slug}`} className="block">
-                  <span className="badge badge-primary absolute left-4 top-4 z-10">
-                    Lançamento
-                  </span>
-                  <div className="aspect-[4/5] overflow-hidden rounded-t-2xl bg-stone-50">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                      onError={handleImageError}
-                      draggable={false}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                </Link>
-                <div className="space-y-3 px-5 py-5 text-center">
-                  <div className="flex justify-center">
-                    <span className="badge badge-neutral">{item.brand}</span>
-                  </div>
-                  <p className="text-sm font-semibold text-stone-800">{item.name}</p>
-                  <p className="text-lg font-extrabold text-stone-900">{formatPrice(item.price)}</p>
-                  <Link
-                    to={`/produto/${item.slug}`}
-                    className="btn-primary w-full"
-                  >
-                    Comprar
+            {newArrivals.map((item, index) => {
+              const gallery = item.images?.length ? item.images : [item.image]
+              const conceptImage = gallery[1] ?? item.image
+              const displayImage = index % 2 === 0 ? item.image : conceptImage
+
+              return (
+                <div
+                  key={item.id}
+                  className="group card-surface card-hover relative min-w-[220px] max-w-[320px] snap-start flex-1 sm:min-w-[260px]"
+                >
+                  <Link to={`/produto/${item.slug}`} className="block">
+                    <span className="badge badge-primary absolute left-4 top-4 z-10">
+                      Lançamento
+                    </span>
+                    <div className="aspect-[4/5] overflow-hidden rounded-t-2xl bg-stone-50">
+                      <img
+                        src={displayImage}
+                        alt={item.name}
+                        className="h-full w-full object-cover object-[center_20%] transition duration-500 group-hover:scale-105"
+                        onError={handleImageError}
+                        draggable={false}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
                   </Link>
+                  <div className="space-y-3 px-5 py-5 text-center">
+                    <div className="flex justify-center">
+                      <span className="badge badge-neutral">{item.brand}</span>
+                    </div>
+                    <p className="text-sm font-semibold text-stone-800">{item.name}</p>
+                    <p className="text-lg font-extrabold text-stone-900">{formatPrice(item.price)}</p>
+                    <Link
+                      to={`/produto/${item.slug}`}
+                      className="btn-primary w-full"
+                    >
+                      Comprar
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
           <button
             type="button"

@@ -56,13 +56,13 @@ a {
 }
 
 .card-hover {
-  @apply transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-card;
+  @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-card focus-within:-translate-y-1 focus-within:shadow-card;
 }
 
 .btn-primary {
-  @apply inline-flex min-h-[48px] items-center justify-center rounded-2xl bg-brand-deep px-6 text-sm font-semibold text-white shadow-soft transition-all duration-300 hover:bg-brand-ocean focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+  @apply inline-flex min-h-[48px] items-center justify-center rounded-2xl bg-brand-deep px-6 text-sm font-semibold text-white shadow-soft transition-all duration-300 hover:bg-brand-ocean active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
 }
 
 .btn-secondary {
-  @apply inline-flex min-h-[48px] items-center justify-center rounded-2xl border border-stone-200 bg-white/90 px-6 text-sm font-semibold text-stone-700 transition-all duration-300 hover:border-brand-deep/40 hover:text-brand-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+  @apply inline-flex min-h-[48px] items-center justify-center rounded-2xl border border-stone-200 bg-white/90 px-6 text-sm font-semibold text-stone-700 transition-all duration-300 hover:border-brand-deep/40 hover:text-brand-deep active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
 }

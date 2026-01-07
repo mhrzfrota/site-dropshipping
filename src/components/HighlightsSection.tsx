@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { categoryMeta } from '../data/products'
 
-const fallbackImage = '/images/cat-roupas.jpg'
+const fallbackImage = '/images/home-hero.png'
 
 const HighlightsSection: React.FC = () => {
   const categories = Object.entries(categoryMeta).map(([slug, meta]) => ({
@@ -10,6 +10,13 @@ const HighlightsSection: React.FC = () => {
     label: meta.label,
     image: meta.image,
   }))
+
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const target = event.currentTarget
+    if (target.dataset.fallbackApplied) return
+    target.dataset.fallbackApplied = 'true'
+    target.src = fallbackImage
+  }
 
   return (
     <section id="categorias" className="bg-brand-sand scroll-mt-28">
@@ -19,26 +26,31 @@ const HighlightsSection: React.FC = () => {
             <Link
               key={cat.slug}
               to={`/categoria/${cat.slug}`}
-              className="group relative block overflow-hidden rounded-2xl border border-white/70 shadow-lg shadow-black/10 transition-transform duration-500 hover:-translate-y-1"
+              className="group relative block overflow-hidden rounded-3xl border border-white/70 shadow-lg shadow-black/10 transition-transform duration-500 hover:-translate-y-1"
               aria-label={`Ver categoria ${cat.label}`}
             >
+              <div className="aspect-[4/5] overflow-hidden">
+                <img
+                  src={cat.image}
+                  alt={`Categoria ${cat.label}`}
+                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  onError={handleImageError}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
               <div
-                className="absolute inset-0 bg-cover bg-center bg-stone-200"
-                style={{ backgroundImage: `url(${cat.image}), url(${fallbackImage})` }}
+                className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent"
                 aria-hidden="true"
               />
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent"
-                aria-hidden="true"
-              />
-              <div className="relative flex h-[240px] items-end justify-center pb-6 text-center sm:h-[300px] lg:h-[340px]">
-                <span className="text-lg font-semibold tracking-[0.12em] text-white">
-                  {cat.label}
+              <div className="absolute inset-x-0 bottom-0 p-5">
+                <div className="inline-flex items-center gap-3 rounded-full bg-black/45 px-5 py-2 text-white backdrop-blur-sm">
+                  <span className="text-sm font-semibold tracking-[0.12em]">{cat.label}</span>
                   <span
-                    className="mt-2 block h-[2px] w-12 bg-white/80 transition-all duration-300 group-hover:w-16"
+                    className="h-[2px] w-8 bg-white/80 transition-all duration-300 group-hover:w-12"
                     aria-hidden="true"
                   />
-                </span>
+                </div>
               </div>
             </Link>
           ))}

@@ -3,13 +3,17 @@ import BrandsSection from '../components/BrandsSection'
 import HeroSection from '../components/HeroSection'
 import HighlightsSection from '../components/HighlightsSection'
 import NewArrivalsSection from '../components/NewArrivalsSection'
+import StoreInfoSection from '../components/StoreInfoSection'
+import TrustSection from '../components/TrustSection'
 
 const HomePage: React.FC = () => {
   return (
     <>
       <HeroSection />
       <HighlightsSection />
+      <TrustSection />
       <NewArrivalsSection />
+      <StoreInfoSection />
       <BrandsSection />
     </>
   )

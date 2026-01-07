@@ -85,6 +85,7 @@ const TopBar: React.FC = () => {
   const [activeLink, setActiveLink] = useState<string | null>(null)
   const [logoError, setLogoError] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
   const { totalItems, toggleCart } = useCart()
   const { showToast } = useToast()
 
@@ -92,10 +93,23 @@ const TopBar: React.FC = () => {
 
   const baseTextColor = 'text-stone-700'
   const iconTone = 'text-stone-700 hover:text-brand-deep'
+  const iconButtonBase =
+    'flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-stone-100 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white'
   const mobileMenuId = 'mobile-menu'
 
   const handleSoon = (label: string) => {
     showToast(`${label} em breve.`)
+  }
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const trimmed = searchTerm.trim()
+    if (!trimmed) {
+      showToast('Digite o que você procura.')
+      return
+    }
+    showToast(`Busca por "${trimmed}" em breve.`)
+    setSearchTerm('')
   }
 
   useEffect(() => {
@@ -162,12 +176,61 @@ const TopBar: React.FC = () => {
           ))}
         </nav>
 
+        <form
+          onSubmit={handleSearchSubmit}
+          className="hidden items-center gap-2 rounded-full border border-stone-200 bg-stone-50 px-3 py-2 shadow-sm transition focus-within:border-brand-ocean focus-within:ring-2 focus-within:ring-brand-ocean/30 lg:flex"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            className="h-4 w-4 text-stone-500"
+            aria-hidden="true"
+          >
+            <path
+              d="M11 19a8 8 0 1 1 5.292-14.01A8 8 0 0 1 11 19Zm7.5 1.5-4.2-4.2"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <input
+            type="search"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            placeholder="Buscar produtos"
+            aria-label="Buscar produtos"
+            className="w-40 bg-transparent text-sm text-stone-700 placeholder:text-stone-400 focus:outline-none"
+          />
+          <button type="submit" className="text-xs font-semibold text-brand-deep">
+            Buscar
+          </button>
+        </form>
+
         <div className="ml-auto flex items-center gap-2">
+          <button
+            type="button"
+            aria-label="Busca"
+            onClick={() => handleSoon('Busca')}
+            title="Em breve"
+            className={`lg:hidden ${iconButtonBase} ${iconTone}`}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.7"
+            >
+              <path d="M11 19a8 8 0 1 1 5.292-14.01A8 8 0 0 1 11 19Zm7.5 1.5-4.2-4.2" />
+            </svg>
+          </button>
           <button
             type="button"
             aria-label="Lista de desejos"
             onClick={() => handleSoon('Favoritos')}
-            className={`flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-stone-100 ${iconTone}`}
+            title="Em breve"
+            className={`${iconButtonBase} ${iconTone}`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -184,7 +247,8 @@ const TopBar: React.FC = () => {
             type="button"
             aria-label="Perfil"
             onClick={() => handleSoon('Perfil')}
-            className={`flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-stone-100 ${iconTone}`}
+            title="Em breve"
+            className={`${iconButtonBase} ${iconTone}`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -202,7 +266,7 @@ const TopBar: React.FC = () => {
             type="button"
             aria-label="Carrinho"
             onClick={toggleCart}
-            className={`relative flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-stone-100 ${iconTone}`}
+            className={`relative ${iconButtonBase} ${iconTone}`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -229,7 +293,7 @@ const TopBar: React.FC = () => {
             aria-label="Menu"
             aria-controls={mobileMenuId}
             aria-expanded={isMobileMenuOpen}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 text-sm font-semibold text-stone-700 transition hover:bg-stone-100 md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 text-sm font-semibold text-stone-700 transition hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white md:hidden"
           >
             {isMobileMenuOpen ? 'Fechar' : 'Menu'}
           </button>
