@@ -42,7 +42,7 @@ const ProductDetailPage: React.FC = () => {
     return (
       <section className="bg-brand-sand py-12">
         <div className="mx-auto max-w-4xl px-4 text-center">
-          <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">Produto</p>
+          <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Produto</p>
           <h1 className="mt-3 font-display text-3xl font-black text-stone-800">Produto não encontrado</h1>
           <p className="mt-2 text-sm text-stone-600">Confira outras opções na vitrine completa.</p>
           <Link
@@ -144,27 +144,28 @@ const ProductDetailPage: React.FC = () => {
           <div className="space-y-6">
             <div className="space-y-3">
               <div className="flex flex-wrap items-center gap-2 text-xs font-semibold tracking-[0.12em]">
-                <span
-                  className={`rounded-full px-3 py-1 ${
-                    product.available ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'
-                  }`}
-                >
+                <span className={`badge ${product.available ? 'badge-success' : 'badge-danger'}`}>
                   {statusLabel}
                 </span>
-                {isBikini && <span className="rounded-full bg-brand-deep/10 px-3 py-1 text-brand-deep">Conjunto</span>}
+                {isBikini && <span className="badge badge-soft">Conjunto</span>}
               </div>
               <h1 className="font-display text-3xl font-black text-stone-800 sm:text-4xl">{product.name}</h1>
-              <div className="flex flex-wrap items-center gap-3 text-sm text-stone-600">
-                <Link to={`/marca/${normalizeSlug(product.brand)}`} className="font-semibold text-brand-deep">
+              <div className="flex flex-wrap items-center gap-2">
+                <Link
+                  to={`/marca/${normalizeSlug(product.brand)}`}
+                  className="badge badge-neutral transition hover:text-brand-deep"
+                >
                   {product.brand}
                 </Link>
-                <span aria-hidden="true">•</span>
                 {categoryInfo ? (
-                  <Link to={`/categoria/${product.category}`} className="font-semibold text-stone-600">
+                  <Link
+                    to={`/categoria/${product.category}`}
+                    className="badge badge-neutral transition hover:text-brand-deep"
+                  >
                     {categoryInfo.label}
                   </Link>
                 ) : (
-                  <span className="font-semibold text-stone-600">Categoria especial</span>
+                  <span className="badge badge-neutral">Categoria especial</span>
                 )}
               </div>
             </div>
@@ -175,7 +176,7 @@ const ProductDetailPage: React.FC = () => {
             </div>
 
             <div className="space-y-3">
-              <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">Descrição</p>
+              <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Descrição</p>
               <p className="text-base text-stone-700">
                 {isBikini
                   ? 'Conjunto premium com acabamento impecável para valorizar a silhueta e garantir conforto o dia inteiro.'

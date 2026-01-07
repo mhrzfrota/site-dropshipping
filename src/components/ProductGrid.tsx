@@ -16,14 +16,14 @@ const ProductGrid: React.FC<ProductGridProps> = ({ items, isLoading = false, ske
         {Array.from({ length: skeletonCount }).map((_, index) => (
           <div
             key={`skeleton-${index}`}
-            className="animate-pulse overflow-hidden rounded-2xl border border-white/70 bg-white/70 shadow-sm"
+            className="card-surface animate-pulse overflow-hidden"
           >
             <div className="aspect-[4/5] bg-stone-200/70" />
             <div className="space-y-3 p-4">
               <div className="h-4 w-3/4 rounded-full bg-stone-200/80" />
               <div className="h-3 w-1/3 rounded-full bg-stone-200/60" />
               <div className="h-5 w-1/2 rounded-full bg-stone-200/70" />
-              <div className="h-11 w-full rounded-xl bg-stone-200/70" />
+              <div className="h-11 w-full rounded-2xl bg-stone-200/70" />
             </div>
           </div>
         ))}

@@ -48,7 +48,7 @@ const NewArrivalsSection: React.FC = () => {
     <section id="lancamentos" className="bg-white py-16 scroll-mt-28">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-8 flex items-center justify-between">
-          <h2 className="flex-1 text-center font-display text-3xl font-black text-stone-800">
+          <h2 className="flex-1 text-center font-display text-3xl font-extrabold text-stone-800">
             Lançamentos do momento
           </h2>
           <Link
@@ -80,10 +80,10 @@ const NewArrivalsSection: React.FC = () => {
             {newArrivals.map((item) => (
               <div
                 key={item.id}
-                className="group card-hover relative min-w-[220px] max-w-[320px] snap-start flex-1 rounded-2xl border border-stone-100 bg-white shadow-sm sm:min-w-[260px]"
+                className="group card-surface card-hover relative min-w-[220px] max-w-[320px] snap-start flex-1 sm:min-w-[260px]"
               >
                 <Link to={`/produto/${item.slug}`} className="block">
-                  <span className="absolute left-4 top-4 z-10 rounded-full bg-brand-deep px-3 py-1 text-[10px] font-semibold text-white shadow-sm">
+                  <span className="badge badge-primary absolute left-4 top-4 z-10">
                     Lançamento
                   </span>
                   <div className="aspect-[4/5] overflow-hidden rounded-t-2xl bg-stone-50">
@@ -99,9 +99,9 @@ const NewArrivalsSection: React.FC = () => {
                   </div>
                 </Link>
                 <div className="space-y-3 px-5 py-5 text-center">
-                  <p className="text-xs font-semibold tracking-[0.12em] text-brand-deep/80">
-                    {item.brand}
-                  </p>
+                  <div className="flex justify-center">
+                    <span className="badge badge-neutral">{item.brand}</span>
+                  </div>
                   <p className="text-sm font-semibold text-stone-800">{item.name}</p>
                   <p className="text-lg font-extrabold text-stone-900">{formatPrice(item.price)}</p>
                   <Link

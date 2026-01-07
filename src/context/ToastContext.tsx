@@ -59,7 +59,7 @@ const ToastViewport: React.FC<{
                 toast.action?.onClick()
                 onClose()
               }}
-              className="self-start text-xs font-semibold uppercase tracking-[0.12em] text-brand-deep transition hover:text-brand-ocean"
+              className="self-start text-xs font-semibold tracking-[0.1em] text-brand-deep transition hover:text-brand-ocean"
             >
               {toast.action.label}
             </button>

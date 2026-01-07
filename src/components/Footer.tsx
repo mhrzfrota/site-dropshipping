@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="space-y-3 text-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">Institucional</p>
+          <p className="text-xs font-semibold tracking-[0.12em] text-stone-300">Institucional</p>
           <Link to="/produtos" className="block text-stone-200 transition hover:text-white">
             Coleções
           </Link>
@@ -26,14 +26,14 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="space-y-3 text-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">Atendimento</p>
+          <p className="text-xs font-semibold tracking-[0.12em] text-stone-300">Atendimento</p>
           <p className="text-stone-200">WhatsApp: (11) 98765-4321</p>
           <p className="text-stone-200">Email: contato@marmov.com</p>
           <p className="text-stone-200">Seg a Sex, 9h às 18h</p>
         </div>
 
         <div className="space-y-3 text-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">Loja física</p>
+          <p className="text-xs font-semibold tracking-[0.12em] text-stone-300">Loja física</p>
           <p className="text-stone-200">Rua das Ondas, 123</p>
           <p className="text-stone-200">Ipanema, Rio de Janeiro</p>
           <p className="text-stone-200">CEP 22400-000</p>

@@ -111,7 +111,7 @@ const CartDrawer: React.FC = () => {
       <aside className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-white shadow-2xl">
         <div className="flex items-center justify-between border-b border-stone-200 px-6 py-5">
           <div>
-            <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">Carrinho</p>
+            <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Carrinho</p>
             <h2 className="text-xl font-bold text-stone-800">Seu carrinho</h2>
           </div>
           <button type="button" onClick={handleCloseDrawer} className="btn-secondary px-4">
@@ -177,8 +177,8 @@ const CartDrawer: React.FC = () => {
                     <div className="flex flex-1 flex-col gap-2">
                       <div>
                         <p className="text-sm font-semibold text-stone-800">{item.name}</p>
-                        <p className="text-xs text-stone-500">{item.brand}</p>
-                        {variations && <p className="text-xs text-stone-500">{variations}</p>}
+                        <p className="text-xs text-stone-600">{item.brand}</p>
+                        {variations && <p className="text-xs text-stone-600">{variations}</p>}
                       </div>
                       <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
@@ -226,7 +226,7 @@ const CartDrawer: React.FC = () => {
             <button
               type="button"
               onClick={clearCart}
-              className="text-xs font-semibold text-stone-500 transition hover:text-stone-700"
+              className="text-xs font-semibold text-stone-600 transition hover:text-stone-800"
               disabled={items.length === 0}
             >
               Limpar carrinho
@@ -264,7 +264,7 @@ const CartDrawer: React.FC = () => {
           >
             <div className="flex items-start justify-between border-b border-stone-200 px-6 py-5">
               <div>
-                <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">WhatsApp</p>
+                <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">WhatsApp</p>
                 <h3 id="checkout-title" className="text-lg font-bold text-stone-800">
                   Finalizar pedido
                 </h3>
@@ -314,7 +314,7 @@ const CartDrawer: React.FC = () => {
                   {formError}
                 </p>
               )}
-              <p className="text-xs text-stone-500">
+              <p className="text-xs text-stone-600">
                 Você será redirecionado para o WhatsApp com a mensagem pronta.
               </p>
               <div className="flex flex-col gap-3 pt-2 sm:flex-row">

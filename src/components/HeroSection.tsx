@@ -21,7 +21,7 @@ const HeroSection: React.FC = () => {
       <div className="relative z-10">
         <div className="mx-auto flex max-w-6xl flex-col items-start px-4 py-16 md:py-24 lg:py-28">
           <div className="max-w-xl rounded-3xl bg-white/10 p-6 backdrop-blur-sm shadow-soft sm:p-8">
-            <p className="text-xs font-semibold tracking-[0.2em] text-white/80">Mar&Mov</p>
+            <p className="text-xs font-semibold tracking-[0.12em] text-white/80">Mar&Mov</p>
             <h1 className="mt-4 font-display text-4xl font-black leading-tight text-white md:text-5xl lg:text-6xl">
               Moda praia e fitness para o seu ritmo.
             </h1>

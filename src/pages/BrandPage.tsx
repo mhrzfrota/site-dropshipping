@@ -33,7 +33,7 @@ const BrandPage: React.FC = () => {
     <section className="bg-brand-sand py-12">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-8 text-center">
-          <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">Marca</p>
+          <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Marca</p>
           <h1 className="mt-3 font-display text-3xl font-black text-stone-800 sm:text-4xl">
             {brandLabel ?? 'Marca não encontrada'}
           </h1>
@@ -58,10 +58,8 @@ const BrandPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setSelectedCategory('all')}
-              className={`rounded-full border px-4 py-2 text-xs font-semibold tracking-[0.12em] transition ${
-                selectedCategory === 'all'
-                  ? 'border-brand-deep bg-brand-deep text-white'
-                  : 'border-white/70 bg-white/70 text-stone-600 hover:border-brand-deep hover:text-brand-deep'
+              className={`btn-secondary px-4 text-xs ${
+                selectedCategory === 'all' ? 'border-brand-deep bg-brand-deep text-white hover:text-white' : ''
               }`}
             >
               Todas
@@ -71,10 +69,10 @@ const BrandPage: React.FC = () => {
                 key={category}
                 type="button"
                 onClick={() => setSelectedCategory(category)}
-                className={`rounded-full border px-4 py-2 text-xs font-semibold tracking-[0.12em] transition ${
+                className={`btn-secondary px-4 text-xs ${
                   selectedCategory === category
-                    ? 'border-brand-deep bg-brand-deep text-white'
-                    : 'border-white/70 bg-white/70 text-stone-600 hover:border-brand-deep hover:text-brand-deep'
+                    ? 'border-brand-deep bg-brand-deep text-white hover:text-white'
+                    : ''
                 }`}
               >
                 {categoryMeta[category]?.label ?? category}

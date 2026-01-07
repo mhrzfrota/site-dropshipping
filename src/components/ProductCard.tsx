@@ -21,10 +21,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   }
 
   return (
-    <div className="group card-hover h-full overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-brand-aqua/15">
+    <div className="group card-surface card-hover h-full overflow-hidden">
       <div className="relative aspect-[4/5] overflow-hidden">
         {badgeLabel && (
-          <span className="absolute left-3 top-3 z-10 rounded-full bg-brand-deep px-3 py-1 text-[10px] font-semibold text-white shadow-sm">
+          <span className="badge badge-primary absolute left-3 top-3 z-10">
             {badgeLabel}
           </span>
         )}
@@ -39,9 +39,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       <div className="flex h-full flex-col gap-3 p-5">
-        <p className="text-xs font-semibold tracking-[0.2em] text-brand-deep/80">{product.brand}</p>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="badge badge-neutral">{product.brand}</span>
+        </div>
         <h3 className="font-display text-lg font-bold text-ink">{product.name}</h3>
-        <p className="text-xs tracking-[0.2em] text-ink/60">
+        <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">
           {categoryMeta[product.category]?.label ?? product.category}
         </p>
         <p className="text-lg font-extrabold text-brand-deep">{formatPrice(product.price)}</p>

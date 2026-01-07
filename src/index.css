@@ -27,14 +27,42 @@ a {
   @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide;
 }
 
+.badge {
+  @apply inline-flex items-center rounded-full px-3 py-1 text-[10px] font-semibold tracking-[0.12em];
+}
+
+.badge-primary {
+  @apply bg-brand-deep text-white shadow-soft;
+}
+
+.badge-neutral {
+  @apply bg-white text-stone-600 ring-1 ring-stone-200;
+}
+
+.badge-soft {
+  @apply bg-brand-deep/10 text-brand-deep;
+}
+
+.badge-success {
+  @apply bg-emerald-100 text-emerald-700;
+}
+
+.badge-danger {
+  @apply bg-rose-100 text-rose-700;
+}
+
+.card-surface {
+  @apply rounded-2xl bg-white shadow-[0_18px_40px_rgba(15,23,42,0.08)] ring-1 ring-black/5;
+}
+
 .card-hover {
   @apply transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-card;
 }
 
 .btn-primary {
-  @apply inline-flex min-h-[44px] items-center justify-center rounded-full bg-brand-deep px-6 text-sm font-semibold text-white shadow-soft transition-all duration-300 hover:bg-brand-ocean focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+  @apply inline-flex min-h-[48px] items-center justify-center rounded-2xl bg-brand-deep px-6 text-sm font-semibold text-white shadow-soft transition-all duration-300 hover:bg-brand-ocean focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
 }
 
 .btn-secondary {
-  @apply inline-flex min-h-[44px] items-center justify-center rounded-full border border-brand-deep/25 bg-white/80 px-6 text-sm font-semibold text-brand-deep transition-all duration-300 hover:border-brand-deep/45 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+  @apply inline-flex min-h-[48px] items-center justify-center rounded-2xl border border-stone-200 bg-white/90 px-6 text-sm font-semibold text-stone-700 transition-all duration-300 hover:border-brand-deep/40 hover:text-brand-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
 }

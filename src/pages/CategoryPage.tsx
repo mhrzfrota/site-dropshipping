@@ -19,7 +19,7 @@ const CategoryPage: React.FC = () => {
     <section className="bg-brand-sand py-12">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-8 text-center">
-          <p className="text-xs font-semibold tracking-[0.2em] text-stone-600">Categoria</p>
+          <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Categoria</p>
           <h1 className="mt-3 font-display text-3xl font-black text-stone-800 sm:text-4xl">
             {categoryInfo ? categoryInfo.label : 'Categoria não encontrada'}
           </h1>

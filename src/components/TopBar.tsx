@@ -240,7 +240,7 @@ const TopBar: React.FC = () => {
         <div className="border-t border-stone-200 bg-white/98 text-stone-700 shadow-[0_16px_32px_rgba(0,0,0,0.12)] backdrop-blur">
           <div className="mx-auto flex max-w-6xl flex-wrap gap-10 px-6 py-6">
             <div className="min-w-[12rem] space-y-2">
-              <p className="text-xs font-semibold tracking-[0.12em] text-stone-500">{activeItem.label}</p>
+              <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">{activeItem.label}</p>
               <div className="space-y-2">
                 {activeItem.items.map((subItem) => (
                   <Link
@@ -256,7 +256,7 @@ const TopBar: React.FC = () => {
             </div>
 
             <div className="flex flex-1 flex-col justify-between gap-4 sm:flex-row sm:items-center">
-              <p className="text-sm text-stone-500">
+              <p className="text-sm text-stone-600">
                 Destaques em <span className="font-semibold text-stone-800">{activeItem.label}</span>
               </p>
               <Link
@@ -295,7 +295,7 @@ const TopBar: React.FC = () => {
                         <Link
                           key={subItem.label}
                           to={subItem.href}
-                          className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-semibold text-stone-600 transition hover:border-brand-deep hover:text-brand-deep"
+                          className="badge badge-neutral transition hover:text-brand-deep"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           {subItem.label}
@@ -307,33 +307,33 @@ const TopBar: React.FC = () => {
               ))}
 
               <div className="mt-2 rounded-xl bg-stone-50 px-3 py-3">
-                <p className="text-xs font-semibold tracking-[0.08em] text-stone-500">Atalhos rápidos</p>
+                <p className="text-xs font-semibold tracking-[0.08em] text-stone-600">Atalhos rápidos</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <button
                     type="button"
                     onClick={() => handleSoon('Busca')}
-                    className="rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-semibold text-stone-700 transition hover:border-brand-deep hover:text-brand-deep"
+                    className="btn-secondary px-3 text-xs"
                   >
                     Buscar
                   </button>
                   <button
                     type="button"
                     onClick={() => handleSoon('Favoritos')}
-                    className="rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-semibold text-stone-700 transition hover:border-brand-deep hover:text-brand-deep"
+                    className="btn-secondary px-3 text-xs"
                   >
                     Favoritos
                   </button>
                   <button
                     type="button"
                     onClick={() => handleSoon('Perfil')}
-                    className="rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-semibold text-stone-700 transition hover:border-brand-deep hover:text-brand-deep"
+                    className="btn-secondary px-3 text-xs"
                   >
                     Perfil
                   </button>
                   <button
                     type="button"
                     onClick={toggleCart}
-                    className="rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-semibold text-stone-700 transition hover:border-brand-deep hover:text-brand-deep"
+                    className="btn-secondary px-3 text-xs"
                   >
                     Carrinho
                   </button>
