@@ -17,17 +17,21 @@ const BrandsSection: React.FC = () => {
     <section id="marcas" className="bg-brand-sand py-16 scroll-mt-28">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-8 text-center">
-          <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Marcas</p>
-          <h2 className="mt-3 font-display text-3xl font-extrabold text-stone-800">Marcas em destaque</h2>
-          <p className="mt-2 text-sm text-stone-600">Seleção de marcas parceiras e exclusivas da Mar&Mov.</p>
+          <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Marcas parceiras</p>
+          <h2 className="mt-3 font-display text-3xl font-extrabold text-stone-800">
+            Nossas marcas favoritas
+          </h2>
+          <p className="mt-2 text-sm text-stone-600">
+            Seleção de marcas que combinam performance, conforto e estilo.
+          </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="flex flex-wrap justify-center gap-3">
           {brands.map((brand) => (
             <Link
               key={brand.slug}
               to={`/marca/${brand.slug}`}
-              className="btn-secondary w-full text-xs"
+              className="rounded-full border border-brand-deep/20 bg-white px-5 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-stone-700 transition hover:border-brand-deep hover:text-brand-deep hover:shadow-md"
             >
               {brand.label}
             </Link>

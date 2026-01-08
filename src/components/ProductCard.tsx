@@ -10,8 +10,7 @@ type ProductCardProps = {
 const fallbackImage = '/images/blusa-1.jpg'
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const productIndex = Number(product.id.split('-')[1]) || 0
-  const badgeLabel = productIndex <= 3 ? 'Lançamento' : productIndex <= 6 ? 'Novo' : null
+  const badgeLabel = product.isNew ? 'Lançamento' : null
   const secondaryImage = product.images?.find((image) => image !== product.image)
 
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
@@ -56,10 +55,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="flex flex-wrap items-center gap-2">
           <span className="badge badge-neutral">{product.brand}</span>
         </div>
-        <h3 className="font-display text-lg font-bold text-ink">{product.name}</h3>
-        <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">
-          {categoryMeta[product.category]?.label ?? product.category}
-        </p>
+        <div className="space-y-1">
+          <h3 className="font-display text-lg font-bold text-ink">{product.name}</h3>
+          <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">
+            {categoryMeta[product.category]?.label ?? product.category}
+          </p>
+        </div>
         <p className="text-lg font-extrabold text-brand-deep">{formatPrice(product.price)}</p>
         <Link
           to={`/produto/${product.slug}`}

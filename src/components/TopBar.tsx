@@ -1,101 +1,258 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useToast } from '../context/ToastContext'
+import { getAllProducts, normalizeSlug } from '../data/products'
 
 type NavSubItem = {
   label: string
   href: string
 }
 
-type NavLinkItem = {
+type NavSection = {
+  title: string
+  items: NavSubItem[]
+}
+
+type NavFeature = {
+  title: string
+  description: string
+  href: string
+  image: string
+}
+
+type NavItem = {
   label: string
   href: string
   accent?: boolean
-  items?: NavSubItem[]
+  sections: NavSection[]
+  feature?: NavFeature
+  isPrimary?: boolean
 }
 
-const navLinks: NavLinkItem[] = [
-  {
-    label: 'Vitrine',
-    href: '/',
-    items: [
-      { label: 'Coleções', href: '/produtos' },
-      { label: 'Revista', href: '/produtos' },
-    ],
-  },
-  {
-    label: 'Lançamentos',
-    href: '/produtos',
-    items: [
-      { label: 'Alto Verão', href: '/categoria/biquinis' },
-      { label: 'Edição cápsula', href: '/categoria/roupas' },
-      { label: 'Novos tecidos', href: '/categoria/maios' },
-    ],
-  },
-  {
-    label: 'Biquínis',
-    href: '/categoria/biquinis',
-    items: [
-      { label: 'Cortininha', href: '/categoria/biquinis' },
-      { label: 'Meia-taça', href: '/categoria/biquinis' },
-      { label: 'Hot pants', href: '/categoria/biquinis' },
-      { label: 'Top faixa', href: '/categoria/biquinis' },
-    ],
-  },
-  {
-    label: 'Maiôs',
-    href: '/categoria/maios',
-    items: [
-      { label: 'Clássicos', href: '/categoria/maios' },
-      { label: 'Recortes', href: '/categoria/maios' },
-      { label: 'Tomara que caia', href: '/categoria/maios' },
-    ],
-  },
-  {
-    label: 'Roupas',
-    href: '/categoria/roupas',
-    items: [
-      { label: 'Vestidos', href: '/categoria/roupas' },
-      { label: 'Bodies', href: '/categoria/roupas' },
-      { label: 'Saídas de praia', href: '/categoria/roupas' },
-    ],
-  },
-  {
-    label: 'Acessórios',
-    href: '/categoria/acessorios',
-    items: [
-      { label: 'Bolsas', href: '/categoria/acessorios' },
-      { label: 'Chapéus', href: '/categoria/acessorios' },
-      { label: 'Óculos', href: '/categoria/acessorios' },
-    ],
-  },
-  {
-    label: 'Sale',
-    href: '/produtos',
-    accent: true,
-    items: [
-      { label: 'Últimas peças', href: '/produtos' },
-      { label: 'Compre 2 leve 3', href: '/produtos' },
-    ],
-  },
-]
+const splitIntoColumns = <T,>(items: T[], columnCount: number) => {
+  const columns: T[][] = Array.from({ length: columnCount }, () => [])
+  items.forEach((item, index) => {
+    columns[index % columnCount].push(item)
+  })
+  return columns
+}
 
 const TopBar: React.FC = () => {
+  const location = useLocation()
+  const isHome = location.pathname === '/'
   const [activeLink, setActiveLink] = useState<string | null>(null)
   const [logoError, setLogoError] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [mobileOpenItem, setMobileOpenItem] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
   const { totalItems, toggleCart } = useCart()
   const { showToast } = useToast()
 
-  const activeItem = useMemo(() => navLinks.find((item) => item.label === activeLink), [activeLink])
+  const brands = useMemo(() => {
+    const list = Array.from(
+      getAllProducts().reduce((map, product) => {
+        const slug = normalizeSlug(product.brand)
+        if (!map.has(slug)) {
+          map.set(slug, product.brand)
+        }
+        return map
+      }, new Map<string, string>()),
+    ).map(([slug, label]) => ({ slug, label }))
+    return list
+  }, [])
 
-  const baseTextColor = 'text-stone-700'
-  const iconTone = 'text-stone-700 hover:text-brand-deep'
-  const iconButtonBase =
-    'flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-stone-100 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white'
-  const mobileMenuId = 'mobile-menu'
+  const brandColumns = useMemo(() => splitIntoColumns(brands, 2), [brands])
+
+  const navItems = useMemo<NavItem[]>(
+    () => [
+      {
+        label: 'Novidades',
+        href: '/produtos',
+        isPrimary: true,
+        sections: [
+          {
+            title: 'Lançamentos',
+            items: [
+              { label: 'Novos tecidos', href: '/produtos' },
+              { label: 'Novas cores', href: '/produtos' },
+              { label: 'Chegou hoje', href: '/produtos' },
+            ],
+          },
+          {
+            title: 'Curadoria',
+            items: [
+              { label: 'Mais desejados', href: '/produtos' },
+              { label: 'Bestsellers', href: '/produtos' },
+              { label: 'Trend report', href: '/produtos' },
+            ],
+          },
+        ],
+        feature: {
+          title: 'Novidades Mar&Mov',
+          description: 'Peças recém-chegadas da loja física direto para você.',
+          href: '/produtos',
+          image: '/images/academia-1.jpg',
+        },
+      },
+      {
+        label: 'Feminino',
+        href: '/categoria/biquinis',
+        isPrimary: true,
+        sections: [
+          {
+            title: 'Moda Praia',
+            items: [
+              { label: 'Biquínis', href: '/categoria/biquinis' },
+              { label: 'Maiôs', href: '/categoria/maios' },
+              { label: 'Saídas de praia', href: '/categoria/roupas' },
+            ],
+          },
+          {
+            title: 'Fitness',
+            items: [
+              { label: 'Tops e conjuntos', href: '/categoria/roupas' },
+              { label: 'Leggings', href: '/categoria/roupas' },
+              { label: 'Camisetas', href: '/categoria/roupas' },
+            ],
+          },
+          {
+            title: 'Acessórios',
+            items: [
+              { label: 'Bolsas', href: '/categoria/acessorios' },
+              { label: 'Óculos', href: '/categoria/acessorios' },
+              { label: 'Chapéus', href: '/categoria/acessorios' },
+            ],
+          },
+        ],
+        feature: {
+          title: 'Coleção Sol & Movimento',
+          description: 'Biquínis e maiôs com modelagem moderna para praia e piscina.',
+          href: '/categoria/biquinis',
+          image: '/images/biquini-2.jpg',
+        },
+      },
+      {
+        label: 'Masculino',
+        href: '/produtos',
+        isPrimary: true,
+        sections: [
+          {
+            title: 'Beachwear',
+            items: [
+              { label: 'Shorts', href: '/produtos' },
+              { label: 'Camisetas UV', href: '/produtos' },
+              { label: 'Regatas', href: '/produtos' },
+            ],
+          },
+          {
+            title: 'Treino',
+            items: [
+              { label: 'Shorts esportivos', href: '/produtos' },
+              { label: 'Camisetas dry-fit', href: '/produtos' },
+              { label: 'Acessórios', href: '/categoria/acessorios' },
+            ],
+          },
+        ],
+        feature: {
+          title: 'Performance no ritmo certo',
+          description: 'Shorts e peças leves para treinos e dias de praia.',
+          href: '/produtos',
+          image: '/images/short-masc-4.jpg',
+        },
+      },
+      {
+        label: 'Acessórios',
+        href: '/categoria/acessorios',
+        isPrimary: true,
+        sections: [
+          {
+            title: 'Essenciais',
+            items: [
+              { label: 'Bolsas', href: '/categoria/acessorios' },
+              { label: 'Óculos', href: '/categoria/acessorios' },
+              { label: 'Chapéus', href: '/categoria/acessorios' },
+            ],
+          },
+          {
+            title: 'Para o dia a dia',
+            items: [
+              { label: 'Meias', href: '/categoria/acessorios' },
+              { label: 'Necessaires', href: '/categoria/acessorios' },
+              { label: 'Itens de viagem', href: '/categoria/acessorios' },
+            ],
+          },
+        ],
+      },
+      {
+        label: 'Kids',
+        href: '/produtos',
+        isPrimary: true,
+        sections: [],
+      },
+      {
+        label: 'Calçados',
+        href: '/produtos',
+        isPrimary: true,
+        sections: [],
+      },
+      {
+        label: 'Sale',
+        href: '/produtos',
+        accent: true,
+        isPrimary: true,
+        sections: [
+          {
+            title: 'Promoções',
+            items: [
+              { label: 'Últimas peças', href: '/produtos' },
+              { label: 'Compre 2 leve 3', href: '/produtos' },
+              { label: 'Outlet fitness', href: '/produtos' },
+            ],
+          },
+          {
+            title: 'Imperdíveis',
+            items: [
+              { label: 'Até 40% off', href: '/produtos' },
+              { label: 'Descontos progressivos', href: '/produtos' },
+              { label: 'Brindes especiais', href: '/produtos' },
+            ],
+          },
+        ],
+        feature: {
+          title: 'Semana Sale Mar&Mov',
+          description: 'Garanta suas peças favoritas com condições especiais.',
+          href: '/produtos',
+          image: '/images/bolsa-2.jpg',
+        },
+      },
+      {
+        label: 'Marcas',
+        href: '/produtos',
+        sections: brandColumns.map((column, index) => ({
+          title: index === 0 ? 'Marcas em destaque' : 'Outras marcas',
+          items: column.map((brand) => ({
+            label: brand.label,
+            href: `/marca/${brand.slug}`,
+          })),
+        })),
+        feature: {
+          title: 'Curadoria de marcas',
+          description: 'Seleção de marcas que unem performance, conforto e estilo.',
+          href: '/produtos',
+          image: '/images/home-hero.png',
+        },
+      },
+    ],
+    [brandColumns],
+  )
+
+  const primaryNavItems = useMemo(() => navItems.filter((item) => item.isPrimary), [navItems])
+  const activeItem = useMemo(() => navItems.find((item) => item.label === activeLink), [activeLink, navItems])
+  const showMegaMenu = activeItem ? activeItem.sections.length > 0 : false
+
+  const topIconClass =
+    'relative flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white/90 transition hover:bg-white hover:text-stone-900'
 
   const handleSoon = (label: string) => {
     showToast(`${label} em breve.`)
@@ -124,260 +281,322 @@ const TopBar: React.FC = () => {
     return () => window.removeEventListener('keydown', handleEscape)
   }, [])
 
+  const navItemBase =
+    'rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition-colors duration-200'
+  const navItemHome = 'text-white/90 hover:bg-white hover:text-stone-900'
+  const navItemDefault = 'text-stone-700 hover:bg-stone-100 hover:text-stone-900'
+  const navItemActive = isHome ? 'bg-white text-stone-900' : 'bg-stone-100 text-stone-900'
+
   return (
-    <header
-      className="group fixed inset-x-0 top-0 z-50 border-b border-stone-200 bg-white text-stone-700 shadow-md"
-      onMouseLeave={() => {
-        setActiveLink(null)
-      }}
-    >
-      <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-2 py-1.5 md:gap-6 md:px-6">
-        <Link to="/" className="flex items-center gap-2 shrink-0">
-          <img
-            src="/images/logo.svg"
-            alt="Logo do site"
-            className={`h-11 w-auto transition-opacity duration-300 ${logoError ? 'opacity-0' : 'opacity-100'}`}
-            onError={() => setLogoError(true)}
-            loading="eager"
-            decoding="async"
-          />
-          {logoError && (
-            <span className={`font-display text-4xl font-black tracking-tight ${baseTextColor}`}>
-              Mar&Mov
-            </span>
-          )}
-        </Link>
-
-        <nav className="hidden flex-1 items-center justify-center gap-4 md:flex">
-          {navLinks.map((item) => (
-            <NavLink
-              key={item.label}
-              to={item.href}
-              end={item.href === '/'}
-              onMouseEnter={() => setActiveLink(item.label)}
-              onFocus={() => setActiveLink(item.label)}
-              onClick={() => setActiveLink(null)}
-              className={({ isActive }) =>
-                `relative pb-2 text-[12px] leading-[1.2] font-semibold tracking-[0.01em] transition-colors duration-200 ${
-                  item.accent
-                    ? 'text-brand-ocean hover:text-brand-deep'
-                    : `${baseTextColor} hover:text-brand-deep ${isActive ? 'text-brand-deep' : ''}`
-                }`
-              }
-            >
-              {item.label}
-              <span
-                className={`absolute left-0 right-0 -bottom-1 h-[2px] origin-left transform bg-current transition-transform duration-300 ${
-                  activeLink === item.label ? 'scale-x-100' : 'scale-x-0 hover:scale-x-100'
-                }`}
-                aria-hidden="true"
-              />
-            </NavLink>
-          ))}
-        </nav>
-
-        <form
-          onSubmit={handleSearchSubmit}
-          className="hidden items-center gap-2 rounded-full border border-stone-200 bg-stone-50 px-3 py-2 shadow-sm transition focus-within:border-brand-ocean focus-within:ring-2 focus-within:ring-brand-ocean/30 lg:flex"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            className="h-4 w-4 text-stone-500"
-            aria-hidden="true"
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div className="bg-[#6f7b59] text-white">
+        <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-2">
+          <form
+            onSubmit={handleSearchSubmit}
+            className="flex w-full max-w-[240px] items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-xs shadow-inner transition focus-within:bg-white/25 md:max-w-[280px]"
           >
-            <path
-              d="M11 19a8 8 0 1 1 5.292-14.01A8 8 0 0 1 11 19Zm7.5 1.5-4.2-4.2"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Digite sua busca"
+              aria-label="Digite sua busca"
+              className="w-full bg-transparent text-white placeholder:text-white/70 focus:outline-none"
             />
-          </svg>
-          <input
-            type="search"
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
-            placeholder="Buscar produtos"
-            aria-label="Buscar produtos"
-            className="w-40 bg-transparent text-sm text-stone-700 placeholder:text-stone-400 focus:outline-none"
-          />
-          <button type="submit" className="text-xs font-semibold text-brand-deep">
-            Buscar
-          </button>
-        </form>
+            <button
+              type="submit"
+              aria-label="Buscar"
+              className="text-white/80 transition hover:text-white"
+            >
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M11 19a8 8 0 1 1 5.292-14.01A8 8 0 0 1 11 19Zm7.5 1.5-4.2-4.2" />
+              </svg>
+            </button>
+          </form>
 
-        <div className="ml-auto flex items-center gap-2">
-          <button
-            type="button"
-            aria-label="Busca"
-            onClick={() => handleSoon('Busca')}
-            title="Em breve"
-            className={`lg:hidden ${iconButtonBase} ${iconTone}`}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.7"
-            >
-              <path d="M11 19a8 8 0 1 1 5.292-14.01A8 8 0 0 1 11 19Zm7.5 1.5-4.2-4.2" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            aria-label="Lista de desejos"
-            onClick={() => handleSoon('Favoritos')}
-            title="Em breve"
-            className={`${iconButtonBase} ${iconTone}`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.7"
-            >
-              <path d="M19 6.5c0-1.933-1.567-3.5-3.5-3.5-1.336 0-2.5.74-3.062 1.812C11.876 3.74 10.712 3 9.375 3 7.443 3 5.875 4.567 5.875 6.5c0 5.25 6.063 9.75 6.063 9.75S19 11.75 19 6.5Z" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            aria-label="Perfil"
-            onClick={() => handleSoon('Perfil')}
-            title="Em breve"
-            className={`${iconButtonBase} ${iconTone}`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.7"
-            >
-              <circle cx="12" cy="8.25" r="3.25" />
-              <path d="M5.75 19.5a6.25 6.25 0 1 1 12.5 0" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            aria-label="Carrinho"
-            onClick={toggleCart}
-            className={`relative ${iconButtonBase} ${iconTone}`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="h-7 w-7"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.7"
-            >
-              <path d="M6.75 9.25h10.5l-.9 9.3a1.45 1.45 0 0 1-1.42 1.3H9.07a1.45 1.45 0 0 1-1.42-1.3Z" />
-              <path d="M9.25 9.25V7.4a2.75 2.75 0 0 1 5.5 0v1.85" />
-              <path d="M9.5 11.5h5" />
-            </svg>
-            {totalItems > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-brand-deep px-1 text-[10px] font-bold text-white">
-                {totalItems}
+          <p className="hidden flex-1 text-center text-xs font-semibold uppercase tracking-[0.24em] text-white/80 lg:block">
+            Conheça nossas lojas físicas no Brasil
+          </p>
+
+          <div className="ml-auto flex items-center gap-2">
+            <button type="button" aria-label="Favoritos" onClick={() => handleSoon('Favoritos')} className={topIconClass}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+              >
+                <path d="M19 6.5c0-1.933-1.567-3.5-3.5-3.5-1.336 0-2.5.74-3.062 1.812C11.876 3.74 10.712 3 9.375 3 7.443 3 5.875 4.567 5.875 6.5c0 5.25 6.063 9.75 6.063 9.75S19 11.75 19 6.5Z" />
+              </svg>
+            </button>
+            <button type="button" aria-label="Perfil" onClick={() => handleSoon('Perfil')} className={topIconClass}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+              >
+                <circle cx="12" cy="8.25" r="3.25" />
+                <path d="M5.75 19.5a6.25 6.25 0 1 1 12.5 0" />
+              </svg>
+            </button>
+            <button type="button" aria-label="Carrinho" onClick={toggleCart} className={topIconClass}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+              >
+                <path d="M6.75 9.25h10.5l-.9 9.3a1.45 1.45 0 0 1-1.42 1.3H9.07a1.45 1.45 0 0 1-1.42-1.3Z" />
+                <path d="M9.25 9.25V7.4a2.75 2.75 0 0 1 5.5 0v1.85" />
+              </svg>
+              {totalItems > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-[#6f7b59]">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={`border-b ${
+          isHome ? 'border-white/10 bg-transparent text-white' : 'border-stone-200 bg-white/95 text-stone-800 shadow-sm'
+        }`}
+        onMouseLeave={() => setActiveLink(null)}
+      >
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3">
+          <Link to="/" className="flex items-center gap-2">
+            <img
+              src="/images/logo.svg"
+              alt="Logo Mar&Mov"
+              className={`h-10 w-auto transition-opacity duration-300 ${
+                logoError ? 'opacity-0' : isHome ? 'brightness-0 invert' : 'opacity-100'
+              }`}
+              onError={() => setLogoError(true)}
+              loading="eager"
+              decoding="async"
+            />
+            {logoError && (
+              <span className={`font-display text-2xl font-black tracking-tight ${isHome ? 'text-white' : 'text-stone-900'}`}>
+                Mar&Mov
               </span>
             )}
-          </button>
+          </Link>
+
+          <nav className="hidden flex-1 items-center justify-center gap-2 lg:flex">
+            {primaryNavItems.map((item) => {
+              const hasMenu = item.sections.length > 0
+              const accentClasses = item.accent
+                ? isHome
+                  ? 'text-rose-200 hover:bg-white hover:text-rose-600'
+                  : 'text-rose-600 hover:bg-stone-100 hover:text-rose-700'
+                : isHome
+                  ? navItemHome
+                  : navItemDefault
+
+              return (
+                <NavLink
+                  key={item.label}
+                  to={item.href}
+                  end={item.href === '/'}
+                  onMouseEnter={() => {
+                    if (hasMenu) setActiveLink(item.label)
+                  }}
+                  onFocus={() => {
+                    if (hasMenu) setActiveLink(item.label)
+                  }}
+                  onClick={() => setActiveLink(null)}
+                  className={({ isActive }) =>
+                    `${navItemBase} ${accentClasses} ${isActive ? navItemActive : ''}`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              )
+            })}
+          </nav>
+
+          <div className="hidden items-center gap-4 lg:flex">
+            <span className={`h-5 w-px ${isHome ? 'bg-white/30' : 'bg-stone-200'}`} aria-hidden="true" />
+            <Link
+              to="/produtos"
+              className={`text-[11px] font-semibold uppercase tracking-[0.22em] ${
+                isHome ? 'text-white/80 hover:text-white' : 'text-stone-600 hover:text-stone-800'
+              }`}
+            >
+              Marcas
+            </Link>
+            <Link
+              to="/produtos"
+              className={`text-[11px] font-semibold uppercase tracking-[0.22em] ${
+                isHome ? 'text-white/80 hover:text-white' : 'text-stone-600 hover:text-stone-800'
+              }`}
+            >
+              Mar&Mov Club
+            </Link>
+          </div>
 
           <button
             type="button"
-            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+            onClick={() => {
+              setIsMobileMenuOpen((prev) => !prev)
+              setMobileOpenItem(null)
+            }}
             aria-label="Menu"
-            aria-controls={mobileMenuId}
+            aria-controls="mobile-menu"
             aria-expanded={isMobileMenuOpen}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 text-sm font-semibold text-stone-700 transition hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white md:hidden"
+            className={`relative flex h-10 w-10 items-center justify-center rounded-full border ${
+              isHome ? 'border-white/40 text-white hover:bg-white/10' : 'border-stone-300 text-stone-700 hover:bg-stone-100'
+            } transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 lg:hidden`}
           >
-            {isMobileMenuOpen ? 'Fechar' : 'Menu'}
+            <span className="sr-only">Abrir menu</span>
+            <span
+              className={`absolute h-[2px] w-5 bg-current transition-all duration-300 ${
+                isMobileMenuOpen ? 'translate-y-0 rotate-45' : '-translate-y-2'
+              }`}
+            />
+            <span
+              className={`absolute h-[2px] w-5 bg-current transition-all duration-300 ${
+                isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
+              }`}
+            />
+            <span
+              className={`absolute h-[2px] w-5 bg-current transition-all duration-300 ${
+                isMobileMenuOpen ? 'translate-y-0 -rotate-45' : 'translate-y-2'
+              }`}
+            />
           </button>
         </div>
       </div>
 
-      {activeItem && activeItem.items && (
+      {showMegaMenu && activeItem && (
         <div className="border-t border-stone-200 bg-white/98 text-stone-700 shadow-[0_16px_32px_rgba(0,0,0,0.12)] backdrop-blur">
-          <div className="mx-auto flex max-w-6xl flex-wrap gap-10 px-6 py-6">
-            <div className="min-w-[12rem] space-y-2">
-              <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">{activeItem.label}</p>
-              <div className="space-y-2">
-                {activeItem.items.map((subItem) => (
-                  <Link
-                    key={subItem.label}
-                    to={subItem.href}
-                    className="block text-base font-semibold text-stone-700 transition hover:text-brand-deep"
-                    onClick={() => setActiveLink(null)}
-                  >
-                    {subItem.label}
-                  </Link>
-                ))}
-              </div>
+          <div className="mx-auto grid max-w-6xl gap-8 px-6 py-8 lg:grid-cols-[2fr_1fr]">
+            <div
+              className={`grid gap-6 ${
+                activeItem.sections.length > 2 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2'
+              }`}
+            >
+              {activeItem.sections.map((section) => (
+                <div key={section.title} className="space-y-3">
+                  <p className="text-xs font-semibold tracking-[0.12em] text-stone-500">{section.title}</p>
+                  <div className="space-y-2">
+                    {section.items.map((subItem) => (
+                      <Link
+                        key={subItem.label}
+                        to={subItem.href}
+                        className="block text-sm font-semibold text-stone-700 transition hover:text-brand-deep"
+                        onClick={() => setActiveLink(null)}
+                      >
+                        {subItem.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
 
-            <div className="flex flex-1 flex-col justify-between gap-4 sm:flex-row sm:items-center">
-              <p className="text-sm text-stone-600">
-                Destaques em <span className="font-semibold text-stone-800">{activeItem.label}</span>
-              </p>
+            {activeItem.feature && (
               <Link
-                to={activeItem.href}
-                className="btn-secondary gap-2"
+                to={activeItem.feature.href}
+                className="group relative overflow-hidden rounded-3xl border border-stone-200 bg-stone-900"
                 onClick={() => setActiveLink(null)}
               >
-                Ver todos em {activeItem.label}
-                <span aria-hidden="true">&rarr;</span>
+                <img
+                  src={activeItem.feature.image}
+                  alt={activeItem.feature.title}
+                  className="h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 space-y-2 px-5 py-5 text-white">
+                  <p className="text-sm font-semibold">{activeItem.feature.title}</p>
+                  <p className="text-xs text-white/80">{activeItem.feature.description}</p>
+                  <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+                    Ver tudo
+                    <span aria-hidden="true">&rarr;</span>
+                  </span>
+                </div>
               </Link>
-            </div>
+            )}
           </div>
         </div>
       )}
 
       {isMobileMenuOpen && (
-        <div className="md:hidden" id={mobileMenuId}>
+        <div className="lg:hidden" id="mobile-menu">
           <div className="border-t border-stone-200 bg-white shadow-xl">
-            <div className="space-y-3 px-6 py-4">
-              {navLinks.map((item) => (
-                <div key={item.label} className="space-y-2">
-                  <Link
-                    to={item.href}
-                    className={`block rounded-lg px-3 py-3 text-sm font-semibold transition ${
-                      item.accent
-                        ? 'text-brand-ocean hover:bg-brand-ocean/10'
-                        : 'text-stone-700 hover:bg-stone-100'
-                    }`}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                  {item.items && (
-                    <div className="flex flex-wrap gap-2 pl-3">
-                      {item.items.map((subItem) => (
-                        <Link
-                          key={subItem.label}
-                          to={subItem.href}
-                          className="badge badge-neutral transition hover:text-brand-deep"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          {subItem.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+            <div className="space-y-4 px-6 py-5">
+              {navItems.map((item) => {
+                if (item.sections.length === 0) {
+                  return (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      className="flex items-center justify-between rounded-2xl border border-stone-200 bg-white px-4 py-4 text-sm font-semibold text-stone-800"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span className={item.accent ? 'text-rose-600' : ''}>{item.label}</span>
+                      <span aria-hidden="true">&rarr;</span>
+                    </Link>
+                  )
+                }
 
-              <div className="mt-2 rounded-xl bg-stone-50 px-3 py-3">
+                const isOpen = mobileOpenItem === item.label
+                return (
+                  <div key={item.label} className="rounded-2xl border border-stone-200 bg-white">
+                    <button
+                      type="button"
+                      onClick={() => setMobileOpenItem(isOpen ? null : item.label)}
+                      className="flex w-full items-center justify-between px-4 py-4 text-left text-sm font-semibold text-stone-800"
+                      aria-expanded={isOpen}
+                    >
+                      <span className={item.accent ? 'text-rose-600' : ''}>{item.label}</span>
+                      <span className="text-lg">{isOpen ? '-' : '+'}</span>
+                    </button>
+                    {isOpen && (
+                      <div className="space-y-4 px-4 pb-4">
+                        {item.sections.map((section) => (
+                          <div key={section.title} className="space-y-2">
+                            <p className="text-xs font-semibold tracking-[0.12em] text-stone-500">
+                              {section.title}
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              {section.items.map((subItem) => (
+                                <Link
+                                  key={subItem.label}
+                                  to={subItem.href}
+                                  className="badge badge-neutral transition hover:text-brand-deep"
+                                  onClick={() => {
+                                    setIsMobileMenuOpen(false)
+                                    setMobileOpenItem(null)
+                                  }}
+                                >
+                                  {subItem.label}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+
+              <div className="rounded-xl bg-stone-50 px-3 py-3">
                 <p className="text-xs font-semibold tracking-[0.08em] text-stone-600">Atalhos rápidos</p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={() => handleSoon('Busca')}
-                    className="btn-secondary px-3 text-xs"
-                  >
+                  <button type="button" onClick={() => handleSoon('Busca')} className="btn-secondary px-3 text-xs">
                     Buscar
                   </button>
                   <button
@@ -387,18 +606,10 @@ const TopBar: React.FC = () => {
                   >
                     Favoritos
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => handleSoon('Perfil')}
-                    className="btn-secondary px-3 text-xs"
-                  >
+                  <button type="button" onClick={() => handleSoon('Perfil')} className="btn-secondary px-3 text-xs">
                     Perfil
                   </button>
-                  <button
-                    type="button"
-                    onClick={toggleCart}
-                    className="btn-secondary px-3 text-xs"
-                  >
+                  <button type="button" onClick={toggleCart} className="btn-secondary px-3 text-xs">
                     Carrinho
                   </button>
                 </div>

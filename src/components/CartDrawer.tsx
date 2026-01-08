@@ -42,17 +42,17 @@ const CartDrawer: React.FC = () => {
     })
 
     const messageLines = [
-      `Olá! Meu nome é ${name} 😊`,
-      'Quero finalizar um pedido na Mar&Mov 💙',
+      `Olá! Meu nome é ${name}.`,
+      'Quero finalizar um pedido na Mar&Mov.',
       '',
-      '🛍️ Itens:',
+      'Itens:',
       ...lines,
       '',
-      `💰 Total estimado: ${formatCurrency(subtotal)}`,
-      `💳 Pagamento: ${payment}`,
+      `Total estimado: ${formatCurrency(subtotal)}`,
+      `Pagamento: ${payment}`,
       '',
-      'Observação: Cupom MAR10 (primeira compra) — confirmar aplicação.',
-      'Aguardo retorno para finalizar 😊',
+      'Observação: Cupom MAR10 (primeira compra) - confirmar aplicação.',
+      'Aguardo retorno para finalizar.',
     ]
 
     return messageLines.join('\n')
@@ -146,22 +146,15 @@ const CartDrawer: React.FC = () => {
               <p className="mt-2 text-sm text-stone-600">
                 Que tal começar pelos lançamentos mais desejados da Mar&Mov?
               </p>
-              <Link
-                to="/produtos"
-                onClick={handleCloseDrawer}
-                className="btn-secondary mt-4"
-              >
+              <Link to="/produtos" onClick={handleCloseDrawer} className="btn-secondary mt-4">
                 Explorar produtos
               </Link>
             </div>
           ) : (
             items.map((item) => {
-              const variations = [
-                item.size ? `Tamanho ${item.size}` : null,
-                item.color ? `Cor ${item.color}` : null,
-              ]
+              const variations = [item.size ? `Tamanho ${item.size}` : null, item.color ? `Cor ${item.color}` : null]
                 .filter(Boolean)
-                .join(' • ')
+                .join(' / ')
 
               return (
                 <div key={item.id} className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
@@ -325,17 +318,10 @@ const CartDrawer: React.FC = () => {
                 Você será redirecionado para o WhatsApp com a mensagem pronta.
               </p>
               <div className="flex flex-col gap-3 pt-2 sm:flex-row">
-                <button
-                  type="button"
-                  onClick={handleCloseCheckout}
-                  className="btn-secondary flex-1"
-                >
+                <button type="button" onClick={handleCloseCheckout} className="btn-secondary flex-1">
                   Cancelar
                 </button>
-                <button
-                  type="submit"
-                  className="btn-primary flex-1"
-                >
+                <button type="submit" className="btn-primary flex-1">
                   Enviar no WhatsApp
                 </button>
               </div>

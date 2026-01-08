@@ -45,7 +45,7 @@ const TrustSection: React.FC = () => {
                 />
               </svg>
             </span>
-            <h3 className="mt-4 text-base font-semibold text-stone-800">Envio para todo Brasil</h3>
+            <h3 className="mt-4 text-base font-semibold text-stone-800">Envio para todo o Brasil</h3>
             <p className="mt-2 text-sm text-stone-600">Entregamos com cuidado e preparo especial.</p>
           </div>
 

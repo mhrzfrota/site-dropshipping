@@ -1,16 +1,27 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { categoryMeta } from '../data/products'
 
 const fallbackImage = '/images/home-hero.png'
 
-const HighlightsSection: React.FC = () => {
-  const categories = Object.entries(categoryMeta).map(([slug, meta]) => ({
-    slug,
-    label: meta.label,
-    image: meta.image,
-  }))
+const categories = [
+  {
+    slug: 'biquinis',
+    label: 'Biquínis',
+    image: '/images/cat-biquinis.jpg',
+  },
+  {
+    slug: 'roupas',
+    label: 'Roupas & Fitness',
+    image: '/images/cat-roupas.jpg',
+  },
+  {
+    slug: 'acessorios',
+    label: 'Acessórios',
+    image: '/images/cat-acessorios.jpg',
+  },
+]
 
+const HighlightsSection: React.FC = () => {
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
     const target = event.currentTarget
     if (target.dataset.fallbackApplied) return
@@ -21,7 +32,17 @@ const HighlightsSection: React.FC = () => {
   return (
     <section id="categorias" className="bg-brand-sand scroll-mt-28">
       <div className="mx-auto max-w-6xl px-4 py-16">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-8 text-center">
+          <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Categorias</p>
+          <h2 className="mt-3 font-display text-3xl font-extrabold text-stone-800">
+            Explore a curadoria Mar&Mov
+          </h2>
+          <p className="mt-2 text-sm text-stone-600">
+            Peças selecionadas para praia, treino e momentos casuais.
+          </p>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((cat) => (
             <Link
               key={cat.slug}

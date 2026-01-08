@@ -17,7 +17,8 @@ const StoreInfoSection: React.FC = () => {
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <div className="rounded-2xl bg-stone-50 p-4">
                 <p className="text-xs font-semibold tracking-[0.12em] text-stone-500">Endereço</p>
-                <p className="mt-2 text-sm font-semibold text-stone-700">BR 408, ao lado da Nattos</p>
+                <p className="mt-2 text-sm font-semibold text-stone-700">BR 408, nº 1250, Centro</p>
+                <p className="text-sm text-stone-600">Recife - PE, 50000-000</p>
               </div>
               <div className="rounded-2xl bg-stone-50 p-4">
                 <p className="text-xs font-semibold tracking-[0.12em] text-stone-500">Horários</p>

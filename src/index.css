@@ -6,6 +6,10 @@
   color-scheme: light;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   @apply min-h-screen bg-brand-sand text-ink font-body antialiased;
 }

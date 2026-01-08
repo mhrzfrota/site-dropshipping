@@ -25,12 +25,13 @@ export type Product = {
   images?: string[]
   available: boolean
   variants: ProductVariant
+  isNew?: boolean
 }
 
 export const categoryMeta: Record<ProductCategory, { label: string; image: string }> = {
   biquinis: {
     label: 'Biquínis',
-    image: '/images/biquinis.jpg',
+    image: '/images/cat-biquinis.jpg',
   },
   maios: {
     label: 'Maiôs',
@@ -38,11 +39,11 @@ export const categoryMeta: Record<ProductCategory, { label: string; image: strin
   },
   roupas: {
     label: 'Roupas',
-    image: '/images/academia-3.jpg',
+    image: '/images/cat-roupas.jpg',
   },
   acessorios: {
     label: 'Acessórios',
-    image: '/images/meias-acessorios.jpg',
+    image: '/images/cat-acessorios.jpg',
   },
 }
 
@@ -55,8 +56,9 @@ const products: Product[] = [
     category: 'biquinis',
     price: 289.9,
     image: '/images/biquini-2.jpg',
-    images: ['/images/biquini-2.jpg', '/images/home-hero.png', '/images/biquinis.jpg'],
+    images: ['/images/biquini-2.jpg', '/images/biquinis.jpg', '/images/maio-1.jpg'],
     available: true,
+    isNew: true,
     variants: {
       sizes: ['P', 'M', 'G'],
       colors: ['Areia', 'Azul', 'Preto'],
@@ -70,8 +72,9 @@ const products: Product[] = [
     category: 'biquinis',
     price: 319.9,
     image: '/images/biquinis.jpg',
-    images: ['/images/biquinis.jpg', '/images/academia-1.jpg', '/images/biquini-2.jpg'],
+    images: ['/images/biquinis.jpg', '/images/academia-1.jpg', '/images/academia=2.jpg'],
     available: true,
+    isNew: true,
     variants: {
       sizes: ['P', 'M', 'G'],
       colors: ['Coral', 'Verde', 'Off-white'],
@@ -85,8 +88,9 @@ const products: Product[] = [
     category: 'maios',
     price: 399.9,
     image: '/images/maio-1.jpg',
-    images: ['/images/maio-1.jpg', '/images/home-hero.png', '/images/academia-4.jpg'],
+    images: ['/images/maio-1.jpg', '/images/academia-4.jpg', '/images/biquini-2.jpg'],
     available: true,
+    isNew: true,
     variants: {
       sizes: ['P', 'M', 'G'],
       colors: ['Preto', 'Grafite'],
@@ -100,8 +104,9 @@ const products: Product[] = [
     category: 'maios',
     price: 419.9,
     image: '/images/academia-4.jpg',
-    images: ['/images/academia-4.jpg', '/images/academia-3.jpg', '/images/maio-1.jpg'],
+    images: ['/images/academia-4.jpg', '/images/academia-3.jpg', '/images/academia=2.jpg'],
     available: true,
+    isNew: true,
     variants: {
       sizes: ['P', 'M', 'G'],
       colors: ['Azul', 'Vinho'],
@@ -130,7 +135,7 @@ const products: Product[] = [
     category: 'roupas',
     price: 249.9,
     image: '/images/short-masc.jpg',
-    images: ['/images/short-masc.jpg', '/images/home-hero.png', '/images/short-masc-3.jpg'],
+    images: ['/images/short-masc.jpg', '/images/short-masc-3.jpg', '/images/short-msc-5(top).jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G', 'GG'],
@@ -145,7 +150,7 @@ const products: Product[] = [
     category: 'roupas',
     price: 359.9,
     image: '/images/short-masc-2.jpg',
-    images: ['/images/short-masc-2.jpg', '/images/academia-3.jpg', '/images/blusa-1.jpg'],
+    images: ['/images/short-masc-2.jpg', '/images/academia=2.jpg', '/images/blusa-1.jpg'],
     available: true,
     variants: {
       sizes: ['P', 'M', 'G', 'GG'],
@@ -175,7 +180,7 @@ const products: Product[] = [
     category: 'acessorios',
     price: 149.9,
     image: '/images/bolsa-2.jpg',
-    images: ['/images/bolsa-2.jpg', '/images/meias-acessorios.jpg', '/images/meias.jpg'],
+    images: ['/images/bolsa-2.jpg', '/images/meias.jpg', '/images/meias-3.jpg'],
     available: true,
     variants: {
       sizes: [],
@@ -210,7 +215,7 @@ export const normalizeSlug = (value: string) =>
   value
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/&/g, ' ')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')

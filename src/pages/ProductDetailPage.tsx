@@ -49,10 +49,7 @@ const ProductDetailPage: React.FC = () => {
           <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Produto</p>
           <h1 className="mt-3 font-display text-3xl font-black text-stone-800">Produto não encontrado</h1>
           <p className="mt-2 text-sm text-stone-600">Confira outras opções na vitrine completa.</p>
-          <Link
-            to="/produtos"
-            className="btn-primary mt-6 inline-flex items-center gap-2"
-          >
+          <Link to="/produtos" className="btn-primary mt-6 inline-flex items-center gap-2">
             Ver todos os produtos
           </Link>
         </div>
@@ -142,7 +139,7 @@ const ProductDetailPage: React.FC = () => {
             <div className="group overflow-hidden rounded-3xl bg-white shadow-lg">
               <img
                 src={selectedImage}
-                alt={product.name}
+                alt={`Imagem de ${product.name}`}
                 className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 onError={handleImageError}
                 loading="eager"
@@ -167,7 +164,7 @@ const ProductDetailPage: React.FC = () => {
                   >
                     <img
                       src={image}
-                      alt="Miniatura do produto"
+                      alt={`Miniatura de ${product.name}`}
                       className="h-full w-full object-cover"
                       onError={handleImageError}
                       loading="lazy"
@@ -341,10 +338,7 @@ const ProductDetailPage: React.FC = () => {
               >
                 Adicionar ao carrinho
               </button>
-              <Link
-                to="/produtos"
-                className="btn-secondary"
-              >
+              <Link to="/produtos" className="btn-secondary">
                 Continuar navegando
               </Link>
             </div>
@@ -364,7 +358,7 @@ const ProductDetailPage: React.FC = () => {
                   </svg>
                 </span>
                 <div>
-                  <p className="font-semibold text-stone-700">Envio para todo Brasil</p>
+                  <p className="font-semibold text-stone-700">Envio para todo o Brasil</p>
                   <p>Receba em casa ou retire na loja.</p>
                 </div>
               </div>

@@ -12,10 +12,7 @@ const NotFoundPage: React.FC = () => {
         <p className="mt-2 text-sm text-stone-600">
           O conteúdo que você procura não está disponível. Explore nossa vitrine completa.
         </p>
-        <Link
-          to="/"
-          className="btn-primary mt-6 inline-flex items-center gap-2"
-        >
+        <Link to="/" className="btn-primary mt-6 inline-flex items-center gap-2">
           Voltar para a home
         </Link>
       </div>
