@@ -13,7 +13,7 @@ const HeroSection: React.FC = () => {
   }
 
   return (
-    <section className="relative isolate overflow-hidden bg-stone-900 -mt-20 md:-mt-24">
+    <section className="relative isolate overflow-hidden bg-stone-900 -mt-28 md:-mt-32">
       <div className="absolute inset-0">
         <img
           src={heroImage}
