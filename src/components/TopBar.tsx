@@ -315,7 +315,7 @@ const TopBar: React.FC = () => {
           </form>
 
           <p className="hidden flex-1 text-center text-xs font-semibold uppercase tracking-[0.24em] text-white/80 lg:block">
-            Conheça nossas lojas físicas no Brasil
+            Conheça nossa loja física
           </p>
 
           <div className="ml-auto flex items-center gap-2">
