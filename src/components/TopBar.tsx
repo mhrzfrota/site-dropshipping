@@ -251,9 +251,6 @@ const TopBar: React.FC = () => {
   const activeItem = useMemo(() => navItems.find((item) => item.label === activeLink), [activeLink, navItems])
   const showMegaMenu = activeItem ? activeItem.sections.length > 0 : false
 
-  const topIconClass =
-    'relative flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white/90 transition hover:bg-white hover:text-stone-900'
-
   const handleSoon = (label: string) => {
     showToast(`${label} em breve.`)
   }
@@ -282,18 +279,22 @@ const TopBar: React.FC = () => {
   }, [])
 
   const navItemBase =
-    'rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition-colors duration-200'
-  const navItemHome = 'text-white/90 hover:bg-white hover:text-stone-900'
+    'rounded-full px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors duration-200'
+  const navItemHome = 'text-white/90 hover:bg-white/15 hover:text-white'
   const navItemDefault = 'text-stone-700 hover:bg-stone-100 hover:text-stone-900'
-  const navItemActive = isHome ? 'bg-white text-stone-900' : 'bg-stone-100 text-stone-900'
+  const navItemActive = isHome ? 'bg-white/15 text-white' : 'bg-stone-100 text-stone-900'
+  const iconButtonClass = `relative flex h-8 w-8 items-center justify-center rounded-full transition active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 ${
+    isHome ? 'text-white/90 hover:bg-white/15 hover:text-white' : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900'
+  }`
+  const cartBadgeClass = isHome ? 'bg-white text-stone-900' : 'bg-brand-deep text-white'
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className="bg-[#6f7b59] text-white">
-        <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-2">
+      <div className="bg-[#0a2345] text-white">
+        <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-1.5">
           <form
             onSubmit={handleSearchSubmit}
-            className="flex w-full max-w-[240px] items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-xs shadow-inner transition focus-within:bg-white/25 md:max-w-[280px]"
+            className="flex w-full max-w-[210px] items-center gap-2 rounded-full bg-white/12 px-3 py-1 text-[11px] shadow-inner transition focus-within:bg-white/20"
           >
             <input
               type="search"
@@ -301,7 +302,7 @@ const TopBar: React.FC = () => {
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Digite sua busca"
               aria-label="Digite sua busca"
-              className="w-full bg-transparent text-white placeholder:text-white/70 focus:outline-none"
+              className="w-full bg-transparent text-white placeholder:text-white/60 focus:outline-none"
             />
             <button
               type="submit"
@@ -314,55 +315,9 @@ const TopBar: React.FC = () => {
             </button>
           </form>
 
-          <p className="hidden flex-1 text-center text-xs font-semibold uppercase tracking-[0.24em] text-white/80 lg:block">
-            Conheça nossa loja física
+          <p className="hidden flex-1 text-center text-[10px] font-semibold uppercase tracking-[0.24em] text-white/70 lg:block">
+            Performance para qualquer movimento
           </p>
-
-          <div className="ml-auto flex items-center gap-2">
-            <button type="button" aria-label="Favoritos" onClick={() => handleSoon('Favoritos')} className={topIconClass}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                className="h-4 w-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-              >
-                <path d="M19 6.5c0-1.933-1.567-3.5-3.5-3.5-1.336 0-2.5.74-3.062 1.812C11.876 3.74 10.712 3 9.375 3 7.443 3 5.875 4.567 5.875 6.5c0 5.25 6.063 9.75 6.063 9.75S19 11.75 19 6.5Z" />
-              </svg>
-            </button>
-            <button type="button" aria-label="Perfil" onClick={() => handleSoon('Perfil')} className={topIconClass}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                className="h-4 w-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-              >
-                <circle cx="12" cy="8.25" r="3.25" />
-                <path d="M5.75 19.5a6.25 6.25 0 1 1 12.5 0" />
-              </svg>
-            </button>
-            <button type="button" aria-label="Carrinho" onClick={toggleCart} className={topIconClass}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-              >
-                <path d="M6.75 9.25h10.5l-.9 9.3a1.45 1.45 0 0 1-1.42 1.3H9.07a1.45 1.45 0 0 1-1.42-1.3Z" />
-                <path d="M9.25 9.25V7.4a2.75 2.75 0 0 1 5.5 0v1.85" />
-              </svg>
-              {totalItems > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-[#6f7b59]">
-                  {totalItems}
-                </span>
-              )}
-            </button>
-          </div>
         </div>
       </div>
 
@@ -372,12 +327,12 @@ const TopBar: React.FC = () => {
         }`}
         onMouseLeave={() => setActiveLink(null)}
       >
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-2">
           <Link to="/" className="flex items-center gap-2">
             <img
               src="/images/logo.svg"
               alt="Logo Mar&Mov"
-              className={`h-10 w-auto transition-opacity duration-300 ${
+              className={`h-9 w-auto transition-opacity duration-300 ${
                 logoError ? 'opacity-0' : isHome ? 'brightness-0 invert' : 'opacity-100'
               }`}
               onError={() => setLogoError(true)}
@@ -385,7 +340,9 @@ const TopBar: React.FC = () => {
               decoding="async"
             />
             {logoError && (
-              <span className={`font-display text-2xl font-black tracking-tight ${isHome ? 'text-white' : 'text-stone-900'}`}>
+              <span
+                className={`font-display text-2xl font-black tracking-tight ${isHome ? 'text-white' : 'text-stone-900'}`}
+              >
                 Mar&Mov
               </span>
             )}
@@ -396,7 +353,7 @@ const TopBar: React.FC = () => {
               const hasMenu = item.sections.length > 0
               const accentClasses = item.accent
                 ? isHome
-                  ? 'text-rose-200 hover:bg-white hover:text-rose-600'
+                  ? navItemHome
                   : 'text-rose-600 hover:bg-stone-100 hover:text-rose-700'
                 : isHome
                   ? navItemHome
@@ -424,56 +381,103 @@ const TopBar: React.FC = () => {
             })}
           </nav>
 
-          <div className="hidden items-center gap-4 lg:flex">
-            <span className={`h-5 w-px ${isHome ? 'bg-white/30' : 'bg-stone-200'}`} aria-hidden="true" />
-            <Link
-              to="/produtos"
-              className={`text-[11px] font-semibold uppercase tracking-[0.22em] ${
-                isHome ? 'text-white/80 hover:text-white' : 'text-stone-600 hover:text-stone-800'
-              }`}
-            >
-              Marcas
-            </Link>
-            <Link
-              to="/produtos"
-              className={`text-[11px] font-semibold uppercase tracking-[0.22em] ${
-                isHome ? 'text-white/80 hover:text-white' : 'text-stone-600 hover:text-stone-800'
-              }`}
-            >
-              Mar&Mov Club
-            </Link>
-          </div>
+          <div className="flex items-center gap-3">
+            <div className="hidden items-center gap-4 lg:flex">
+              <span className={`h-5 w-px ${isHome ? 'bg-white/30' : 'bg-stone-200'}`} aria-hidden="true" />
+              <Link
+                to="/produtos"
+                className={`text-[11px] font-semibold uppercase tracking-[0.22em] ${
+                  isHome ? 'text-white/80 hover:text-white' : 'text-stone-600 hover:text-stone-800'
+                }`}
+              >
+                Marcas
+              </Link>
+            </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              setIsMobileMenuOpen((prev) => !prev)
-              setMobileOpenItem(null)
-            }}
-            aria-label="Menu"
-            aria-controls="mobile-menu"
-            aria-expanded={isMobileMenuOpen}
-            className={`relative flex h-10 w-10 items-center justify-center rounded-full border ${
-              isHome ? 'border-white/40 text-white hover:bg-white/10' : 'border-stone-300 text-stone-700 hover:bg-stone-100'
-            } transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 lg:hidden`}
-          >
-            <span className="sr-only">Abrir menu</span>
-            <span
-              className={`absolute h-[2px] w-5 bg-current transition-all duration-300 ${
-                isMobileMenuOpen ? 'translate-y-0 rotate-45' : '-translate-y-2'
-              }`}
-            />
-            <span
-              className={`absolute h-[2px] w-5 bg-current transition-all duration-300 ${
-                isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
-              }`}
-            />
-            <span
-              className={`absolute h-[2px] w-5 bg-current transition-all duration-300 ${
-                isMobileMenuOpen ? 'translate-y-0 -rotate-45' : 'translate-y-2'
-              }`}
-            />
-          </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                aria-label="Favoritos"
+                onClick={() => handleSoon('Favoritos')}
+                className={iconButtonClass}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                >
+                  <path d="M19 6.5c0-1.933-1.567-3.5-3.5-3.5-1.336 0-2.5.74-3.062 1.812C11.876 3.74 10.712 3 9.375 3 7.443 3 5.875 4.567 5.875 6.5c0 5.25 6.063 9.75 6.063 9.75S19 11.75 19 6.5Z" />
+                </svg>
+              </button>
+              <button type="button" aria-label="Perfil" onClick={() => handleSoon('Perfil')} className={iconButtonClass}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                >
+                  <circle cx="12" cy="8.25" r="3.25" />
+                  <path d="M5.75 19.5a6.25 6.25 0 1 1 12.5 0" />
+                </svg>
+              </button>
+              <button type="button" aria-label="Carrinho" onClick={toggleCart} className={iconButtonClass}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                >
+                  <path d="M6.75 9.25h10.5l-.9 9.3a1.45 1.45 0 0 1-1.42 1.3H9.07a1.45 1.45 0 0 1-1.42-1.3Z" />
+                  <path d="M9.25 9.25V7.4a2.75 2.75 0 0 1 5.5 0v1.85" />
+                </svg>
+                {totalItems > 0 && (
+                  <span
+                    className={`absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full px-1 text-[10px] font-bold ${cartBadgeClass}`}
+                  >
+                    {totalItems}
+                  </span>
+                )}
+              </button>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                setIsMobileMenuOpen((prev) => !prev)
+                setMobileOpenItem(null)
+              }}
+              aria-label="Menu"
+              aria-controls="mobile-menu"
+              aria-expanded={isMobileMenuOpen}
+              className={`relative flex h-9 w-9 items-center justify-center rounded-full border ${
+                isHome ? 'border-white/40 text-white hover:bg-white/10' : 'border-stone-300 text-stone-700 hover:bg-stone-100'
+              } transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-aqua/40 lg:hidden`}
+            >
+              <span className="sr-only">Abrir menu</span>
+              <span
+                className={`absolute h-[2px] w-5 bg-current transition-all duration-300 ${
+                  isMobileMenuOpen ? 'translate-y-0 rotate-45' : '-translate-y-2'
+                }`}
+              />
+              <span
+                className={`absolute h-[2px] w-5 bg-current transition-all duration-300 ${
+                  isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
+                }`}
+              />
+              <span
+                className={`absolute h-[2px] w-5 bg-current transition-all duration-300 ${
+                  isMobileMenuOpen ? 'translate-y-0 -rotate-45' : 'translate-y-2'
+                }`}
+              />
+            </button>
+          </div>
         </div>
       </div>
 

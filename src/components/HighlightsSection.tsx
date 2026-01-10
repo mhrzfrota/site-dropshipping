@@ -3,21 +3,24 @@ import { Link } from 'react-router-dom'
 
 const fallbackImage = '/images/home-hero.png'
 
-const categories = [
+const highlights = [
   {
-    slug: 'biquinis',
-    label: 'Biquínis',
-    image: '/images/cat-biquinis.jpg',
+    title: 'Praia & Resort',
+    description: 'Beachwear leve e elegante para curtir o sol.',
+    image: '/images/biquini-2.jpg',
+    href: '/categoria/biquinis',
   },
   {
-    slug: 'roupas',
-    label: 'Roupas & Fitness',
-    image: '/images/cat-roupas.jpg',
+    title: 'Fitness & Treino',
+    description: 'Performance e conforto para qualquer movimento.',
+    image: '/images/academia-1.jpg',
+    href: '/categoria/roupas',
   },
   {
-    slug: 'acessorios',
-    label: 'Acessórios',
-    image: '/images/cat-acessorios.jpg',
+    title: 'Acessórios Essenciais',
+    description: 'Detalhes que completam o look do dia.',
+    image: '/images/bolsa-1.jpg',
+    href: '/categoria/acessorios',
   },
 ]
 
@@ -30,50 +33,42 @@ const HighlightsSection: React.FC = () => {
   }
 
   return (
-    <section id="categorias" className="bg-brand-sand scroll-mt-28">
-      <div className="mx-auto max-w-6xl px-4 py-16">
-        <div className="mb-8 text-center">
-          <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Categorias</p>
-          <h2 className="mt-3 font-display text-3xl font-extrabold text-stone-800">
-            Explore a curadoria Mar&Mov
+    <section id="categorias" className="bg-white py-16 scroll-mt-28">
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="mb-10 text-center">
+          <p className="text-xs font-semibold tracking-[0.12em] text-stone-500">Performance para</p>
+          <h2 className="mt-2 font-display text-3xl font-extrabold text-stone-900">
+            Qualquer movimento
           </h2>
           <p className="mt-2 text-sm text-stone-600">
-            Peças selecionadas para praia, treino e momentos casuais.
+            Curadoria Mar&Mov para praia, treino e momentos casuais.
           </p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((cat) => (
-            <Link
-              key={cat.slug}
-              to={`/categoria/${cat.slug}`}
-              className="group relative block overflow-hidden rounded-3xl border border-white/70 shadow-lg shadow-black/10 transition-transform duration-500 hover:-translate-y-1"
-              aria-label={`Ver categoria ${cat.label}`}
-            >
-              <div className="aspect-[4/5] overflow-hidden">
-                <img
-                  src={cat.image}
-                  alt={`Categoria ${cat.label}`}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                  onError={handleImageError}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent"
-                aria-hidden="true"
-              />
-              <div className="absolute inset-x-0 bottom-0 p-5">
-                <div className="inline-flex items-center gap-3 rounded-full bg-black/45 px-5 py-2 text-white backdrop-blur-sm">
-                  <span className="text-sm font-semibold tracking-[0.12em]">{cat.label}</span>
-                  <span
-                    className="h-[2px] w-8 bg-white/80 transition-all duration-300 group-hover:w-12"
-                    aria-hidden="true"
+        <div className="grid gap-6 lg:grid-cols-3">
+          {highlights.map((item) => (
+            <div key={item.title} className="flex flex-col items-center text-center">
+              <div className="w-full overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
+                <div className="aspect-[4/5]">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="h-full w-full object-cover"
+                    onError={handleImageError}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>
-            </Link>
+              <p className="mt-4 text-sm font-semibold text-stone-900">{item.title}</p>
+              <p className="mt-1 text-xs text-stone-600">{item.description}</p>
+              <Link
+                to={item.href}
+                className="mt-4 inline-flex min-h-[42px] items-center justify-center rounded-full border border-stone-300 px-6 text-xs font-semibold uppercase tracking-[0.2em] text-stone-700 transition hover:border-stone-500 hover:text-stone-900"
+              >
+                Confira
+              </Link>
+            </div>
           ))}
         </div>
       </div>
