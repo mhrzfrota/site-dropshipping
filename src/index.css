@@ -8,10 +8,11 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
-  @apply min-h-screen bg-brand-sand text-ink font-body antialiased;
+  @apply min-h-screen bg-brand-sand text-ink font-body antialiased overflow-x-hidden;
 }
 
 a {

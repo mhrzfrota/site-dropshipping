@@ -1,41 +1,29 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { getAllProducts, normalizeSlug } from '../data/products'
 
 const BrandsSection: React.FC = () => {
-  const brands = Array.from(
-    getAllProducts().reduce((map, product) => {
-      const slug = normalizeSlug(product.brand)
-      if (!map.has(slug)) {
-        map.set(slug, product.brand)
-      }
-      return map
-    }, new Map<string, string>()),
-  ).map(([slug, label]) => ({ slug, label }))
+  const brandLogos = [
+    { src: '/images/lupo.png', alt: 'Lupo' },
+    { src: '/images/cocci.png', alt: 'Cocci' },
+    { src: '/images/onda.png', alt: 'Onda' },
+  ]
 
   return (
-    <section id="marcas" className="bg-brand-sand py-16 scroll-mt-28">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-8 text-center">
-          <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Marcas parceiras</p>
-          <h2 className="mt-3 font-display text-3xl font-extrabold text-stone-800">
-            Nossas marcas favoritas
-          </h2>
-          <p className="mt-2 text-sm text-stone-600">
-            Seleção de marcas que combinam performance, conforto e estilo.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-3">
-          {brands.map((brand) => (
-            <Link
-              key={brand.slug}
-              to={`/marca/${brand.slug}`}
-              className="rounded-full border border-brand-deep/20 bg-white px-5 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-stone-700 transition hover:border-brand-deep hover:text-brand-deep hover:shadow-md"
-            >
-              {brand.label}
-            </Link>
-          ))}
+    <section id="marcas" className="bg-white py-16 scroll-mt-28">
+      <div className="mx-auto flex max-w-6xl flex-col items-center px-4">
+        <p className="text-center text-sm font-medium text-stone-600">Marcas parceiras</p>
+        <div className="mt-10 w-full">
+          <div className="mx-auto grid max-w-5xl grid-cols-2 items-center justify-items-center gap-x-8 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+            {brandLogos.map((brand) => (
+              <img
+                key={brand.src}
+                src={brand.src}
+                alt={brand.alt}
+                className="h-9 w-auto object-contain transition-transform duration-300 hover:scale-105 sm:h-10 md:h-12"
+                loading="lazy"
+                decoding="async"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

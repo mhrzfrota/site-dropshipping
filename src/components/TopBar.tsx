@@ -287,14 +287,20 @@ const TopBar: React.FC = () => {
     isHome ? 'text-white/90 hover:bg-white/15 hover:text-white' : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900'
   }`
   const cartBadgeClass = isHome ? 'bg-white text-stone-900' : 'bg-brand-deep text-white'
+  const megaMenuWrapperClass = isHome
+    ? 'border-t border-white/10 bg-transparent text-white shadow-none'
+    : 'border-t border-stone-200 bg-white/98 text-stone-700 shadow-[0_16px_32px_rgba(0,0,0,0.12)] backdrop-blur'
+  const megaMenuTitleClass = isHome ? 'text-white/60' : 'text-stone-500'
+  const megaMenuLinkClass = isHome ? 'text-white/80 hover:text-white' : 'text-stone-700 hover:text-brand-deep'
+  const megaMenuFeatureClass = isHome ? 'border-white/20 bg-black/60' : 'border-stone-200 bg-stone-900'
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className="bg-[#0a2345] text-white">
-        <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-1.5">
+      <div className="bg-[#0a1f3d] text-white">
+        <div className="mx-auto flex w-full max-w-6xl items-center gap-2 px-4 py-1">
           <form
             onSubmit={handleSearchSubmit}
-            className="flex w-full max-w-[210px] items-center gap-2 rounded-full bg-white/12 px-3 py-1 text-[11px] shadow-inner transition focus-within:bg-white/20"
+            className="flex w-full max-w-[200px] items-center gap-2 rounded-full bg-white/12 px-3 py-0.5 text-[10px] shadow-inner transition focus-within:bg-white/20"
           >
             <input
               type="search"
@@ -315,9 +321,6 @@ const TopBar: React.FC = () => {
             </button>
           </form>
 
-          <p className="hidden flex-1 text-center text-[10px] font-semibold uppercase tracking-[0.24em] text-white/70 lg:block">
-            Performance para qualquer movimento
-          </p>
         </div>
       </div>
 
@@ -482,7 +485,7 @@ const TopBar: React.FC = () => {
       </div>
 
       {showMegaMenu && activeItem && (
-        <div className="border-t border-stone-200 bg-white/98 text-stone-700 shadow-[0_16px_32px_rgba(0,0,0,0.12)] backdrop-blur">
+        <div className={megaMenuWrapperClass}>
           <div className="mx-auto grid max-w-6xl gap-8 px-6 py-8 lg:grid-cols-[2fr_1fr]">
             <div
               className={`grid gap-6 ${
@@ -491,13 +494,13 @@ const TopBar: React.FC = () => {
             >
               {activeItem.sections.map((section) => (
                 <div key={section.title} className="space-y-3">
-                  <p className="text-xs font-semibold tracking-[0.12em] text-stone-500">{section.title}</p>
+                  <p className={`text-xs font-semibold tracking-[0.12em] ${megaMenuTitleClass}`}>{section.title}</p>
                   <div className="space-y-2">
                     {section.items.map((subItem) => (
                       <Link
                         key={subItem.label}
                         to={subItem.href}
-                        className="block text-sm font-semibold text-stone-700 transition hover:text-brand-deep"
+                        className={`block text-sm font-semibold transition ${megaMenuLinkClass}`}
                         onClick={() => setActiveLink(null)}
                       >
                         {subItem.label}
@@ -511,7 +514,7 @@ const TopBar: React.FC = () => {
             {activeItem.feature && (
               <Link
                 to={activeItem.feature.href}
-                className="group relative overflow-hidden rounded-3xl border border-stone-200 bg-stone-900"
+                className={`group relative overflow-hidden rounded-3xl border ${megaMenuFeatureClass}`}
                 onClick={() => setActiveLink(null)}
               >
                 <img
