@@ -64,7 +64,7 @@ const HighlightsSection: React.FC = () => {
               <p className="mt-1 text-xs text-stone-600">{item.description}</p>
               <Link
                 to={item.href}
-                className="mt-4 inline-flex min-h-[42px] items-center justify-center rounded-full border border-stone-300 px-6 text-xs font-semibold uppercase tracking-[0.2em] text-stone-700 transition hover:border-stone-500 hover:text-stone-900"
+                className="mt-4 inline-flex min-h-[42px] items-center justify-center rounded-md border border-stone-300 px-6 text-xs font-semibold uppercase tracking-[0.2em] text-stone-700 transition hover:border-stone-500 hover:text-stone-900"
               >
                 Confira
               </Link>
