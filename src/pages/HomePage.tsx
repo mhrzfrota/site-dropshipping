@@ -4,7 +4,6 @@ import BenefitsStripSection from '../components/BenefitsStripSection'
 import HeroSection from '../components/HeroSection'
 import HighlightsSection from '../components/HighlightsSection'
 import NewArrivalsSection from '../components/NewArrivalsSection'
-import StoreInfoSection from '../components/StoreInfoSection'
 
 const HomePage: React.FC = () => {
   return (
@@ -14,7 +13,6 @@ const HomePage: React.FC = () => {
       <BrandsSection />
       <BenefitsStripSection />
       <NewArrivalsSection />
-      <StoreInfoSection />
     </>
   )
 }

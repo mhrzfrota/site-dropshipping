@@ -13,7 +13,7 @@ const HeroSection: React.FC = () => {
   }
 
   return (
-    <section className="relative isolate overflow-hidden bg-stone-900 -mt-28 md:-mt-32">
+    <section className="relative isolate min-h-[100svh] overflow-hidden bg-stone-900">
       <div className="absolute inset-0">
         <img
           src={heroImage}
@@ -27,14 +27,14 @@ const HeroSection: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/10" aria-hidden="true" />
 
       <div className="relative z-10">
-        <div className="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-4 pb-16 pt-36 md:pt-40">
+        <div className="mx-auto flex min-h-full max-w-6xl flex-col justify-center px-4 pb-16 pt-48 md:pt-52 box-border">
           <div className="max-w-xl space-y-5 text-white">
             <p className="text-xs font-semibold uppercase tracking-[0.32em] text-white/80">Mar&Mov</p>
             <h1 className="font-display text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
-              Moda praia e fitness para o seu ritmo.
+              <span className="block">Beach Wear</span>
+              <span className="block">e Fitness</span>
             </h1>
             <p className="text-base text-white/90 sm:text-lg">
-              Peças direto da loja física. Compre online e receba em todo o Brasil.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               <Link
