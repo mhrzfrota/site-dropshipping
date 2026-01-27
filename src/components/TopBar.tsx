@@ -60,7 +60,7 @@ const TopBar: React.FC = () => {
     () => [
       {
         label: 'SALE',
-        href: '/produtos',
+        href: '/sale',
         accent: true,
         sections: [],
       },
@@ -123,7 +123,7 @@ const TopBar: React.FC = () => {
   const iconButtonClass = 'relative flex items-center justify-center text-ink/70 transition hover:text-ink'
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-stone-200 bg-white">
+    <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-[0_6px_30px_rgba(0,0,0,0.18)]">
       <div onMouseLeave={handleMenuMouseLeave}>
         <div className="mx-auto flex w-full max-w-7xl items-center px-6 py-5">
           {/* Left: Navigation */}

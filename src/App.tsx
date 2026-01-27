@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import ProductsPage from './pages/ProductsPage'
+import SalePage from './pages/SalePage'
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
       <Route path="/" element={<SiteLayout />}>
         <Route index element={<HomePage />} />
         <Route path="produtos" element={<ProductsPage />} />
+        <Route path="sale" element={<SalePage />} />
         <Route path="categoria/:slug" element={<CategoryPage />} />
         <Route path="marca/:slug" element={<BrandPage />} />
         <Route path="produto/:slug" element={<ProductDetailPage />} />
