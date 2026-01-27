@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 
 const helpLinks = [
   { label: 'Acompanhe seu pedido', href: '/produtos' },
-  { label: 'Solicite sua devolu??o', href: '/produtos' },
-  { label: 'Pol?tica de trocas e devolu??es', href: '/produtos' },
+  { label: 'Solicite sua devolução', href: '/produtos' },
+  { label: 'Política de trocas e devoluções', href: '/produtos' },
   { label: 'Retire na loja', href: '/produtos' },
   { label: 'Compre pelo WhatsApp', href: '/produtos' },
   { label: 'Central de ajuda', href: '/produtos' },
@@ -58,10 +58,10 @@ const Footer: React.FC = () => {
               </button>
             </form>
             <p className="text-xs text-stone-500">
-              A Mar&Mov utiliza os dados preenchidos para enviar novidades e promo??es exclusivas. Para saber mais,
+              A Mar&Mov utiliza os dados preenchidos para enviar novidades e promoções exclusivas. Para saber mais,
               consulte nossa{' '}
               <Link to="/produtos" className="underline">
-                Pol?tica de Seguran?a e Privacidade
+                Política de Segurança e Privacidade
               </Link>
               .
             </p>
@@ -155,8 +155,8 @@ const Footer: React.FC = () => {
 
       <div className="border-t border-stone-200">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-4 text-xs text-stone-500 sm:flex-row">
-          <span>? 2026 Mar&Mov - Todos os direitos reservados.</span>
-          <span>CNPJ 59.418.806/0032-43 | Rua Cipriano Barata, 456, Ipiranga S?o Paulo - SP</span>
+          <span>© 2026 Mar&Mov - Todos os direitos reservados.</span>
+          <span>CNPJ 59.418.806/0032-43 | Rua Cipriano Barata, 456, Ipiranga, São Paulo - SP</span>
         </div>
       </div>
     </footer>
