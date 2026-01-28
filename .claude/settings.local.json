@@ -3,7 +3,8 @@
     "allow": [
       "Bash(npm install)",
       "Bash(npm run dev)",
-      "WebFetch(domain:www.fullvinylstore.com.br)"
+      "WebFetch(domain:www.fullvinylstore.com.br)",
+      "Bash(npm run build:*)"
     ]
   }
 }
