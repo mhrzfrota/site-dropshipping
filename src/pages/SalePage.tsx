@@ -78,9 +78,6 @@ const SalePage: React.FC = () => {
     )
   }
 
-  const getDiscountedPrice = (price: number) => price * 0.85
-  const getInstallmentPrice = (price: number) => price / 2
-
   return (
     <section className="min-h-screen bg-white pt-20">
       <div className="mx-auto max-w-7xl px-4 py-8">

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useToast } from '../context/ToastContext'
 import { getAllProducts, normalizeSlug } from '../data/products'
@@ -31,8 +31,6 @@ const splitIntoColumns = <T,>(items: T[], columnCount: number) => {
 }
 
 const TopBar: React.FC = () => {
-  const location = useLocation()
-  const isHome = location.pathname === '/'
   const [activeLink, setActiveLink] = useState<string | null>(null)
   const [lockedLink, setLockedLink] = useState<string | null>(null)
   const [logoError, setLogoError] = useState(false)
@@ -93,7 +91,6 @@ const TopBar: React.FC = () => {
   const currentActiveLink = lockedLink ?? activeLink
   const activeItem = useMemo(() => navItems.find((item) => item.label === currentActiveLink), [currentActiveLink, navItems])
   const showMegaMenu = activeItem ? activeItem.sections.length > 0 : false
-  const isMenuOpen = Boolean(showMegaMenu && activeItem)
 
   const handleSoon = (label: string) => {
     showToast(`${label} em breve.`)
