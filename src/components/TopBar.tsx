@@ -122,9 +122,9 @@ const TopBar: React.FC = () => {
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-[0_6px_30px_rgba(0,0,0,0.18)]">
       <div onMouseLeave={handleMenuMouseLeave}>
-        <div className="mx-auto flex w-full max-w-7xl items-center px-6 py-5">
+        <div className="flex w-full items-center justify-between px-4 py-5">
           {/* Left: Navigation */}
-          <nav className="hidden flex-1 items-center gap-6 lg:flex">
+          <nav className="hidden items-center gap-6 lg:flex">
             {navItems.map((item) => {
               const hasMenu = item.sections.length > 0
 
@@ -202,7 +202,7 @@ const TopBar: React.FC = () => {
           </Link>
 
           {/* Right: Icons */}
-          <div className="ml-auto flex items-center gap-5">
+          <div className="flex items-center gap-5">
             {/* Search */}
             <button
               type="button"
