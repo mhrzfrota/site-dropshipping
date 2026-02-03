@@ -10,11 +10,11 @@ const HomePage: React.FC = () => {
   return (
     <>
       <HeroSection />
+      <BenefitsStripSection />
       <FeaturedProductsSection />
       <HighlightsSection />
       <NewArrivalsSection />
       <RhythmSection />
-      <BenefitsStripSection />
     </>
   )
 }
