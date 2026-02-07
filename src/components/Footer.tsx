@@ -1,162 +1,160 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const helpLinks = [
-  { label: 'Acompanhe seu pedido', href: '/produtos' },
-  { label: 'Solicite sua devolução', href: '/produtos' },
-  { label: 'Política de trocas e devoluções', href: '/produtos' },
-  { label: 'Retire na loja', href: '/produtos' },
-  { label: 'Compre pelo WhatsApp', href: '/produtos' },
-  { label: 'Central de ajuda', href: '/produtos' },
+const institutionalLinks = [
+  { label: 'Institucional', href: '/produtos' },
+  { label: 'Ajuda', href: '/produtos' },
+  { label: 'Termos de uso', href: '/produtos' },
+  { label: 'Politica de Troca e Devolucao', href: '/produtos' },
+  { label: 'Politica de Envio', href: '/produtos' },
 ]
-
-const aboutLinks = [
-  { label: 'Quem somos', href: '/produtos' },
-  { label: 'Política e segurança', href: '/produtos' },
-  { label: 'Encontre sua loja', href: '/produtos' },
-  { label: 'Trabalhe conosco', href: '/produtos' },
-  { label: 'Franquias', href: '/produtos' },
-  { label: 'Investidores', href: '/produtos' },
-  { label: 'Mapa do site', href: '/produtos' },
-]
-
-const storeLinks = ['Mar&Mov Recife', 'Mar&Mov Verão']
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-white text-[#0a1f3d]">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.85fr_0.85fr_0.85fr]">
+    <footer className="bg-[#477e8a] text-white">
+      <div className="mx-auto max-w-7xl px-4 pb-6 pt-8">
+        <div className="grid gap-12 lg:grid-cols-[1.15fr_1fr_1fr_0.8fr]">
           <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 text-stone-500">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6">
-                  <path d="M4 6h16v12H4z" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="m4 7 8 6 8-6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-400">Fique por dentro</p>
-                <p className="text-lg font-semibold text-stone-900">Novidades Mar&Mov</p>
-              </div>
-            </div>
-            <p className="text-sm text-stone-500">
-              Cadastre-se e acompanhe todas as nossas novidades e ofertas.
-            </p>
-            <form className="flex flex-col gap-3 border-b border-stone-200 pb-2 sm:flex-row sm:items-center sm:gap-4">
-              <input
-                type="email"
-                placeholder="Insira seu e-mail"
-                className="w-full min-w-0 flex-1 bg-transparent py-2 text-sm text-[#0a1f3d] placeholder:text-stone-400 focus:outline-none"
-              />
-              <button
-                type="submit"
-                aria-label="Enviar e-mail"
-                className="self-end text-xl text-stone-500 transition hover:text-[#0a1f3d] sm:self-auto"
+            <div className="flex items-center gap-2.5">
+              <a
+                href="https://wa.me/5511934942311"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="WhatsApp Mar e Mov"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/10 transition hover:bg-white/20"
               >
-                &rarr;
-              </button>
-            </form>
-            <p className="text-xs text-stone-500">
-              A Mar&Mov utiliza os dados preenchidos para enviar novidades e promoções exclusivas. Para saber mais,
-              consulte nossa{' '}
-              <Link to="/produtos" className="underline">
-                Política de Segurança e Privacidade
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 4.5a7.5 7.5 0 0 0-6.5 11.2L4 20l4.5-1.4A7.5 7.5 0 1 0 12 4.5Z" />
+                  <path d="M9.2 9.5c.2-.3.4-.3.6-.3h.5c.2 0 .3.1.4.3l.5 1.1c.1.2.1.4 0 .6l-.4.5c-.1.1-.1.3 0 .5.3.5.9 1.1 1.4 1.4.2.1.4.1.5 0l.5-.4c.2-.1.4-.1.6 0l1.1.5c.2.1.3.3.3.5 0 .4-.2.9-.5 1.2-.3.3-.7.4-1.2.3-1.1-.2-2.4-1.1-3.3-2-.9-.9-1.8-2.2-2-3.3-.1-.5 0-.9.3-1.2Z" />
+                </svg>
+              </a>
+              <a
+                href="https://www.instagram.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram Mar e Mov"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/10 transition hover:bg-white/20"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                  <rect x="4.5" y="4.5" width="15" height="15" rx="4" />
+                  <circle cx="12" cy="12" r="3.5" />
+                  <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook Mar e Mov"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/10 transition hover:bg-white/20"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                  <path d="M14 8h2V5h-2a4 4 0 0 0-4 4v2H8v3h2v5h3v-5h2.2l.8-3H13V9a1 1 0 0 1 1-1Z" />
+                </svg>
+              </a>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-[15px] font-bold uppercase tracking-[0.05em]">Receba as novidades</p>
+              <form className="space-y-2.5">
+                <label className="sr-only" htmlFor="footer-email">
+                  Digite seu e-mail
+                </label>
+                <input
+                  id="footer-email"
+                  type="email"
+                  placeholder="Digite seu e-mail aqui"
+                  className="h-8 w-full border border-white/45 bg-white/95 px-3 text-xs text-slate-800 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-white/70"
+                />
+                <button
+                  type="submit"
+                  className="h-8 w-full border border-white/75 text-sm font-semibold text-white transition hover:bg-white/15"
+                >
+                  Enviar
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <p className="text-[15px] font-bold uppercase tracking-[0.05em]">Onde estamos</p>
+            <div className="overflow-hidden border border-white/30">
+              <iframe
+                title="Mapa Mar e Mov"
+                src="https://www.google.com/maps?q=Recife%20PE&output=embed"
+                className="h-36 w-full"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <p className="text-[15px] font-bold uppercase tracking-[0.05em]">Fale conosco</p>
+            <a
+              href="tel:+558530774269"
+              className="flex min-h-[32px] items-center gap-2 border border-white/30 bg-[#0000001f] px-3 text-xs font-semibold transition hover:bg-[#0000002c]"
+            >
+              <span className="text-white/90">WhatsApp</span>
+              <span>(85) 85 3077-4269</span>
+            </a>
+            <a
+              href="mailto:contato@maremov.com.br"
+              className="flex min-h-[32px] items-center gap-2 border border-white/30 bg-[#0000001f] px-3 text-xs font-semibold transition hover:bg-[#0000002c]"
+            >
+              <span className="text-white/90">Email</span>
+              <span>contato@maremov.com.br</span>
+            </a>
+            <p className="text-xs text-white/90">Segunda a Sexta das 10h as 19h | Sabado das 10h as 17h</p>
+          </div>
+
+          <div className="space-y-4 pt-1">
+            {institutionalLinks.map((item) => (
+              <Link
+                key={item.label}
+                to={item.href}
+                className="block text-xs font-medium text-white/90 transition hover:text-white"
+              >
+                {item.label}
               </Link>
-              .
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <p className="text-sm font-semibold text-stone-900">Ajuda</p>
-            <div className="space-y-2 text-sm text-stone-600">
-              {helpLinks.map((link) => (
-                <Link key={link.label} to={link.href} className="block transition hover:text-[#0a1f3d]">
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <p className="text-sm font-semibold text-stone-900">Sobre a Mar&Mov</p>
-            <div className="space-y-2 text-sm text-stone-600">
-              {aboutLinks.map((link) => (
-                <Link key={link.label} to={link.href} className="block transition hover:text-[#0a1f3d]">
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <p className="text-sm font-semibold text-stone-900">Encontre uma loja</p>
-              <div className="space-y-2 text-sm text-stone-600">
-                {storeLinks.map((label) => (
-                  <span key={label} className="block font-semibold text-[#0a1f3d]">
-                    {label}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <p className="text-sm font-semibold text-stone-900">Formas de pagamento</p>
-              <div className="flex flex-wrap items-center gap-3">
-                <span aria-label="Visa" className="flex h-7 items-center justify-center rounded border border-stone-200 px-2">
-                  <svg viewBox="0 0 48 20" className="h-4 w-auto" aria-hidden="true">
-                    <text x="2" y="15" fontSize="14" fontFamily="Arial" fontWeight="700" fill="#1a2b8b">
-                      VISA
-                    </text>
-                  </svg>
-                </span>
-                <span aria-label="Mastercard" className="flex h-7 items-center justify-center rounded border border-stone-200 px-2">
-                  <svg viewBox="0 0 36 20" className="h-4 w-auto" aria-hidden="true">
-                    <circle cx="14" cy="10" r="7" fill="#ea001b" />
-                    <circle cx="22" cy="10" r="7" fill="#f79e1b" fillOpacity="0.9" />
-                  </svg>
-                </span>
-                <span aria-label="Diners Club" className="flex h-7 items-center justify-center rounded border border-stone-200 px-2">
-                  <svg viewBox="0 0 42 20" className="h-4 w-auto" aria-hidden="true">
-                    <circle cx="10" cy="10" r="7" fill="none" stroke="#1b6aa5" strokeWidth="2" />
-                    <text x="18" y="14" fontSize="9" fontFamily="Arial" fontWeight="700" fill="#1b6aa5">
-                      DINERS
-                    </text>
-                  </svg>
-                </span>
-                <span aria-label="American Express" className="flex h-7 items-center justify-center rounded border border-stone-200 px-2">
-                  <svg viewBox="0 0 52 20" className="h-4 w-auto" aria-hidden="true">
-                    <text x="2" y="14" fontSize="10" fontFamily="Arial" fontWeight="700" fill="#2e77bb">
-                      AMEX
-                    </text>
-                  </svg>
-                </span>
-                <span aria-label="Elo" className="flex h-7 items-center justify-center rounded border border-stone-200 px-2">
-                  <svg viewBox="0 0 36 20" className="h-4 w-auto" aria-hidden="true">
-                    <text x="2" y="14" fontSize="12" fontFamily="Arial" fontWeight="700" fill="#111">
-                      elo
-                    </text>
-                  </svg>
-                </span>
-                <span aria-label="Pix" className="flex h-7 items-center justify-center rounded border border-stone-200 px-2">
-                  <svg viewBox="0 0 36 20" className="h-4 w-auto" aria-hidden="true">
-                    <path d="M10 10l8-8 8 8-8 8-8-8Z" fill="none" stroke="#2bb673" strokeWidth="1.8" />
-                    <text x="20" y="14" fontSize="8" fontFamily="Arial" fontWeight="700" fill="#2bb673">
-                      pix
-                    </text>
-                  </svg>
-                </span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
-      </div>
 
-      <div className="border-t border-stone-200">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-4 text-center text-xs text-stone-500 sm:flex-row sm:gap-2 sm:text-left">
-          <span>© 2026 Mar&Mov - Todos os direitos reservados.</span>
-          <span>CNPJ 59.418.806/0032-43 | Rua Cipriano Barata, 456, Ipiranga, São Paulo - SP</span>
+        <div className="mt-10 border-t border-white/25 pt-4">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <p className="text-xs text-white/85">(c) Mar&Mov - CNPJ 08.794.548/0001-62 | Vnda - Tecnologia em Ecommerce</p>
+
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="inline-flex h-7 items-center rounded border border-white/30 bg-[#0000002b] px-2.5 text-[10px] font-bold tracking-[0.06em] text-white">
+                SITE SEGURO SSL
+              </span>
+              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5 text-[10px] font-bold text-slate-800">
+                VISA
+              </span>
+              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5 text-[10px] font-bold text-slate-800">
+                MASTERCARD
+              </span>
+              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5 text-[10px] font-bold text-slate-800">
+                HIPER
+              </span>
+              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5 text-[10px] font-bold text-slate-800">
+                ELO
+              </span>
+              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5 text-[10px] font-bold text-slate-800">
+                PIX
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
