@@ -122,7 +122,7 @@ const TopBar: React.FC = () => {
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-[0_6px_30px_rgba(0,0,0,0.18)]">
       <div onMouseLeave={handleMenuMouseLeave}>
-        <div className="flex w-full items-center justify-between px-4 py-5">
+        <div className="relative flex w-full items-center justify-between px-4 py-4 sm:py-5">
           {/* Left: Navigation */}
           <nav className="hidden items-center gap-6 lg:flex">
             {navItems.map((item) => {
@@ -185,11 +185,11 @@ const TopBar: React.FC = () => {
           </nav>
 
           {/* Center: Logo */}
-          <Link to="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Link to="/" className="flex items-center gap-2 lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
             <img
               src="/images/logo.svg"
               alt="Logo Mar&Mov"
-              className={`h-9 w-auto ${logoError ? 'hidden' : ''}`}
+              className={`h-8 w-auto sm:h-9 ${logoError ? 'hidden' : ''}`}
               onError={() => setLogoError(true)}
               loading="eager"
               decoding="async"
@@ -202,13 +202,13 @@ const TopBar: React.FC = () => {
           </Link>
 
           {/* Right: Icons */}
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-4 sm:gap-5">
             {/* Search */}
             <button
               type="button"
               aria-label="Buscar"
               onClick={() => handleSoon('Busca')}
-              className={iconButtonClass}
+              className={`${iconButtonClass} hidden sm:flex`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -228,7 +228,7 @@ const TopBar: React.FC = () => {
               type="button"
               aria-label="Conta"
               onClick={() => handleSoon('Perfil')}
-              className={iconButtonClass}
+              className={`${iconButtonClass} hidden sm:flex`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

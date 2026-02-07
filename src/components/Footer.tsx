@@ -25,8 +25,8 @@ const storeLinks = ['Mar&Mov Recife', 'Mar&Mov Verão']
 const Footer: React.FC = () => {
   return (
     <footer className="bg-white text-[#0a1f3d]">
-      <div className="mx-auto max-w-7xl px-4 py-14">
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_0.85fr_0.85fr_0.85fr]">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.85fr_0.85fr_0.85fr]">
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 text-stone-500">
@@ -43,16 +43,16 @@ const Footer: React.FC = () => {
             <p className="text-sm text-stone-500">
               Cadastre-se e acompanhe todas as nossas novidades e ofertas.
             </p>
-            <form className="flex items-center gap-4 border-b border-stone-200 pb-2">
+            <form className="flex flex-col gap-3 border-b border-stone-200 pb-2 sm:flex-row sm:items-center sm:gap-4">
               <input
                 type="email"
                 placeholder="Insira seu e-mail"
-                className="flex-1 bg-transparent text-sm text-[#0a1f3d] placeholder:text-stone-400 focus:outline-none"
+                className="w-full min-w-0 flex-1 bg-transparent py-2 text-sm text-[#0a1f3d] placeholder:text-stone-400 focus:outline-none"
               />
               <button
                 type="submit"
                 aria-label="Enviar e-mail"
-                className="text-xl text-stone-500 transition hover:text-[#0a1f3d]"
+                className="self-end text-xl text-stone-500 transition hover:text-[#0a1f3d] sm:self-auto"
               >
                 &rarr;
               </button>
@@ -154,7 +154,7 @@ const Footer: React.FC = () => {
       </div>
 
       <div className="border-t border-stone-200">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-4 text-xs text-stone-500 sm:flex-row">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-4 text-center text-xs text-stone-500 sm:flex-row sm:gap-2 sm:text-left">
           <span>© 2026 Mar&Mov - Todos os direitos reservados.</span>
           <span>CNPJ 59.418.806/0032-43 | Rua Cipriano Barata, 456, Ipiranga, São Paulo - SP</span>
         </div>

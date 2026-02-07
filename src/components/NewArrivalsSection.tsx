@@ -106,7 +106,7 @@ const NewArrivalsSection: React.FC = () => {
           <p className="text-xs font-semibold tracking-[0.32em] text-stone-500">NOVIDADES</p>
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-6">
+        <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
           {(['feminino', 'masculino'] as TabKey[]).map((tab) => {
             const isActive = activeTab === tab
             return (
@@ -114,7 +114,7 @@ const NewArrivalsSection: React.FC = () => {
                 key={tab}
                 type="button"
                 onClick={() => setActiveTab(tab)}
-                className={`relative w-40 px-2 pb-3 text-center text-xs font-semibold uppercase tracking-[0.2em] transition sm:w-56 ${
+                className={`relative w-full max-w-[220px] px-2 pb-3 text-center text-xs font-semibold uppercase tracking-[0.2em] transition sm:w-56 ${
                   isActive ? 'text-[#0a1f3d]' : 'text-stone-400'
                 }`}
                 aria-pressed={isActive}
