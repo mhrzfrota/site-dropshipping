@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useToast } from '../context/ToastContext'
 import { getAllProducts, normalizeSlug } from '../data/products'
@@ -31,11 +31,14 @@ const splitIntoColumns = <T,>(items: T[], columnCount: number) => {
 }
 
 const TopBar: React.FC = () => {
+  const location = useLocation()
+  const headerRef = useRef<HTMLElement | null>(null)
   const [activeLink, setActiveLink] = useState<string | null>(null)
   const [lockedLink, setLockedLink] = useState<string | null>(null)
   const [logoError, setLogoError] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mobileOpenItem, setMobileOpenItem] = useState<string | null>(null)
+  const [isTopBarSolid, setIsTopBarSolid] = useState(location.pathname !== '/')
   const { totalItems, toggleCart } = useCart()
   const { showToast } = useToast()
 
@@ -114,15 +117,51 @@ const TopBar: React.FC = () => {
     return () => window.removeEventListener('keydown', handleEscape)
   }, [])
 
-  const navItemBase = 'text-[14px] font-semibold tracking-[0.08em] transition-colors duration-200 hover:text-brand-deep'
-  const navItemDefault = 'text-ink/70 hover:text-ink'
-  const navItemAccent = 'border border-ink/80 rounded-full px-5 py-2 text-[14px] text-ink hover:border-brand-deep hover:text-brand-deep'
-  const iconButtonClass = 'relative flex items-center justify-center text-ink/70 transition hover:text-ink'
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setIsTopBarSolid(true)
+      return
+    }
+
+    const updateTopBarState = () => {
+      const firstSection = document.querySelector('main section') as HTMLElement | null
+      if (!firstSection) {
+        setIsTopBarSolid(false)
+        return
+      }
+
+      const headerHeight = headerRef.current?.offsetHeight ?? 0
+      const firstSectionBottom = firstSection.offsetTop + firstSection.offsetHeight
+      setIsTopBarSolid(window.scrollY + headerHeight >= firstSectionBottom)
+    }
+
+    updateTopBarState()
+    window.addEventListener('scroll', updateTopBarState, { passive: true })
+    window.addEventListener('resize', updateTopBarState)
+
+    return () => {
+      window.removeEventListener('scroll', updateTopBarState)
+      window.removeEventListener('resize', updateTopBarState)
+    }
+  }, [location.pathname])
+
+  const navItemBase = 'text-[14px] font-semibold tracking-[0.08em] text-inherit transition-colors duration-300'
+  const navItemDefault = 'text-inherit opacity-90 hover:opacity-100'
+  const navItemAccent =
+    'rounded-full border border-current/75 px-5 py-2 text-[14px] text-inherit transition-colors duration-300 hover:bg-white/20 hover:text-white'
+  const iconButtonClass = 'relative flex items-center justify-center text-inherit opacity-90 transition duration-300 hover:opacity-100'
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-[0_6px_30px_rgba(0,0,0,0.18)]">
+    <header
+      ref={headerRef}
+      className={`group/topbar fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+        isTopBarSolid
+          ? 'bg-[#477e8a] text-white'
+          : 'bg-transparent text-[#477e8a] hover:bg-[#477e8a] hover:text-white'
+      }`}
+    >
       <div onMouseLeave={handleMenuMouseLeave}>
-        <div className="relative flex w-full items-center justify-between px-4 py-4 sm:py-5">
+        <div className="relative flex w-full items-center justify-between px-4 py-[13.5px] sm:py-[17px]">
           {/* Left: Navigation */}
           <nav className="hidden items-center gap-6 lg:flex">
             {navItems.map((item) => {
@@ -189,13 +228,15 @@ const TopBar: React.FC = () => {
             <img
               src="/images/logo.svg"
               alt="Logo Mar&Mov"
-              className={`h-8 w-auto sm:h-9 ${logoError ? 'hidden' : ''}`}
+              className={`h-[27px] w-auto transition duration-300 sm:h-[31px] ${
+                isTopBarSolid ? 'brightness-0 invert' : 'group-hover/topbar:brightness-0 group-hover/topbar:invert'
+              } ${logoError ? 'hidden' : ''}`}
               onError={() => setLogoError(true)}
               loading="eager"
               decoding="async"
             />
             {logoError && (
-              <span className="font-display text-2xl font-black tracking-tight text-ink">
+              <span className="font-display text-2xl font-black tracking-tight text-inherit">
                 Mar&Mov
               </span>
             )}
@@ -216,7 +257,7 @@ const TopBar: React.FC = () => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
-                className="h-[22px] w-[22px]"
+                className="h-[19px] w-[19px]"
               >
                 <circle cx="11" cy="11" r="7" />
                 <path d="m21 21-4.35-4.35" strokeLinecap="round" />
@@ -236,7 +277,7 @@ const TopBar: React.FC = () => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
-                className="h-[22px] w-[22px]"
+                className="h-[19px] w-[19px]"
               >
                 <circle cx="12" cy="8" r="4" />
                 <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" strokeLinecap="round" />
@@ -256,7 +297,7 @@ const TopBar: React.FC = () => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
-                className="h-[22px] w-[22px]"
+                className="h-[19px] w-[19px]"
               >
                 <path d="M6 6h15l-1.5 9h-12z" strokeLinejoin="round" />
                 <path d="M6 6 5.25 3H3" strokeLinecap="round" strokeLinejoin="round" />
@@ -264,7 +305,13 @@ const TopBar: React.FC = () => {
                 <circle cx="18" cy="20" r="1" fill="currentColor" />
               </svg>
               {totalItems > 0 && (
-                <span className="absolute -right-2 -top-2 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-ink px-1 text-[10px] font-semibold text-white">
+                <span
+                  className={`absolute -right-2 -top-2 flex h-4 min-w-[1rem] items-center justify-center rounded-full px-1 text-[10px] font-semibold transition-colors duration-300 ${
+                    isTopBarSolid
+                      ? 'bg-white text-[#477e8a]'
+                      : 'bg-[#477e8a] text-white group-hover/topbar:bg-white group-hover/topbar:text-[#477e8a]'
+                  }`}
+                >
                   {totalItems}
                 </span>
               )}
@@ -280,7 +327,7 @@ const TopBar: React.FC = () => {
               aria-label="Menu"
               aria-controls="mobile-menu"
               aria-expanded={isMobileMenuOpen}
-              className="relative flex h-10 w-10 items-center justify-center text-ink lg:hidden"
+              className="relative flex h-9 w-9 items-center justify-center text-inherit lg:hidden"
             >
               <span className="sr-only">Abrir menu</span>
               <span
@@ -305,7 +352,11 @@ const TopBar: React.FC = () => {
         {/* Mega Menu */}
         {showMegaMenu && activeItem && (
           <div
-            className="absolute left-0 right-0 top-full border-t border-stone-200 bg-white shadow-lg"
+            className={`absolute left-0 right-0 top-full shadow-lg transition-colors duration-300 ${
+              isTopBarSolid
+                ? 'border-t border-[#477e8a]/40 bg-[#477e8a]'
+                : 'border-t border-[#477e8a]/30 bg-[#f3ede4] group-hover/topbar:bg-[#477e8a]'
+            }`}
             onMouseLeave={handleMenuMouseLeave}
           >
             <div className="mx-auto grid max-w-3xl gap-4 px-4 py-6">
@@ -316,13 +367,13 @@ const TopBar: React.FC = () => {
               >
                 {activeItem.sections.map((section) => (
                   <div key={section.title} className="space-y-3">
-                    <p className="text-xs font-semibold uppercase tracking-[0.1em] text-ink/50">{section.title}</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.1em] text-inherit opacity-70">{section.title}</p>
                     <div className="space-y-2">
                       {section.items.map((subItem) => (
                         <Link
                           key={subItem.label}
                           to={subItem.href}
-                          className="block text-sm text-ink/80 transition hover:text-brand-deep"
+                          className="block text-sm text-inherit opacity-85 transition hover:opacity-100"
                           onClick={() => {
                             setActiveLink(null)
                             setLockedLink(null)
@@ -343,7 +394,13 @@ const TopBar: React.FC = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="lg:hidden" id="mobile-menu">
-          <div className="border-t border-stone-200 bg-white shadow-xl">
+          <div
+            className={`shadow-xl transition-colors duration-300 ${
+              isTopBarSolid
+                ? 'border-t border-[#477e8a]/40 bg-[#477e8a]'
+                : 'border-t border-[#477e8a]/30 bg-[#f3ede4] group-hover/topbar:bg-[#477e8a]'
+            }`}
+          >
             <div className="space-y-4 px-6 py-5">
               {navItems.map((item) => {
                 if (item.sections.length === 0) {
@@ -352,7 +409,7 @@ const TopBar: React.FC = () => {
                       key={item.label}
                       to={item.href}
                       className={`flex items-center justify-between py-3 text-sm font-semibold ${
-                        item.accent ? 'text-brand-deep' : 'text-ink/80'
+                        item.accent ? 'text-inherit' : 'text-inherit opacity-90'
                       }`}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
@@ -364,11 +421,11 @@ const TopBar: React.FC = () => {
 
                 const isOpen = mobileOpenItem === item.label
                 return (
-                  <div key={item.label} className="border-b border-stone-100 pb-3">
+                  <div key={item.label} className="border-b border-[#477e8a]/20 pb-3">
                     <button
                       type="button"
                       onClick={() => setMobileOpenItem(isOpen ? null : item.label)}
-                      className="flex w-full items-center justify-between py-3 text-left text-sm font-semibold text-ink/80"
+                      className="flex w-full items-center justify-between py-3 text-left text-sm font-semibold text-inherit opacity-90"
                       aria-expanded={isOpen}
                     >
                       <span>{item.label}</span>
@@ -385,7 +442,7 @@ const TopBar: React.FC = () => {
                       <div className="space-y-4 pb-2 pt-2">
                         {item.sections.map((section) => (
                           <div key={section.title} className="space-y-2">
-                            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-ink/50">
+                            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-inherit opacity-70">
                               {section.title}
                             </p>
                             <div className="flex flex-wrap gap-2">
@@ -393,7 +450,7 @@ const TopBar: React.FC = () => {
                                 <Link
                                   key={subItem.label}
                                   to={subItem.href}
-                                  className="text-sm text-ink/70 transition hover:text-brand-deep"
+                                  className="text-sm text-inherit opacity-85 transition hover:opacity-100"
                                   onClick={() => {
                                     setIsMobileMenuOpen(false)
                                     setMobileOpenItem(null)
@@ -412,10 +469,10 @@ const TopBar: React.FC = () => {
               })}
 
               <div className="flex items-center gap-4 pt-2">
-                <button type="button" onClick={() => handleSoon('Busca')} className="flex-1 rounded-full border border-stone-200 py-3 text-sm font-semibold text-ink/70">
+                <button type="button" onClick={() => handleSoon('Busca')} className="flex-1 rounded-full border border-current/35 py-3 text-sm font-semibold text-inherit opacity-90 transition hover:bg-white/20 hover:opacity-100">
                   Buscar
                 </button>
-                <button type="button" onClick={() => handleSoon('Perfil')} className="flex-1 rounded-full border border-stone-200 py-3 text-sm font-semibold text-ink/70">
+                <button type="button" onClick={() => handleSoon('Perfil')} className="flex-1 rounded-full border border-current/35 py-3 text-sm font-semibold text-inherit opacity-90 transition hover:bg-white/20 hover:opacity-100">
                   Conta
                 </button>
               </div>

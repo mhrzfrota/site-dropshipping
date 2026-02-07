@@ -3,21 +3,31 @@ import { Link } from 'react-router-dom'
 
 const fallbackImage = '/images/home-hero.png'
 
-const highlights = [
+type HighlightCard = {
+  title: string
+  image: string
+  href: string
+  featured: boolean
+}
+
+const highlights: HighlightCard[] = [
   {
-    title: 'Looks casuais para começar o ano.',
+    title: 'Looks casuais para começar o ano',
     image: '/images/academia-4.jpg',
     href: '/categoria/roupas',
+    featured: true,
   },
   {
-    title: 'Leve. Prática. Essencial.',
+    title: 'Leve, prática, essencial',
     image: '/images/bolsa-1.jpg',
     href: '/categoria/acessorios',
+    featured: false,
   },
   {
-    title: 'Camisetas com design e movimento.',
+    title: 'Camisetas com design e movimento',
     image: '/images/short-masc-2.jpg',
     href: '/categoria/roupas',
+    featured: false,
   },
 ]
 
@@ -33,37 +43,43 @@ const HighlightsSection: React.FC = () => {
     <section id="categorias" className="bg-white py-20 scroll-mt-28">
       <div className="mx-auto max-w-7xl px-4">
         <div className="mb-12 text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-stone-500">
-            Performance para
-          </p>
-          <h2 className="mt-3 font-display text-3xl font-extrabold text-stone-900 sm:text-4xl">
-            Qualquer movimento
+          <h2 className="font-body text-3xl font-medium tracking-[0.04em] text-stone-900 sm:text-4xl">
+            Produtos Destaques
           </h2>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-3">
+        <div className="grid gap-[3px] bg-white md:grid-cols-2">
           {highlights.map((item) => (
-            <div key={item.title} className="flex flex-col items-center text-center">
-              <div className="w-full overflow-hidden bg-stone-100">
-                <div className="aspect-[3/4]">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="h-full w-full object-cover"
-                    onError={handleImageError}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
+            <Link
+              key={item.title}
+              to={item.href}
+              className={`group relative isolate block overflow-hidden bg-stone-100 ${
+                item.featured ? 'aspect-[16/8] md:col-span-2' : 'aspect-[4/5] sm:aspect-[16/11]'
+              }`}
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-105 group-hover:brightness-[.72] group-focus-visible:scale-105 group-focus-visible:brightness-[.72]"
+                onError={handleImageError}
+                loading="lazy"
+                decoding="async"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/25 to-black/10 transition duration-500 group-hover:from-black/65 group-hover:via-black/30 group-focus-visible:from-black/65 group-focus-visible:via-black/30" />
+
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-8 text-center text-white">
+                <p className="max-w-[18ch] text-3xl font-extrabold uppercase leading-tight tracking-[0.06em] drop-shadow-[0_4px_10px_rgba(0,0,0,.45)] sm:text-4xl">
+                  {item.title}
+                </p>
+
+                {!item.featured && (
+                  <span className="inline-flex min-h-[42px] translate-y-3 items-center justify-center border border-white/90 px-8 text-sm font-semibold uppercase tracking-[0.08em] text-white opacity-0 transition duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+                    Ver mais
+                  </span>
+                )}
               </div>
-              <p className="mt-5 text-sm font-semibold text-[#0a1f3d]">{item.title}</p>
-              <Link
-                to={item.href}
-                className="mt-6 inline-flex min-h-[44px] items-center justify-center border border-[#0a1f3d] px-8 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
-              >
-                Confira
-              </Link>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

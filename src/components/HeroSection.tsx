@@ -11,22 +11,22 @@ type Slide = {
 
 const slides: Slide[] = [
   {
-    image: '/images/biquini-2.jpg',
-    fallback: '/images/biquinis.jpg',
+    image: '/images/home1.png',
+    fallback: '/images/home-hero.png',
     subtitle: 'Nova Coleção',
     title: ['Moda Praia', 'Verão 2025'],
     cta: { label: 'Ver coleção', href: '/categoria/biquinis' },
   },
   {
-    image: '/images/academia-1.jpg',
-    fallback: '/images/academia-3.jpg',
+    image: '/images/home2.png',
+    fallback: '/images/home-hero.png',
     subtitle: 'Fitness',
     title: ['Performance', '& Estilo'],
     cta: { label: 'Explorar', href: '/categoria/roupas' },
   },
   {
-    image: '/images/short-masc-4.jpg',
-    fallback: '/images/short-masc.jpg',
+    image: '/images/home3.png',
+    fallback: '/images/home-hero.png',
     subtitle: 'Masculino',
     title: ['Beach', '& Lifestyle'],
     cta: { label: 'Conferir', href: '/produtos' },

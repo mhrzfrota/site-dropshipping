@@ -17,14 +17,14 @@ const SiteLayout: React.FC = () => {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Falar no WhatsApp"
-        className="fixed bottom-6 right-6 z-[60] flex h-12 w-12 items-center justify-center rounded-lg bg-[#1f6f1f] text-white shadow-lg transition hover:scale-105"
+        className="fixed bottom-4 right-4 z-[80] flex h-14 w-14 items-center justify-center rounded-full bg-[#477e8a] text-white shadow-[0_8px_18px_rgba(71,126,138,0.45)] transition hover:-translate-y-0.5 hover:shadow-[0_12px_22px_rgba(71,126,138,0.55)] sm:bottom-6 sm:right-6"
       >
         <svg
           viewBox="0 0 24 24"
-          className="h-6 w-6"
+          className="h-7 w-7"
           fill="none"
           stroke="currentColor"
-          strokeWidth="1.6"
+          strokeWidth="1.8"
           strokeLinecap="round"
           strokeLinejoin="round"
           aria-hidden="true"
