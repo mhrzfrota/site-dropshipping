@@ -11,11 +11,8 @@ const FeaturedProductsSection: React.FC = () => {
     <section className="bg-white py-16">
       <div className="mx-auto max-w-[1400px] px-4">
         <div className="mb-10 text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-stone-500">
-            Seleção especial
-          </p>
-          <h2 className="mt-3 font-display text-3xl font-extrabold text-stone-900 sm:text-4xl">
-            Produtos em Destaque
+          <h2 className="text-2xl font-semibold text-stone-900 sm:text-[1.8rem]">
+            Produtos Destaques
           </h2>
         </div>
 

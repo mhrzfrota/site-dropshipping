@@ -13,9 +13,9 @@ const slides: Slide[] = [
   {
     image: '/images/home1.png',
     fallback: '/images/home-hero.png',
-    subtitle: 'Nova Coleção',
-    title: ['Moda Praia', 'Verão 2025'],
-    cta: { label: 'Ver coleção', href: '/categoria/biquinis' },
+    subtitle: 'Nova Cole\u00E7\u00E3o',
+    title: ['Moda Praia', 'Ver\u00E3o 2025'],
+    cta: { label: 'Ver cole\u00E7\u00E3o', href: '/categoria/biquinis' },
   },
   {
     image: '/images/home2.png',
@@ -104,7 +104,7 @@ const HeroSection: React.FC = () => {
                     <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
                       {slide.subtitle}
                     </p>
-                    <h1 className="mt-4 font-display text-5xl font-black leading-[1.1] sm:text-6xl lg:text-7xl">
+                    <h1 className="mt-4 text-5xl font-black leading-[1.1] sm:text-6xl lg:text-7xl">
                       {slide.title.map((line, i) => (
                         <span key={i} className="block">{line}</span>
                       ))}
@@ -159,7 +159,7 @@ const HeroSection: React.FC = () => {
       </button>
       <button
         onClick={() => goToSlide((current + 1) % slides.length)}
-        aria-label="Próximo slide"
+        aria-label="Pr\u00F3ximo slide"
         className="absolute right-4 top-1/2 z-30 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 sm:right-6"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">

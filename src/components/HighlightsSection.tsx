@@ -12,13 +12,13 @@ type HighlightCard = {
 
 const highlights: HighlightCard[] = [
   {
-    title: 'Looks casuais para começar o ano',
+    title: 'Looks casuais para come\u00E7ar o ano',
     image: '/images/academia-4.jpg',
     href: '/categoria/roupas',
     featured: true,
   },
   {
-    title: 'Leve, prática, essencial',
+    title: 'Leve, pr\u00E1tica, essencial',
     image: '/images/bolsa-1.jpg',
     href: '/categoria/acessorios',
     featured: false,
@@ -42,11 +42,6 @@ const HighlightsSection: React.FC = () => {
   return (
     <section id="categorias" className="bg-white py-20 scroll-mt-28">
       <div className="mx-auto max-w-7xl px-4">
-        <div className="mb-12 text-center">
-          <h2 className="font-body text-3xl font-medium tracking-[0.04em] text-stone-900 sm:text-4xl">
-            Produtos Destaques
-          </h2>
-        </div>
 
         <div className="grid gap-[3px] bg-white md:grid-cols-2">
           {highlights.map((item) => (
@@ -69,7 +64,7 @@ const HighlightsSection: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/25 to-black/10 transition duration-500 group-hover:from-black/65 group-hover:via-black/30 group-focus-visible:from-black/65 group-focus-visible:via-black/30" />
 
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-8 text-center text-white">
-                <p className="max-w-[18ch] text-3xl font-extrabold uppercase leading-tight tracking-[0.06em] drop-shadow-[0_4px_10px_rgba(0,0,0,.45)] sm:text-4xl">
+                <p className="text-3xl font-semibold leading-tight drop-shadow-[0_4px_10px_rgba(0,0,0,.45)]">
                   {item.title}
                 </p>
 

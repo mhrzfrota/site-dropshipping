@@ -17,15 +17,15 @@ const Footer: React.FC = () => {
           <div className="space-y-6">
             <div className="flex items-center gap-2.5">
               <a
-                href="https://wa.me/5511934942311"
+                href="https://wa.me/5581981894816"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="WhatsApp Mar e Mov"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/10 transition hover:bg-white/20"
+                className="flex h-9 w-9 items-center justify-center text-white transition hover:opacity-80"
               >
                 <svg
                   viewBox="0 0 24 24"
-                  className="h-4 w-4"
+                  className="h-6 w-6"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.8"
@@ -42,9 +42,9 @@ const Footer: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram Mar e Mov"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/10 transition hover:bg-white/20"
+                className="flex h-9 w-9 items-center justify-center text-white transition hover:opacity-80"
               >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                   <rect x="4.5" y="4.5" width="15" height="15" rx="4" />
                   <circle cx="12" cy="12" r="3.5" />
                   <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
@@ -55,9 +55,9 @@ const Footer: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Facebook Mar e Mov"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/10 transition hover:bg-white/20"
+                className="flex h-9 w-9 items-center justify-center text-white transition hover:opacity-80"
               >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                   <path d="M14 8h2V5h-2a4 4 0 0 0-4 4v2H8v3h2v5h3v-5h2.2l.8-3H13V9a1 1 0 0 1 1-1Z" />
                 </svg>
               </a>
@@ -90,22 +90,25 @@ const Footer: React.FC = () => {
             <div className="overflow-hidden border border-white/30">
               <iframe
                 title="Mapa Mar e Mov"
-                src="https://www.google.com/maps?q=Recife%20PE&output=embed"
+                src="https://www.google.com/maps?q=Rua%20Costa%20e%20Silva%20116%20C%20Loteamento%20Primavera%20Paudalho%20PE&output=embed"
                 className="h-36 w-full"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
+            <p className="text-xs leading-relaxed text-white/90">
+              10, rua Costa e Silva, 116 C - Loteamento Primavera, Paudalho - PE, 55825-000
+            </p>
           </div>
 
           <div className="space-y-4">
             <p className="text-[15px] font-bold uppercase tracking-[0.05em]">Fale conosco</p>
             <a
-              href="tel:+558530774269"
+              href="tel:+5581981894816"
               className="flex min-h-[32px] items-center gap-2 border border-white/30 bg-[#0000001f] px-3 text-xs font-semibold transition hover:bg-[#0000002c]"
             >
               <span className="text-white/90">WhatsApp</span>
-              <span>(85) 85 3077-4269</span>
+              <span>(81) 98189-4816</span>
             </a>
             <a
               href="mailto:contato@maremov.com.br"
@@ -114,7 +117,7 @@ const Footer: React.FC = () => {
               <span className="text-white/90">Email</span>
               <span>contato@maremov.com.br</span>
             </a>
-            <p className="text-xs text-white/90">Segunda a Sexta das 10h as 19h | Sabado das 10h as 17h</p>
+            <p className="text-xs text-white/90">Horário de atendimento: Segunda a Quinta das 07:30h às 18h | Sexta das 07:30 às 17h</p>
           </div>
 
           <div className="space-y-4 pt-1">
@@ -138,20 +141,50 @@ const Footer: React.FC = () => {
               <span className="inline-flex h-7 items-center rounded border border-white/30 bg-[#0000002b] px-2.5 text-[10px] font-bold tracking-[0.06em] text-white">
                 SITE SEGURO SSL
               </span>
-              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5 text-[10px] font-bold text-slate-800">
-                VISA
+              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5">
+                <img
+                  src="/images/payment-icons/visa.svg"
+                  alt="Visa"
+                  className="h-4 w-auto"
+                  loading="lazy"
+                  decoding="async"
+                />
               </span>
-              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5 text-[10px] font-bold text-slate-800">
-                MASTERCARD
+              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5">
+                <img
+                  src="/images/payment-icons/mastercard.svg"
+                  alt="Mastercard"
+                  className="h-4 w-auto"
+                  loading="lazy"
+                  decoding="async"
+                />
               </span>
-              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5 text-[10px] font-bold text-slate-800">
-                HIPER
+              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5">
+                <img
+                  src="/images/payment-icons/hipercard.svg"
+                  alt="Hipercard"
+                  className="h-4 w-auto"
+                  loading="lazy"
+                  decoding="async"
+                />
               </span>
-              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5 text-[10px] font-bold text-slate-800">
-                ELO
+              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5">
+                <img
+                  src="/images/payment-icons/elo.svg"
+                  alt="Elo"
+                  className="h-4 w-auto"
+                  loading="lazy"
+                  decoding="async"
+                />
               </span>
-              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5 text-[10px] font-bold text-slate-800">
-                PIX
+              <span className="inline-flex h-6 items-center rounded border border-white/30 bg-white px-1.5">
+                <img
+                  src="/images/payment-icons/pix.svg"
+                  alt="Pix"
+                  className="h-4 w-auto"
+                  loading="lazy"
+                  decoding="async"
+                />
               </span>
             </div>
           </div>
@@ -162,3 +195,4 @@ const Footer: React.FC = () => {
 }
 
 export default Footer
+

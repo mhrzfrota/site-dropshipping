@@ -28,8 +28,8 @@ const RhythmSection: React.FC = () => {
     <section className="bg-white py-16">
       <div className="mx-auto max-w-7xl px-4">
         <div className="text-center">
-          <h2 className="font-display text-3xl font-extrabold text-stone-900 sm:text-4xl">
-            Peças que acompanham seu ritmo
+          <h2 className="text-3xl font-semibold text-stone-900 sm:text-4xl">
+            Pe\u00E7as que acompanham seu ritmo
           </h2>
         </div>
 
