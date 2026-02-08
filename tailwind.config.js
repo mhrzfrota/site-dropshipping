@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         display: ['"Fraunces"', 'ui-serif', 'Georgia', 'serif'],
         body: ['"Manrope"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        raleway: ['"Raleway"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         soft: '0 15px 35px rgba(13, 155, 211, 0.12)',

@@ -49,7 +49,7 @@ const HighlightsSection: React.FC = () => {
               key={item.title}
               to={item.href}
               className={`group relative isolate block overflow-hidden bg-stone-100 ${
-                item.featured ? 'aspect-[16/8] md:col-span-2' : 'aspect-[4/5] sm:aspect-[16/11]'
+                item.featured ? 'aspect-[5/2] md:col-span-2' : 'aspect-[8/11] sm:aspect-[4/3]'
               }`}
             >
               <img
@@ -68,11 +68,9 @@ const HighlightsSection: React.FC = () => {
                   {item.title}
                 </p>
 
-                {!item.featured && (
-                  <span className="inline-flex min-h-[42px] translate-y-3 items-center justify-center border border-white/90 px-8 text-sm font-semibold uppercase tracking-[0.08em] text-white opacity-0 transition duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
-                    Ver mais
-                  </span>
-                )}
+                <span className="inline-flex min-h-[42px] translate-y-3 items-center justify-center border border-white/90 px-8 text-sm font-semibold uppercase tracking-[0.08em] text-white opacity-0 transition duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+                  Ver mais
+                </span>
               </div>
             </Link>
           ))}

@@ -145,10 +145,10 @@ const TopBar: React.FC = () => {
     }
   }, [location.pathname])
 
-  const navItemBase = 'text-[14px] font-semibold tracking-[0.08em] text-inherit transition-colors duration-300'
-  const navItemDefault = 'text-inherit opacity-90 hover:opacity-100'
+  const navItemBase = 'text-[14px] font-semibold tracking-[0.08em] text-white transition-colors duration-300'
+  const navItemDefault = 'text-white/90 hover:text-white'
   const navItemAccent =
-    'rounded-full border border-current/75 px-5 py-2 text-[14px] text-inherit transition-colors duration-300 hover:bg-white/20 hover:text-white'
+    'rounded-full border border-white/75 px-5 py-2 text-[14px] text-white transition-colors duration-300 hover:bg-white/20 hover:text-white'
   const iconButtonClass = 'relative flex items-center justify-center text-inherit opacity-90 transition duration-300 hover:opacity-100'
 
   return (
@@ -157,11 +157,11 @@ const TopBar: React.FC = () => {
       className={`group/topbar fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
         isTopBarSolid
           ? 'bg-[#477e8a] text-white'
-          : 'bg-transparent text-[#477e8a] hover:bg-[#477e8a] hover:text-white'
+          : 'bg-transparent text-white hover:bg-[#477e8a] hover:text-white'
       }`}
     >
       <div onMouseLeave={handleMenuMouseLeave}>
-        <div className="relative flex w-full items-center justify-between px-4 py-[13.5px] sm:py-[17px]">
+        <div className="relative flex w-full items-center justify-between px-[22px] py-[13.5px] sm:px-[24px] sm:py-[17px]">
           {/* Left: Navigation */}
           <nav className="hidden items-center gap-6 lg:flex">
             {navItems.map((item) => {
@@ -228,9 +228,9 @@ const TopBar: React.FC = () => {
             <img
               src="/images/logo.svg"
               alt="Logo Mar&Mov"
-              className={`h-[27px] w-auto transition duration-300 sm:h-[31px] ${
-                isTopBarSolid ? 'brightness-0 invert' : 'group-hover/topbar:brightness-0 group-hover/topbar:invert'
-              } ${logoError ? 'hidden' : ''}`}
+              className={`h-[27px] w-auto brightness-0 invert transition duration-300 sm:h-[31px] ${
+                logoError ? 'hidden' : ''
+              }`}
               onError={() => setLogoError(true)}
               loading="eager"
               decoding="async"
@@ -257,7 +257,7 @@ const TopBar: React.FC = () => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
-                className="h-[19px] w-[19px]"
+                className="h-[22px] w-[22px]"
               >
                 <circle cx="11" cy="11" r="7" />
                 <path d="m21 21-4.35-4.35" strokeLinecap="round" />
@@ -277,7 +277,7 @@ const TopBar: React.FC = () => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
-                className="h-[19px] w-[19px]"
+                className="h-[22px] w-[22px]"
               >
                 <circle cx="12" cy="8" r="4" />
                 <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" strokeLinecap="round" />
@@ -297,7 +297,7 @@ const TopBar: React.FC = () => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
-                className="h-[19px] w-[19px]"
+                className="h-[22px] w-[22px]"
               >
                 <path d="M6 6h15l-1.5 9h-12z" strokeLinejoin="round" />
                 <path d="M6 6 5.25 3H3" strokeLinecap="round" strokeLinejoin="round" />

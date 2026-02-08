@@ -1,31 +1,121 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getAllProducts, formatPrice, normalizeSlug, type Product } from '../data/products'
 
 const fallbackImage = '/images/home-hero.png'
 
 const FeaturedProductsSection: React.FC = () => {
-  const products = getAllProducts().slice(0, 4)
+  const products = getAllProducts()
+  const loopedProducts = [...products, ...products, ...products]
+  const carouselRef = useRef<HTMLDivElement | null>(null)
+
+  const normalizeInfiniteScroll = () => {
+    const container = carouselRef.current
+    if (!container) return
+
+    const singleLoopWidth = container.scrollWidth / 3
+    if (!singleLoopWidth) return
+
+    if (container.scrollLeft >= singleLoopWidth * 2) {
+      container.scrollLeft -= singleLoopWidth
+    } else if (container.scrollLeft <= 0) {
+      container.scrollLeft += singleLoopWidth
+    }
+  }
+
+  const setMiddleLoopPosition = () => {
+    const container = carouselRef.current
+    if (!container) return
+
+    const singleLoopWidth = container.scrollWidth / 3
+    if (!singleLoopWidth) return
+
+    container.scrollLeft = singleLoopWidth
+  }
+
+  useEffect(() => {
+    setMiddleLoopPosition()
+    window.addEventListener('resize', setMiddleLoopPosition)
+
+    return () => {
+      window.removeEventListener('resize', setMiddleLoopPosition)
+    }
+  }, [])
+
+  const scrollProducts = (direction: 'prev' | 'next') => {
+    const container = carouselRef.current
+    if (!container) return
+
+    const firstItem = container.querySelector<HTMLElement>('[data-carousel-item]')
+    const itemWidth = firstItem?.getBoundingClientRect().width ?? Math.max(container.clientWidth * 0.25, 220)
+    const styles = window.getComputedStyle(container)
+    const gap = Number.parseFloat(styles.columnGap || styles.gap || '0') || 0
+    const amount = itemWidth + gap
+    const left = direction === 'next' ? amount : -amount
+
+    container.scrollBy({
+      left,
+      behavior: 'smooth',
+    })
+
+    window.setTimeout(() => {
+      normalizeInfiniteScroll()
+    }, 320)
+  }
 
   return (
     <section className="bg-white py-16">
       <div className="mx-auto max-w-[1400px] px-4">
-        <div className="mb-10 text-center">
-          <h2 className="text-2xl font-semibold text-stone-900 sm:text-[1.8rem]">
+        <div className="mb-6 text-center">
+          <h2 className="font-raleway text-2xl font-normal tracking-[0.01em] text-stone-900 sm:text-[2rem]">
             Produtos Destaques
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+        <div className="relative">
+          <button
+            type="button"
+            aria-label="Produtos anteriores"
+            onClick={() => scrollProducts('prev')}
+            className="absolute left-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-[#0a1f3d] bg-white/95 text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            aria-label="Proximos produtos"
+            onClick={() => scrollProducts('next')}
+            className="absolute right-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-[#0a1f3d] bg-white/95 text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          <div
+            ref={carouselRef}
+            onScroll={normalizeInfiniteScroll}
+            className="flex gap-4 overflow-x-hidden scroll-smooth px-14 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {loopedProducts.map((product, index) => (
+              <div
+                key={`${product.id}-${index}`}
+                data-carousel-item
+                className="min-w-0 shrink-0 basis-[calc(50%-0.5rem)] md:basis-[calc(33.333%-0.7rem)] lg:basis-[calc(25%-0.75rem)]"
+              >
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-12 text-center">
+        <div className="mt-8 text-center">
           <Link
             to="/produtos"
-            className="inline-flex min-h-[48px] items-center justify-center border border-[#0a1f3d] px-10 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
+            className="inline-flex min-h-[48px] items-center justify-center border border-[#0a1f3d] px-10 font-body text-[11px] font-semibold uppercase tracking-[0.28em] text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
           >
             Ver todos os produtos
           </Link>
@@ -39,7 +129,7 @@ type ProductCardProps = {
   product: Product
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [secondImageError, setSecondImageError] = useState(false)
 
