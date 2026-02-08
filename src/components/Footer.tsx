@@ -135,7 +135,7 @@ const Footer: React.FC = () => {
 
         <div className="mt-10 border-t border-white/25 pt-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <p className="text-xs text-white/85">(c) Mar&Mov - CNPJ 08.794.548/0001-62 | Vnda - Tecnologia em Ecommerce</p>
+            <p className="text-xs text-white/85">(c) Mar&Mov - MF Services</p>
 
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="inline-flex h-7 items-center rounded border border-white/30 bg-[#0000002b] px-2.5 text-[10px] font-bold tracking-[0.06em] text-white">

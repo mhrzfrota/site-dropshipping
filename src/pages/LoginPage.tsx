@@ -1,15 +1,29 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useToast } from '../context/ToastContext'
 
+const PROFILE_STORAGE_KEY = 'marmov:user-profile'
+
 const LoginPage: React.FC = () => {
+  const navigate = useNavigate()
   const { showToast } = useToast()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    showToast('Login em desenvolvimento.')
+    const profileData = {
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+    }
+
+    window.localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(profileData))
+    window.dispatchEvent(new Event('marmov-profile-updated'))
+    showToast('Login realizado com sucesso.')
+    navigate('/perfil', { state: { profileData } })
   }
 
   return (
@@ -45,6 +59,18 @@ const LoginPage: React.FC = () => {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="seuemail@exemplo.com"
+                className="h-11 w-full border border-stone-300 px-3 text-sm text-[#0a1f3d] outline-none transition focus:border-[#477e8a]"
+                required
+              />
+            </label>
+
+            <label className="block space-y-1">
+              <span className="text-xs font-semibold uppercase tracking-[0.08em] text-stone-500">Celular</span>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(event) => setPhone(event.target.value)}
+                placeholder="(81) 99999-9999"
                 className="h-11 w-full border border-stone-300 px-3 text-sm text-[#0a1f3d] outline-none transition focus:border-[#477e8a]"
                 required
               />

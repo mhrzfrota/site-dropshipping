@@ -22,6 +22,47 @@ type NavItem = {
   sections: NavSection[]
 }
 
+type ProfileData = {
+  name: string
+  email: string
+  phone: string
+}
+
+const PROFILE_STORAGE_KEY = 'marmov:user-profile'
+
+const readStoredProfile = (): ProfileData | null => {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  const raw = window.localStorage.getItem(PROFILE_STORAGE_KEY)
+  if (!raw) {
+    return null
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as Partial<ProfileData>
+    if (!parsed.name || !parsed.email || !parsed.phone) {
+      return null
+    }
+    return {
+      name: parsed.name.trim(),
+      email: parsed.email.trim(),
+      phone: parsed.phone.trim(),
+    }
+  } catch {
+    return null
+  }
+}
+
+const getFirstName = (fullName: string) => {
+  const normalizedName = fullName.trim()
+  if (!normalizedName) {
+    return 'visitante'
+  }
+  return normalizedName.split(/\s+/)[0]
+}
+
 const splitIntoColumns = <T,>(items: T[], columnCount: number) => {
   const columns: T[][] = Array.from({ length: columnCount }, () => [])
   items.forEach((item, index) => {
@@ -43,6 +84,7 @@ const TopBar: React.FC = () => {
   const [mobileOpenItem, setMobileOpenItem] = useState<string | null>(null)
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
   const [isTopBarSolid, setIsTopBarSolid] = useState(location.pathname !== '/')
+  const [loggedProfile, setLoggedProfile] = useState<ProfileData | null>(() => readStoredProfile())
   const { totalItems, toggleCart } = useCart()
   const { showToast } = useToast()
 
@@ -108,6 +150,34 @@ const TopBar: React.FC = () => {
     navigate('/login')
   }
 
+  const handleOpenProfile = () => {
+    setIsProfileMenuOpen(false)
+    navigate('/perfil')
+  }
+
+  const handleOpenOrders = () => {
+    setIsProfileMenuOpen(false)
+    navigate('/perfil#pedidos')
+  }
+
+  const handleLogoutProfile = () => {
+    window.localStorage.removeItem(PROFILE_STORAGE_KEY)
+    window.dispatchEvent(new Event('marmov-profile-updated'))
+    setLoggedProfile(null)
+    setIsProfileMenuOpen(false)
+    showToast('Sessao encerrada.')
+    navigate('/')
+  }
+
+  const handleOpenMobileAccount = () => {
+    setIsMobileMenuOpen(false)
+    if (loggedProfile) {
+      navigate('/perfil')
+      return
+    }
+    navigate('/login')
+  }
+
   const handleMenuMouseLeave = () => {
     setActiveLink(null)
     setLockedLink(null)
@@ -145,7 +215,25 @@ const TopBar: React.FC = () => {
   }, [isProfileMenuOpen])
 
   useEffect(() => {
+    const syncProfile = () => setLoggedProfile(readStoredProfile())
+    window.addEventListener('storage', syncProfile)
+    window.addEventListener('marmov-profile-updated', syncProfile as EventListener)
+
+    return () => {
+      window.removeEventListener('storage', syncProfile)
+      window.removeEventListener('marmov-profile-updated', syncProfile as EventListener)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isProfileMenuOpen) {
+      setLoggedProfile(readStoredProfile())
+    }
+  }, [isProfileMenuOpen])
+
+  useEffect(() => {
     setIsProfileMenuOpen(false)
+    setLoggedProfile(readStoredProfile())
 
     if (location.pathname !== '/') {
       setIsTopBarSolid(true)
@@ -328,46 +416,84 @@ const TopBar: React.FC = () => {
                     className="absolute -top-2 right-6 h-4 w-4 rotate-45 border-l border-t border-[#477e8a]/20 bg-white"
                   />
 
-                  <div className="space-y-2">
-                    <p className="font-raleway text-[23px] font-semibold leading-none text-[#477e8a]">
-                      Olá, visitante
-                    </p>
-                    <p className="text-[11px] leading-snug text-[#477e8a]/85">
-                      Escolha uma das opções abaixo para acessar sua conta.
-                    </p>
-                  </div>
+                  {loggedProfile ? (
+                    <>
+                      <div className="space-y-1.5">
+                        <p className="font-raleway text-[21px] font-semibold leading-none text-[#477e8a]">
+                          Ola, {getFirstName(loggedProfile.name)}
+                        </p>
+                        <p className="text-[11px] leading-snug text-[#477e8a]/85">{loggedProfile.email}</p>
+                        <p className="text-[11px] leading-snug text-[#477e8a]/85">{loggedProfile.phone}</p>
+                      </div>
 
-                  <div className="mt-6 space-y-3">
-                    <button
-                      type="button"
-                      onClick={handleOpenLogin}
-                      className="flex h-14 w-full items-center justify-center rounded-md bg-[#477e8a] text-[13px] font-semibold text-white transition hover:bg-[#3d6f7a]"
-                    >
-                      Entrar com email e senha
-                    </button>
-                    <button
-                      type="button"
-                      className="flex h-14 w-full items-center justify-center rounded-md border border-[#477e8a]/45 bg-white text-[13px] font-semibold text-[#477e8a] transition hover:bg-[#477e8a]/5"
-                    >
-                      Receber código de acesso por email
-                    </button>
-                  </div>
+                      <div className="mt-5 space-y-2.5">
+                        <button
+                          type="button"
+                          onClick={handleOpenProfile}
+                          className="flex h-12 w-full items-center justify-center rounded-md bg-[#477e8a] text-[13px] font-semibold text-white transition hover:bg-[#3d6f7a]"
+                        >
+                          Minha conta
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleOpenOrders}
+                          className="flex h-12 w-full items-center justify-center rounded-md border border-[#477e8a]/45 bg-white text-[13px] font-semibold text-[#477e8a] transition hover:bg-[#477e8a]/5"
+                        >
+                          Meus pedidos
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleLogoutProfile}
+                          className="flex h-12 w-full items-center justify-center rounded-md bg-[#0a1f3d] text-[13px] font-semibold text-white transition hover:bg-[#091734]"
+                        >
+                          Sair
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="space-y-2">
+                        <p className="font-raleway text-[23px] font-semibold leading-none text-[#477e8a]">
+                          Ola, visitante
+                        </p>
+                        <p className="text-[11px] leading-snug text-[#477e8a]/85">
+                          Escolha uma das opcoes abaixo para acessar sua conta.
+                        </p>
+                      </div>
 
-                  <div className="my-5 flex items-center gap-3">
-                    <span className="h-px flex-1 bg-[#477e8a]/20" />
-                    <span className="text-[12px] text-[#477e8a]/75">ou entre com</span>
-                    <span className="h-px flex-1 bg-[#477e8a]/20" />
-                  </div>
+                      <div className="mt-6 space-y-3">
+                        <button
+                          type="button"
+                          onClick={handleOpenLogin}
+                          className="flex h-14 w-full items-center justify-center rounded-md bg-[#477e8a] text-[13px] font-semibold text-white transition hover:bg-[#3d6f7a]"
+                        >
+                          Entrar com email e senha
+                        </button>
+                        <button
+                          type="button"
+                          className="flex h-14 w-full items-center justify-center rounded-md border border-[#477e8a]/45 bg-white text-[13px] font-semibold text-[#477e8a] transition hover:bg-[#477e8a]/5"
+                        >
+                          Receber codigo de acesso por email
+                        </button>
+                      </div>
 
-                  <button
-                    type="button"
-                    className="flex h-14 w-full items-center justify-center gap-3 rounded-md border border-stone-300 bg-white text-[16px] font-semibold text-[#1f2b3a] transition hover:bg-stone-50"
-                  >
-                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-stone-300 text-[12px] font-bold text-[#4285f4]">
-                      G
-                    </span>
-                    Entrar com Google
-                  </button>
+                      <div className="my-5 flex items-center gap-3">
+                        <span className="h-px flex-1 bg-[#477e8a]/20" />
+                        <span className="text-[12px] text-[#477e8a]/75">ou entre com</span>
+                        <span className="h-px flex-1 bg-[#477e8a]/20" />
+                      </div>
+
+                      <button
+                        type="button"
+                        className="flex h-14 w-full items-center justify-center gap-3 rounded-md border border-stone-300 bg-white text-[16px] font-semibold text-[#1f2b3a] transition hover:bg-stone-50"
+                      >
+                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-stone-300 text-[12px] font-bold text-[#4285f4]">
+                          G
+                        </span>
+                        Entrar com Google
+                      </button>
+                    </>
+                  )}
                 </div>
               )}
             </div>
@@ -560,9 +686,7 @@ const TopBar: React.FC = () => {
                 <button type="button" onClick={() => handleSoon('Busca')} className="flex-1 rounded-full border border-current/35 py-3 text-sm font-semibold text-inherit opacity-90 transition hover:bg-white/20 hover:opacity-100">
                   Buscar
                 </button>
-                <button type="button" onClick={() => handleSoon('Perfil')} className="flex-1 rounded-full border border-current/35 py-3 text-sm font-semibold text-inherit opacity-90 transition hover:bg-white/20 hover:opacity-100">
-                  Conta
-                </button>
+                <button type="button" onClick={handleOpenMobileAccount} className="flex-1 rounded-full border border-current/35 py-3 text-sm font-semibold text-inherit opacity-90 transition hover:bg-white/20 hover:opacity-100">{loggedProfile ? 'Minha conta' : 'Conta'}</button>
               </div>
             </div>
           </div>
