@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useToast } from '../context/ToastContext'
 import { getAllProducts, normalizeSlug } from '../data/products'
@@ -32,12 +32,16 @@ const splitIntoColumns = <T,>(items: T[], columnCount: number) => {
 
 const TopBar: React.FC = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const headerRef = useRef<HTMLElement | null>(null)
+  const profileButtonRef = useRef<HTMLButtonElement | null>(null)
+  const profileMenuRef = useRef<HTMLDivElement | null>(null)
   const [activeLink, setActiveLink] = useState<string | null>(null)
   const [lockedLink, setLockedLink] = useState<string | null>(null)
   const [logoError, setLogoError] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mobileOpenItem, setMobileOpenItem] = useState<string | null>(null)
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
   const [isTopBarSolid, setIsTopBarSolid] = useState(location.pathname !== '/')
   const { totalItems, toggleCart } = useCart()
   const { showToast } = useToast()
@@ -99,6 +103,11 @@ const TopBar: React.FC = () => {
     showToast(`${label} em breve.`)
   }
 
+  const handleOpenLogin = () => {
+    setIsProfileMenuOpen(false)
+    navigate('/login')
+  }
+
   const handleMenuMouseLeave = () => {
     setActiveLink(null)
     setLockedLink(null)
@@ -110,6 +119,7 @@ const TopBar: React.FC = () => {
         setActiveLink(null)
         setLockedLink(null)
         setIsMobileMenuOpen(false)
+        setIsProfileMenuOpen(false)
       }
     }
 
@@ -118,6 +128,25 @@ const TopBar: React.FC = () => {
   }, [])
 
   useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node
+      if (profileMenuRef.current?.contains(target)) return
+      if (profileButtonRef.current?.contains(target)) return
+      setIsProfileMenuOpen(false)
+    }
+
+    if (isProfileMenuOpen) {
+      window.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      window.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isProfileMenuOpen])
+
+  useEffect(() => {
+    setIsProfileMenuOpen(false)
+
     if (location.pathname !== '/') {
       setIsTopBarSolid(true)
       return
@@ -265,24 +294,83 @@ const TopBar: React.FC = () => {
             </button>
 
             {/* User */}
-            <button
-              type="button"
-              aria-label="Conta"
-              onClick={() => handleSoon('Perfil')}
-              className={`${iconButtonClass} hidden sm:flex`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                className="h-[22px] w-[22px]"
+            <div className="relative hidden sm:block">
+              <button
+                ref={profileButtonRef}
+                type="button"
+                aria-label="Conta"
+                onClick={() => setIsProfileMenuOpen((prev) => !prev)}
+                className={`${iconButtonClass} flex`}
+                aria-expanded={isProfileMenuOpen}
+                aria-controls="profile-menu"
               >
-                <circle cx="12" cy="8" r="4" />
-                <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" strokeLinecap="round" />
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  className="h-[22px] w-[22px]"
+                >
+                  <circle cx="12" cy="8" r="4" />
+                  <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" strokeLinecap="round" />
+                </svg>
+              </button>
+
+              {isProfileMenuOpen && (
+                <div
+                  id="profile-menu"
+                  ref={profileMenuRef}
+                  className="absolute right-0 top-[calc(100%+14px)] z-[90] w-[360px] max-w-[calc(100vw-2rem)] rounded-2xl border border-[#477e8a]/20 bg-white p-6 text-[#1a2430] shadow-[0_22px_50px_rgba(10,31,61,0.24)]"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="absolute -top-2 right-6 h-4 w-4 rotate-45 border-l border-t border-[#477e8a]/20 bg-white"
+                  />
+
+                  <div className="space-y-2">
+                    <p className="font-raleway text-[23px] font-semibold leading-none text-[#477e8a]">
+                      Olá, visitante
+                    </p>
+                    <p className="text-[11px] leading-snug text-[#477e8a]/85">
+                      Escolha uma das opções abaixo para acessar sua conta.
+                    </p>
+                  </div>
+
+                  <div className="mt-6 space-y-3">
+                    <button
+                      type="button"
+                      onClick={handleOpenLogin}
+                      className="flex h-14 w-full items-center justify-center rounded-md bg-[#477e8a] text-[13px] font-semibold text-white transition hover:bg-[#3d6f7a]"
+                    >
+                      Entrar com email e senha
+                    </button>
+                    <button
+                      type="button"
+                      className="flex h-14 w-full items-center justify-center rounded-md border border-[#477e8a]/45 bg-white text-[13px] font-semibold text-[#477e8a] transition hover:bg-[#477e8a]/5"
+                    >
+                      Receber código de acesso por email
+                    </button>
+                  </div>
+
+                  <div className="my-5 flex items-center gap-3">
+                    <span className="h-px flex-1 bg-[#477e8a]/20" />
+                    <span className="text-[12px] text-[#477e8a]/75">ou entre com</span>
+                    <span className="h-px flex-1 bg-[#477e8a]/20" />
+                  </div>
+
+                  <button
+                    type="button"
+                    className="flex h-14 w-full items-center justify-center gap-3 rounded-md border border-stone-300 bg-white text-[16px] font-semibold text-[#1f2b3a] transition hover:bg-stone-50"
+                  >
+                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-stone-300 text-[12px] font-bold text-[#4285f4]">
+                      G
+                    </span>
+                    Entrar com Google
+                  </button>
+                </div>
+              )}
+            </div>
 
             {/* Cart */}
             <button

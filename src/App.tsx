@@ -4,6 +4,7 @@ import SiteLayout from './layouts/SiteLayout'
 import BrandPage from './pages/BrandPage'
 import CategoryPage from './pages/CategoryPage'
 import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
 import NotFoundPage from './pages/NotFoundPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import ProductsPage from './pages/ProductsPage'
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <Route path="categoria/:slug" element={<CategoryPage />} />
         <Route path="marca/:slug" element={<BrandPage />} />
         <Route path="produto/:slug" element={<ProductDetailPage />} />
+        <Route path="login" element={<LoginPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

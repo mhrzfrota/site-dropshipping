@@ -29,7 +29,7 @@ const RhythmSection: React.FC = () => {
       <div className="mx-auto max-w-7xl px-4">
         <div className="text-center">
           <h2 className="text-3xl font-semibold text-stone-900 sm:text-4xl">
-            Pe\u00E7as que acompanham seu ritmo
+            Peças que acompanham seu ritmo
           </h2>
         </div>
 

@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
               >
                 <svg
                   viewBox="0 0 24 24"
-                  className="h-6 w-6"
+                  className="h-[31px] w-[31px]"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.8"
@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
                 aria-label="Instagram Mar e Mov"
                 className="flex h-9 w-9 items-center justify-center text-white transition hover:opacity-80"
               >
-                <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                <svg viewBox="0 0 24 24" className="h-[31px] w-[31px]" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                   <rect x="4.5" y="4.5" width="15" height="15" rx="4" />
                   <circle cx="12" cy="12" r="3.5" />
                   <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
                 aria-label="Facebook Mar e Mov"
                 className="flex h-9 w-9 items-center justify-center text-white transition hover:opacity-80"
               >
-                <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                <svg viewBox="0 0 24 24" className="h-[31px] w-[31px]" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                   <path d="M14 8h2V5h-2a4 4 0 0 0-4 4v2H8v3h2v5h3v-5h2.2l.8-3H13V9a1 1 0 0 1 1-1Z" />
                 </svg>
               </a>
