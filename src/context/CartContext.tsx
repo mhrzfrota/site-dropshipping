@@ -83,6 +83,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       if (existing) {
         return {
           ...state,
+          isOpen: true,
           items: state.items.map((item) =>
             item.id === itemId ? { ...item, qty: item.qty + nextQty } : item,
           ),
@@ -104,6 +105,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 
       return {
         ...state,
+        isOpen: true,
         items: [...state.items, newItem],
       }
     }

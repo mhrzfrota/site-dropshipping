@@ -108,20 +108,20 @@ const CartDrawer: React.FC = () => {
         className="absolute inset-0 bg-black/40"
         onClick={handleCloseDrawer}
       />
-      <aside className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-white shadow-2xl">
+      <aside className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-white shadow-2xl">
         <div className="flex items-center justify-between border-b border-stone-200 px-6 py-5">
           <div>
             <p className="text-xs font-semibold tracking-[0.12em] text-stone-600">Carrinho</p>
             <h2 className="text-xl font-bold text-stone-800">Seu carrinho</h2>
           </div>
-          <button type="button" onClick={handleCloseDrawer} className="btn-secondary px-4">
+          <button type="button" onClick={handleCloseDrawer} className="btn-secondary !rounded-none px-4">
             Fechar
           </button>
         </div>
 
         <div className="flex-1 space-y-4 overflow-y-auto px-6 py-5">
           {items.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-stone-200 bg-stone-50 px-5 py-8 text-center">
+            <div className="rounded-none border border-dashed border-stone-200 bg-stone-50 px-5 py-8 text-center">
               <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-aqua/20 text-brand-deep">
                 <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
                   <path
@@ -146,7 +146,7 @@ const CartDrawer: React.FC = () => {
               <p className="mt-2 text-sm text-stone-600">
                 Que tal começar pelos lançamentos mais desejados da Mar&Mov?
               </p>
-              <Link to="/produtos" onClick={handleCloseDrawer} className="btn-secondary mt-4">
+              <Link to="/produtos" onClick={handleCloseDrawer} className="btn-secondary !rounded-none mt-4">
                 Explorar produtos
               </Link>
             </div>
@@ -157,12 +157,12 @@ const CartDrawer: React.FC = () => {
                 .join(' / ')
 
               return (
-                <div key={item.id} className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
+                <div key={item.id} className="rounded-none border border-stone-200 bg-white p-4 shadow-sm">
                   <div className="flex gap-4">
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="h-16 w-16 rounded-xl object-cover"
+                      className="h-16 w-16 rounded-none object-cover"
                       onError={handleImageError}
                       loading="lazy"
                       decoding="async"
@@ -178,7 +178,7 @@ const CartDrawer: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => updateQty(item.id, Math.max(1, item.qty - 1))}
-                            className="flex h-8 w-8 items-center justify-center rounded-full border border-stone-200 text-sm font-semibold text-stone-600 transition hover:border-stone-400"
+                            className="flex h-8 w-8 items-center justify-center rounded-none border border-stone-200 text-sm font-semibold text-stone-600 transition hover:border-stone-400"
                             aria-label="Diminuir quantidade"
                           >
                             -
@@ -187,7 +187,7 @@ const CartDrawer: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => updateQty(item.id, item.qty + 1)}
-                            className="flex h-8 w-8 items-center justify-center rounded-full border border-stone-200 text-sm font-semibold text-stone-600 transition hover:border-stone-400"
+                            className="flex h-8 w-8 items-center justify-center rounded-none border border-stone-200 text-sm font-semibold text-stone-600 transition hover:border-stone-400"
                             aria-label="Aumentar quantidade"
                           >
                             +
@@ -214,7 +214,7 @@ const CartDrawer: React.FC = () => {
         </div>
 
         <div className="border-t border-stone-200 bg-stone-50/80 px-6 py-5">
-          <div className="rounded-2xl border border-stone-200 bg-white px-4 py-4">
+          <div className="rounded-none border border-stone-200 bg-white px-4 py-4">
             <div className="flex items-center justify-between text-sm text-stone-600">
               <span>Itens ({totalItems})</span>
               <button
@@ -232,11 +232,11 @@ const CartDrawer: React.FC = () => {
             </div>
           </div>
 
-          <div className="mt-4 rounded-2xl border border-stone-200 bg-white px-4 py-4">
+          <div className="mt-4 rounded-none border border-stone-200 bg-white px-4 py-4">
             <button
               type="button"
               onClick={handleOpenCheckout}
-              className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60"
+              className="btn-primary !rounded-none w-full disabled:cursor-not-allowed disabled:opacity-60"
               aria-disabled={items.length === 0}
               disabled={items.length === 0}
             >
@@ -260,7 +260,7 @@ const CartDrawer: React.FC = () => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="checkout-title"
-            className="relative w-full max-w-md rounded-3xl bg-white shadow-2xl"
+            className="relative w-full max-w-md rounded-none bg-white shadow-2xl"
           >
             <div className="flex items-start justify-between border-b border-stone-200 px-6 py-5">
               <div>
@@ -269,7 +269,7 @@ const CartDrawer: React.FC = () => {
                   Finalizar pedido
                 </h3>
               </div>
-              <button type="button" onClick={handleCloseCheckout} className="btn-secondary px-4">
+              <button type="button" onClick={handleCloseCheckout} className="btn-secondary !rounded-none px-4">
                 Fechar
               </button>
             </div>
@@ -287,7 +287,7 @@ const CartDrawer: React.FC = () => {
                     setFormError('')
                   }}
                   placeholder="Seu nome completo"
-                  className="mt-2 w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm text-stone-800 shadow-sm focus:border-brand-ocean focus:outline-none focus:ring-2 focus:ring-brand-ocean/30"
+                  className="mt-2 w-full rounded-none border border-stone-200 px-4 py-3 text-sm text-stone-800 shadow-sm focus:border-brand-ocean focus:outline-none focus:ring-2 focus:ring-brand-ocean/30"
                 />
               </div>
               <div>
@@ -301,7 +301,7 @@ const CartDrawer: React.FC = () => {
                     setPaymentMethod(event.target.value)
                     setFormError('')
                   }}
-                  className="mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-800 shadow-sm focus:border-brand-ocean focus:outline-none focus:ring-2 focus:ring-brand-ocean/30"
+                  className="mt-2 w-full rounded-none border border-stone-200 bg-white px-4 py-3 text-sm text-stone-800 shadow-sm focus:border-brand-ocean focus:outline-none focus:ring-2 focus:ring-brand-ocean/30"
                 >
                   <option value="">Selecione</option>
                   <option value="Pix">Pix</option>
@@ -310,7 +310,7 @@ const CartDrawer: React.FC = () => {
                 </select>
               </div>
               {formError && (
-                <p className="rounded-2xl bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-600">
+                <p className="rounded-none bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-600">
                   {formError}
                 </p>
               )}
@@ -318,10 +318,10 @@ const CartDrawer: React.FC = () => {
                 Você será redirecionado para o WhatsApp com a mensagem pronta.
               </p>
               <div className="flex flex-col gap-3 pt-2 sm:flex-row">
-                <button type="button" onClick={handleCloseCheckout} className="btn-secondary flex-1">
+                <button type="button" onClick={handleCloseCheckout} className="btn-secondary !rounded-none flex-1">
                   Cancelar
                 </button>
-                <button type="submit" className="btn-primary flex-1">
+                <button type="submit" className="btn-primary !rounded-none flex-1">
                   Enviar no WhatsApp
                 </button>
               </div>

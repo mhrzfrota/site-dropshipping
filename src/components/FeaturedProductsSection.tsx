@@ -64,62 +64,62 @@ const FeaturedProductsSection: React.FC = () => {
   }
 
   return (
-    <section className="bg-white py-16">
+    <section className="bg-white py-14">
       <div className="mx-auto max-w-[1400px] px-4">
         <div className="mb-6 text-center">
           <h2 className="font-raleway text-2xl font-normal tracking-[0.01em] text-stone-900 sm:text-[2rem]">
             Produtos Destaques
           </h2>
         </div>
+      </div>
 
-        <div className="relative">
-          <button
-            type="button"
-            aria-label="Produtos anteriores"
-            onClick={() => scrollProducts('prev')}
-            className="absolute left-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-[#0a1f3d] bg-white/95 text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
-          >
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
+      <div className="relative w-full">
+        <button
+          type="button"
+          aria-label="Produtos anteriores"
+          onClick={() => scrollProducts('prev')}
+          className="absolute left-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-[#0a1f3d] bg-white/95 text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
+        >
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
 
-          <button
-            type="button"
-            aria-label="Proximos produtos"
-            onClick={() => scrollProducts('next')}
-            className="absolute right-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-[#0a1f3d] bg-white/95 text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
-          >
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
+        <button
+          type="button"
+          aria-label="Proximos produtos"
+          onClick={() => scrollProducts('next')}
+          className="absolute right-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-[#0a1f3d] bg-white/95 text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
+        >
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
 
-          <div
-            ref={carouselRef}
-            onScroll={normalizeInfiniteScroll}
-            className="flex gap-4 overflow-x-hidden scroll-smooth px-14 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {loopedProducts.map((product, index) => (
-              <div
-                key={`${product.id}-${index}`}
-                data-carousel-item
-                className="min-w-0 shrink-0 basis-[calc(50%-0.5rem)] md:basis-[calc(33.333%-0.7rem)] lg:basis-[calc(25%-0.75rem)]"
-              >
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
+        <div
+          ref={carouselRef}
+          onScroll={normalizeInfiniteScroll}
+          className="flex gap-4 overflow-x-hidden scroll-smooth px-0 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {loopedProducts.map((product, index) => (
+            <div
+              key={`${product.id}-${index}`}
+              data-carousel-item
+              className="min-w-0 shrink-0 basis-[51%] sm:basis-[44%] md:basis-[34%] lg:basis-[26%]"
+            >
+              <ProductCard product={product} />
+            </div>
+          ))}
         </div>
+      </div>
 
-        <div className="mt-8 text-center">
-          <Link
-            to="/produtos"
-            className="inline-flex min-h-[48px] items-center justify-center border border-[#0a1f3d] px-10 font-body text-[11px] font-semibold uppercase tracking-[0.28em] text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
-          >
-            Ver todos os produtos
-          </Link>
-        </div>
+      <div className="mx-auto mt-8 max-w-[1400px] px-4 text-center">
+        <Link
+          to="/produtos"
+          className="inline-flex min-h-[48px] items-center justify-center border border-[#0a1f3d] px-10 font-body text-[11px] font-semibold uppercase tracking-[0.28em] text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
+        >
+          Ver todos os produtos
+        </Link>
       </div>
     </section>
   )

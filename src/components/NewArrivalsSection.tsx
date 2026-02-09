@@ -19,10 +19,10 @@ const NewArrivalsSection: React.FC = () => {
   const items = productTabs[activeTab]
 
   return (
-    <section id="vitrine" className="bg-white pt-8 pb-16 scroll-mt-28">
+    <section id="vitrine" className="bg-white pt-4 pb-16 scroll-mt-28">
       <div className="mx-auto max-w-7xl px-3 sm:px-4">
         <div className="text-center">
-          <h2 className="text-2xl font-semibold text-stone-900 sm:text-[1.8rem]">
+          <h2 className="font-raleway text-2xl font-normal tracking-[0.01em] text-stone-900 sm:text-[2rem]">
             Novidades
           </h2>
         </div>
