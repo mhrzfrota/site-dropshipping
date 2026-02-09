@@ -7,6 +7,7 @@ import { getAllProducts, normalizeSlug } from '../data/products'
 type NavSubItem = {
   label: string
   href: string
+  logoSrc?: string
 }
 
 type NavSection = {
@@ -71,6 +72,16 @@ const splitIntoColumns = <T,>(items: T[], columnCount: number) => {
   return columns
 }
 
+const brandLogoMap: Record<string, string> = {
+  cocci: '/images/cocci.png',
+  lupo: '/images/lupo.png',
+  marina: '/images/marina.png',
+  onda: '/images/onda.png',
+  'mar-mov': '/images/logo.svg',
+}
+
+const getBrandLogo = (brandSlug: string) => brandLogoMap[brandSlug] ?? '/images/logo.svg'
+
 const TopBar: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
@@ -120,6 +131,7 @@ const TopBar: React.FC = () => {
           items: column.map((brand) => ({
             label: brand.label,
             href: `/marca/${brand.slug}`,
+            logoSrc: getBrandLogo(brand.slug),
           })),
         })),
       },
@@ -140,6 +152,7 @@ const TopBar: React.FC = () => {
   const currentActiveLink = lockedLink ?? activeLink
   const activeItem = useMemo(() => navItems.find((item) => item.label === currentActiveLink), [currentActiveLink, navItems])
   const showMegaMenu = activeItem ? activeItem.sections.length > 0 : false
+  const isBrandMenu = activeItem?.label === 'MARCAS'
 
   const handleSoon = (label: string) => {
     showToast(`${label} em breve.`)
@@ -574,32 +587,60 @@ const TopBar: React.FC = () => {
             onMouseLeave={handleMenuMouseLeave}
           >
             <div className="mx-auto grid max-w-3xl gap-4 px-4 py-6">
-              <div
-                className={`grid gap-6 ${
-                  activeItem.sections.length > 2 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2'
-                }`}
-              >
-                {activeItem.sections.map((section) => (
-                  <div key={section.title} className="space-y-3">
-                    <p className="text-xs font-semibold uppercase tracking-[0.1em] text-inherit opacity-70">{section.title}</p>
-                    <div className="space-y-2">
-                      {section.items.map((subItem) => (
-                        <Link
-                          key={subItem.label}
-                          to={subItem.href}
-                          className="block text-sm text-inherit opacity-85 transition hover:opacity-100"
-                          onClick={() => {
-                            setActiveLink(null)
-                            setLockedLink(null)
-                          }}
-                        >
-                          {subItem.label}
-                        </Link>
-                      ))}
+              {isBrandMenu ? (
+                <div className="no-scrollbar flex items-center gap-8 overflow-x-auto px-2 pb-1">
+                  {activeItem.sections.flatMap((section) =>
+                    section.items.map((subItem) => (
+                      <Link
+                        key={subItem.label}
+                        to={subItem.href}
+                        className="flex h-14 shrink-0 items-center justify-center px-2 opacity-95 transition hover:opacity-100"
+                        onClick={() => {
+                          setActiveLink(null)
+                          setLockedLink(null)
+                        }}
+                        aria-label={subItem.label}
+                        title={subItem.label}
+                      >
+                        <img
+                          src={subItem.logoSrc ?? '/images/logo.svg'}
+                          alt={subItem.label}
+                          className="max-h-10 w-auto object-contain"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </Link>
+                    )),
+                  )}
+                </div>
+              ) : (
+                <div
+                  className={`grid gap-6 ${
+                    activeItem.sections.length > 2 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2'
+                  }`}
+                >
+                  {activeItem.sections.map((section) => (
+                    <div key={section.title} className="space-y-3">
+                      <p className="text-xs font-semibold uppercase tracking-[0.1em] text-inherit opacity-70">{section.title}</p>
+                      <div className="space-y-2">
+                        {section.items.map((subItem) => (
+                          <Link
+                            key={subItem.label}
+                            to={subItem.href}
+                            className="block text-sm text-inherit opacity-85 transition hover:opacity-100"
+                            onClick={() => {
+                              setActiveLink(null)
+                              setLockedLink(null)
+                            }}
+                          >
+                            {subItem.label}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -654,28 +695,56 @@ const TopBar: React.FC = () => {
                     </button>
                     {isOpen && (
                       <div className="space-y-4 pb-2 pt-2">
-                        {item.sections.map((section) => (
-                          <div key={section.title} className="space-y-2">
-                            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-inherit opacity-70">
-                              {section.title}
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                              {section.items.map((subItem) => (
+                        {item.label === 'MARCAS' ? (
+                          <div className="no-scrollbar flex items-center gap-4 overflow-x-auto pb-1">
+                            {item.sections.flatMap((section) =>
+                              section.items.map((subItem) => (
                                 <Link
                                   key={subItem.label}
                                   to={subItem.href}
-                                  className="text-sm text-inherit opacity-85 transition hover:opacity-100"
+                                  className="flex h-12 shrink-0 items-center justify-center px-2"
                                   onClick={() => {
                                     setIsMobileMenuOpen(false)
                                     setMobileOpenItem(null)
                                   }}
+                                  aria-label={subItem.label}
+                                  title={subItem.label}
                                 >
-                                  {subItem.label}
+                                  <img
+                                    src={subItem.logoSrc ?? '/images/logo.svg'}
+                                    alt={subItem.label}
+                                    className="max-h-8 w-auto object-contain"
+                                    loading="lazy"
+                                    decoding="async"
+                                  />
                                 </Link>
-                              ))}
-                            </div>
+                              )),
+                            )}
                           </div>
-                        ))}
+                        ) : (
+                          item.sections.map((section) => (
+                            <div key={section.title} className="space-y-2">
+                              <p className="text-xs font-semibold uppercase tracking-[0.1em] text-inherit opacity-70">
+                                {section.title}
+                              </p>
+                              <div className="flex flex-wrap gap-2">
+                                {section.items.map((subItem) => (
+                                  <Link
+                                    key={subItem.label}
+                                    to={subItem.href}
+                                    className="text-sm text-inherit opacity-85 transition hover:opacity-100"
+                                    onClick={() => {
+                                      setIsMobileMenuOpen(false)
+                                      setMobileOpenItem(null)
+                                    }}
+                                  >
+                                    {subItem.label}
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          ))
+                        )}
                       </div>
                     )}
                   </div>
