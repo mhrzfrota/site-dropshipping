@@ -5,6 +5,7 @@ import HeroSection from '../components/HeroSection'
 import HighlightsSection from '../components/HighlightsSection'
 import NewArrivalsSection from '../components/NewArrivalsSection'
 import RhythmSection from '../components/RhythmSection'
+import TestimonialsSection from '../components/TestimonialsSection'
 
 const HomePage: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const HomePage: React.FC = () => {
       <BenefitsStripSection />
       <FeaturedProductsSection />
       <HighlightsSection />
+      <TestimonialsSection />
       <NewArrivalsSection />
       <RhythmSection />
     </>
