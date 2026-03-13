@@ -1,13 +1,46 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useToast } from '../context/ToastContext'
+import { formatPrice } from '../data/products'
 
 const PROFILE_STORAGE_KEY = 'marmov:user-profile'
+const ORDERS_STORAGE_KEY = 'marmov:orders'
 
 type LoginProfileData = {
   name: string
   email: string
   phone: string
+}
+
+type SavedOrder = {
+  id: string
+  date: string
+  customerName: string
+  paymentMethod: string
+  items: {
+    name: string
+    brand: string
+    qty: number
+    price: number
+    size?: string
+    color?: string
+  }[]
+  subtotal: number
+}
+
+const loadOrders = (): SavedOrder[] => {
+  const raw = window.localStorage.getItem(ORDERS_STORAGE_KEY)
+  if (!raw) return []
+  try {
+    return JSON.parse(raw) as SavedOrder[]
+  } catch {
+    return []
+  }
+}
+
+const formatDate = (iso: string) => {
+  const d = new Date(iso)
+  return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
 }
 
 type FormValues = {
@@ -84,6 +117,7 @@ const ProfilePage: React.FC = () => {
   const [isOrdersOpen, setIsOrdersOpen] = useState(true)
   const [isPasswordOpen, setIsPasswordOpen] = useState(false)
   const [formValues, setFormValues] = useState<FormValues>(() => getInitialValues(location.state as LocationState | null))
+  const [orders] = useState<SavedOrder[]>(() => loadOrders())
 
   const fullName = `${formValues.firstName} ${formValues.lastName}`.trim()
 
@@ -307,8 +341,44 @@ const ProfilePage: React.FC = () => {
             </button>
 
             {isOrdersOpen && (
-              <div className="border-t border-stone-200 px-4 py-12 text-center text-base text-[#0a1f3d]">
-                Voce ainda nao realizou nenhum pedido.
+              <div className="border-t border-stone-200 p-4">
+                {orders.length === 0 ? (
+                  <p className="py-8 text-center text-sm text-stone-500">
+                    Você ainda não realizou nenhum pedido.
+                  </p>
+                ) : (
+                  <div className="space-y-4">
+                    {orders.map((order) => (
+                      <div key={order.id} className="rounded border border-stone-200 bg-stone-50 p-4 text-sm">
+                        <div className="flex items-center justify-between mb-3">
+                          <div>
+                            <p className="font-semibold text-[#0a1f3d]">{order.id}</p>
+                            <p className="text-xs text-stone-500">{formatDate(order.date)}</p>
+                          </div>
+                          <span className="rounded-full bg-[#477e8a]/15 px-3 py-1 text-xs font-semibold text-[#477e8a]">
+                            Enviado via WhatsApp
+                          </span>
+                        </div>
+                        <div className="space-y-1 mb-3">
+                          {order.items.map((item, i) => (
+                            <div key={i} className="flex items-center justify-between text-xs text-stone-600">
+                              <span>
+                                {item.qty}× {item.name}
+                                {item.size ? ` (${item.size})` : ''}
+                                {item.color ? ` / ${item.color}` : ''}
+                              </span>
+                              <span className="font-medium text-[#0a1f3d]">{formatPrice(item.price * item.qty)}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex items-center justify-between border-t border-stone-200 pt-2">
+                          <span className="text-xs text-stone-500">Pagamento: {order.paymentMethod}</span>
+                          <span className="font-bold text-[#0a1f3d]">{formatPrice(order.subtotal)}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </article>

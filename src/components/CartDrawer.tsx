@@ -3,6 +3,31 @@ import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { formatPrice } from '../data/products'
 
+const ORDERS_STORAGE_KEY = 'marmov:orders'
+
+type SavedOrder = {
+  id: string
+  date: string
+  customerName: string
+  paymentMethod: string
+  items: {
+    name: string
+    brand: string
+    qty: number
+    price: number
+    size?: string
+    color?: string
+  }[]
+  subtotal: number
+}
+
+const saveOrder = (order: SavedOrder) => {
+  const raw = window.localStorage.getItem(ORDERS_STORAGE_KEY)
+  const existing: SavedOrder[] = raw ? (JSON.parse(raw) as SavedOrder[]) : []
+  existing.unshift(order)
+  window.localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(existing))
+}
+
 const CartDrawer: React.FC = () => {
   const { items, isOpen, closeCart, removeItem, updateQty, subtotal, totalItems, clearCart } = useCart()
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
@@ -88,6 +113,24 @@ const CartDrawer: React.FC = () => {
     const message = buildWhatsappMessage(trimmedName, paymentMethod)
     const whatsappUrl = `https://wa.me/5511934942311?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
+
+    const order: SavedOrder = {
+      id: `ORD-${Date.now()}`,
+      date: new Date().toISOString(),
+      customerName: trimmedName,
+      paymentMethod,
+      items: items.map((item) => ({
+        name: item.name,
+        brand: item.brand,
+        qty: item.qty,
+        price: item.price,
+        size: item.size,
+        color: item.color,
+      })),
+      subtotal,
+    }
+    saveOrder(order)
+
     handleCloseCheckout()
   }
 

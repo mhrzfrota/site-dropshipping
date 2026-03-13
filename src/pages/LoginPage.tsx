@@ -4,6 +4,16 @@ import { useToast } from '../context/ToastContext'
 
 const PROFILE_STORAGE_KEY = 'marmov:user-profile'
 
+const formatPhone = (value: string) => {
+  const digits = value.replace(/\D/g, '').slice(0, 11)
+  if (digits.length <= 2) return digits
+  if (digits.length <= 7) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
+  if (digits.length <= 11) return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`
+  return digits
+}
+
+const validateEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())
+
 const LoginPage: React.FC = () => {
   const navigate = useNavigate()
   const { showToast } = useToast()
@@ -11,9 +21,34 @@ const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const validate = () => {
+    const newErrors: Record<string, string> = {}
+    if (!name.trim() || name.trim().length < 2) {
+      newErrors.name = 'Informe seu nome completo.'
+    }
+    if (!validateEmail(email)) {
+      newErrors.email = 'Informe um email válido.'
+    }
+    const digits = phone.replace(/\D/g, '')
+    if (digits.length < 10) {
+      newErrors.phone = 'Informe um telefone com DDD.'
+    }
+    if (password.length < 6) {
+      newErrors.password = 'A senha deve ter pelo menos 6 caracteres.'
+    }
+    return newErrors
+  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    const newErrors = validate()
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+
     const profileData = {
       name: name.trim(),
       email: email.trim(),
@@ -25,6 +60,13 @@ const LoginPage: React.FC = () => {
     showToast('Login realizado com sucesso.')
     navigate('/perfil', { state: { profileData } })
   }
+
+  const clearError = (field: string) =>
+    setErrors((prev) => {
+      const next = { ...prev }
+      delete next[field]
+      return next
+    })
 
   return (
     <section className="bg-brand-sand py-20 pt-28">
@@ -39,54 +81,54 @@ const LoginPage: React.FC = () => {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <label className="block space-y-1">
-              <span className="text-xs font-semibold uppercase tracking-[0.08em] text-stone-500">Nome</span>
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-stone-500">Nome</label>
               <input
                 type="text"
                 value={name}
-                onChange={(event) => setName(event.target.value)}
-                placeholder="Seu nome"
-                className="h-11 w-full border border-stone-300 px-3 text-sm text-[#0a1f3d] outline-none transition focus:border-[#477e8a]"
-                required
+                onChange={(event) => { setName(event.target.value); clearError('name') }}
+                placeholder="Seu nome completo"
+                className={`h-11 w-full border px-3 text-sm text-[#0a1f3d] outline-none transition ${errors.name ? 'border-rose-400 focus:border-rose-500' : 'border-stone-300 focus:border-[#477e8a]'}`}
               />
-            </label>
+              {errors.name && <p className="text-xs text-rose-500">{errors.name}</p>}
+            </div>
 
-            <label className="block space-y-1">
-              <span className="text-xs font-semibold uppercase tracking-[0.08em] text-stone-500">Email</span>
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-stone-500">Email</label>
               <input
                 type="email"
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={(event) => { setEmail(event.target.value); clearError('email') }}
                 placeholder="seuemail@exemplo.com"
-                className="h-11 w-full border border-stone-300 px-3 text-sm text-[#0a1f3d] outline-none transition focus:border-[#477e8a]"
-                required
+                className={`h-11 w-full border px-3 text-sm text-[#0a1f3d] outline-none transition ${errors.email ? 'border-rose-400 focus:border-rose-500' : 'border-stone-300 focus:border-[#477e8a]'}`}
               />
-            </label>
+              {errors.email && <p className="text-xs text-rose-500">{errors.email}</p>}
+            </div>
 
-            <label className="block space-y-1">
-              <span className="text-xs font-semibold uppercase tracking-[0.08em] text-stone-500">Celular</span>
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-stone-500">Celular</label>
               <input
                 type="tel"
                 value={phone}
-                onChange={(event) => setPhone(event.target.value)}
+                onChange={(event) => { setPhone(formatPhone(event.target.value)); clearError('phone') }}
                 placeholder="(81) 99999-9999"
-                className="h-11 w-full border border-stone-300 px-3 text-sm text-[#0a1f3d] outline-none transition focus:border-[#477e8a]"
-                required
+                className={`h-11 w-full border px-3 text-sm text-[#0a1f3d] outline-none transition ${errors.phone ? 'border-rose-400 focus:border-rose-500' : 'border-stone-300 focus:border-[#477e8a]'}`}
               />
-            </label>
+              {errors.phone && <p className="text-xs text-rose-500">{errors.phone}</p>}
+            </div>
 
-            <label className="block space-y-1">
-              <span className="text-xs font-semibold uppercase tracking-[0.08em] text-stone-500">Senha</span>
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-stone-500">Senha</label>
               <input
                 type="password"
                 value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="Digite sua senha"
-                className="h-11 w-full border border-stone-300 px-3 text-sm text-[#0a1f3d] outline-none transition focus:border-[#477e8a]"
-                required
+                onChange={(event) => { setPassword(event.target.value); clearError('password') }}
+                placeholder="Mínimo 6 caracteres"
+                className={`h-11 w-full border px-3 text-sm text-[#0a1f3d] outline-none transition ${errors.password ? 'border-rose-400 focus:border-rose-500' : 'border-stone-300 focus:border-[#477e8a]'}`}
               />
-            </label>
+              {errors.password && <p className="text-xs text-rose-500">{errors.password}</p>}
+            </div>
 
             <button
               type="submit"

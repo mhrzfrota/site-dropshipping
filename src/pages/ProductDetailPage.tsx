@@ -13,8 +13,8 @@ const ProductDetailPage: React.FC = () => {
   const { showToast } = useToast()
 
   const [selectedSize, setSelectedSize] = useState('')
+  const [selectedColor, setSelectedColor] = useState('')
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [cep, setCep] = useState('')
 
   const galleryImages = useMemo(() => {
     if (!product) return [fallbackImage]
@@ -26,6 +26,7 @@ const ProductDetailPage: React.FC = () => {
   useEffect(() => {
     if (!product) return
     setSelectedSize('')
+    setSelectedColor('')
     setCurrentImageIndex(0)
   }, [product])
 
@@ -59,7 +60,7 @@ const ProductDetailPage: React.FC = () => {
   }
 
   const hasSizes = product.variants.sizes.length > 0
-  const canAddToCart = !hasSizes || selectedSize !== ''
+  const hasColors = product.variants.colors.length > 0
 
   // Calculate prices (simulating sale)
   const originalPrice = product.price
@@ -67,23 +68,21 @@ const ProductDetailPage: React.FC = () => {
   const installmentPrice = discountedPrice / 2
 
   const handleAddToCart = () => {
-    if (!canAddToCart) {
+    if (hasSizes && !selectedSize) {
       showToast('Selecione um tamanho para continuar.')
       return
     }
-    addItem(product, selectedSize || undefined, undefined)
+    if (hasColors && !selectedColor) {
+      showToast('Selecione uma cor para continuar.')
+      return
+    }
+    addItem(product, selectedSize || undefined, selectedColor || undefined)
     showToast('Produto adicionado ao carrinho.', {
       action: {
         label: 'Ver carrinho',
         onClick: openCart,
       },
     })
-  }
-
-  const handleCalculateFrete = () => {
-    if (cep.length >= 8) {
-      showToast('Frete calculado! Entrega em 3-5 dias úteis.')
-    }
   }
 
   return (
@@ -199,6 +198,34 @@ const ProductDetailPage: React.FC = () => {
               </div>
             )}
 
+            {/* Color Selection */}
+            {hasColors && (
+              <div className="space-y-3">
+                <p className="text-sm font-semibold text-ink">
+                  Cor{selectedColor ? `: ${selectedColor}` : ''}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {product.variants.colors.map((color) => {
+                    const isSelected = selectedColor === color
+                    return (
+                      <button
+                        key={color}
+                        type="button"
+                        onClick={() => setSelectedColor(color)}
+                        className={`rounded-full border px-4 py-1.5 text-xs font-medium transition ${
+                          isSelected
+                            ? 'border-ink bg-ink text-white'
+                            : 'border-stone-300 bg-white text-ink hover:border-ink'
+                        }`}
+                      >
+                        {color}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* Stock Warning */}
             <div className="inline-flex items-center gap-2 rounded bg-ink px-3 py-2 text-xs font-semibold text-white">
               <span>Últimas {Math.floor(Math.random() * 5) + 2} unidades disponíveis</span>
@@ -212,33 +239,6 @@ const ProductDetailPage: React.FC = () => {
             >
               Adicionar ao carrinho
             </button>
-
-            {/* Shipping Calculator */}
-            <div className="space-y-3 pt-4">
-              <p className="text-sm font-semibold text-ink">Calcule o frete:</p>
-              <div className="space-y-2">
-                <label className="text-xs text-stone-500">CEP</label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={cep}
-                    onChange={(e) => setCep(e.target.value.replace(/\D/g, '').slice(0, 8))}
-                    placeholder="00000-000"
-                    className="w-full border border-stone-300 px-4 py-3 pr-12 text-sm text-ink placeholder:text-stone-400 focus:border-ink focus:outline-none"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleCalculateFrete}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 transition hover:text-ink"
-                    aria-label="Calcular frete"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
-                      <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

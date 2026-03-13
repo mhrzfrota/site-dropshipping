@@ -4,6 +4,13 @@ import { useCart } from '../context/CartContext'
 import { useToast } from '../context/ToastContext'
 import { getAllProducts, normalizeSlug } from '../data/products'
 
+type SearchSuggestion = {
+  name: string
+  slug: string
+  brand: string
+  image: string
+}
+
 type NavSubItem = {
   label: string
   href: string
@@ -96,8 +103,50 @@ const TopBar: React.FC = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
   const [isTopBarSolid, setIsTopBarSolid] = useState(location.pathname !== '/')
   const [loggedProfile, setLoggedProfile] = useState<ProfileData | null>(() => readStoredProfile())
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const searchInputRef = useRef<HTMLInputElement | null>(null)
   const { totalItems, toggleCart } = useCart()
   const { showToast } = useToast()
+
+  const allProducts = useMemo(() => getAllProducts(), [])
+
+  const searchSuggestions = useMemo<SearchSuggestion[]>(() => {
+    const q = searchQuery.trim().toLowerCase()
+    if (!q) return []
+    return allProducts
+      .filter(
+        (p) =>
+          p.name.toLowerCase().includes(q) ||
+          p.brand.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q),
+      )
+      .slice(0, 6)
+      .map((p) => ({ name: p.name, slug: p.slug, brand: p.brand, image: p.image }))
+  }, [searchQuery, allProducts])
+
+  const handleOpenSearch = () => {
+    setIsSearchOpen(true)
+    setSearchQuery('')
+    setTimeout(() => searchInputRef.current?.focus(), 50)
+  }
+
+  const handleCloseSearch = () => {
+    setIsSearchOpen(false)
+    setSearchQuery('')
+  }
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const q = searchQuery.trim()
+    if (!q) return
+    handleCloseSearch()
+    navigate(`/busca?q=${encodeURIComponent(q)}`)
+  }
+
+  const handleSuggestionClick = () => {
+    handleCloseSearch()
+  }
 
   const brands = useMemo(() => {
     const list = Array.from(
@@ -154,10 +203,6 @@ const TopBar: React.FC = () => {
   const showMegaMenu = activeItem ? activeItem.sections.length > 0 : false
   const isBrandMenu = activeItem?.label === 'MARCAS'
 
-  const handleSoon = (label: string) => {
-    showToast(`${label} em breve.`)
-  }
-
   const handleOpenLogin = () => {
     setIsProfileMenuOpen(false)
     navigate('/login')
@@ -203,6 +248,8 @@ const TopBar: React.FC = () => {
         setLockedLink(null)
         setIsMobileMenuOpen(false)
         setIsProfileMenuOpen(false)
+        setIsSearchOpen(false)
+        setSearchQuery('')
       }
     }
 
@@ -378,7 +425,7 @@ const TopBar: React.FC = () => {
             <button
               type="button"
               aria-label="Buscar"
-              onClick={() => handleSoon('Busca')}
+              onClick={handleOpenSearch}
               className={`${iconButtonClass} hidden sm:flex`}
             >
               <svg
@@ -752,12 +799,78 @@ const TopBar: React.FC = () => {
               })}
 
               <div className="flex items-center gap-4 pt-2">
-                <button type="button" onClick={() => handleSoon('Busca')} className="flex-1 rounded-full border border-current/35 py-3 text-sm font-semibold text-inherit opacity-90 transition hover:bg-white/20 hover:opacity-100">
+                <button type="button" onClick={() => { setIsMobileMenuOpen(false); handleOpenSearch() }} className="flex-1 rounded-full border border-current/35 py-3 text-sm font-semibold text-inherit opacity-90 transition hover:bg-white/20 hover:opacity-100">
                   Buscar
                 </button>
                 <button type="button" onClick={handleOpenMobileAccount} className="flex-1 rounded-full border border-current/35 py-3 text-sm font-semibold text-inherit opacity-90 transition hover:bg-white/20 hover:opacity-100">{loggedProfile ? 'Minha conta' : 'Conta'}</button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+      {/* Search Modal */}
+      {isSearchOpen && (
+        <div className="fixed inset-0 z-[80]" role="dialog" aria-modal="true" aria-label="Busca">
+          <button
+            type="button"
+            aria-label="Fechar busca"
+            className="absolute inset-0 bg-black/50"
+            onClick={handleCloseSearch}
+          />
+          <div className="relative mx-auto mt-[80px] max-w-xl px-4">
+            <form onSubmit={handleSearchSubmit} className="relative">
+              <input
+                ref={searchInputRef}
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Buscar produtos, marcas..."
+                className="h-14 w-full rounded-xl border border-stone-200 bg-white pl-5 pr-14 text-base text-ink shadow-2xl outline-none focus:border-[#477e8a]"
+              />
+              <button
+                type="submit"
+                aria-label="Buscar"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-ink transition"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="m21 21-4.35-4.35" strokeLinecap="round" />
+                </svg>
+              </button>
+            </form>
+
+            {searchSuggestions.length > 0 && (
+              <div className="mt-2 rounded-xl border border-stone-200 bg-white shadow-2xl overflow-hidden">
+                {searchSuggestions.map((s) => (
+                  <Link
+                    key={s.slug}
+                    to={`/produto/${s.slug}`}
+                    onClick={handleSuggestionClick}
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-stone-50 transition border-b border-stone-100 last:border-0"
+                  >
+                    <img
+                      src={s.image}
+                      alt={s.name}
+                      className="h-10 w-10 rounded object-cover shrink-0 bg-stone-100"
+                      loading="lazy"
+                    />
+                    <div>
+                      <p className="text-sm font-semibold text-ink leading-snug">{s.name}</p>
+                      <p className="text-xs text-stone-500">{s.brand}</p>
+                    </div>
+                  </Link>
+                ))}
+                {searchQuery.trim() && (
+                  <Link
+                    to={`/busca?q=${encodeURIComponent(searchQuery.trim())}`}
+                    onClick={handleSuggestionClick}
+                    className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-[#477e8a] hover:bg-stone-50 transition"
+                  >
+                    Ver todos os resultados para "{searchQuery.trim()}"
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -2,11 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const institutionalLinks = [
-  { label: 'Institucional', href: '/produtos' },
-  { label: 'Ajuda', href: '/produtos' },
-  { label: 'Termos de uso', href: '/produtos' },
-  { label: 'Politica de Troca e Devolucao', href: '/produtos' },
-  { label: 'Politica de Envio', href: '/produtos' },
+  { label: 'Institucional', href: '/institucional' },
+  { label: 'Ajuda', href: '/ajuda' },
+  { label: 'Termos de uso', href: '/termos' },
+  { label: 'Política de Troca e Devolução', href: '/trocas-devolucao' },
+  { label: 'Política de Envio', href: '/politica-envio' },
 ]
 
 const Footer: React.FC = () => {
