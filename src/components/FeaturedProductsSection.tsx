@@ -47,7 +47,8 @@ const FeaturedProductsSection: React.FC = () => {
     if (!container) return
 
     const firstItem = container.querySelector<HTMLElement>('[data-carousel-item]')
-    const itemWidth = firstItem?.getBoundingClientRect().width ?? Math.max(container.clientWidth * 0.25, 220)
+    const itemWidth =
+      firstItem?.getBoundingClientRect().width ?? Math.max(container.clientWidth * 0.25, 220)
     const styles = window.getComputedStyle(container)
     const gap = Number.parseFloat(styles.columnGap || styles.gap || '0') || 0
     const amount = itemWidth + gap
@@ -64,12 +65,26 @@ const FeaturedProductsSection: React.FC = () => {
   }
 
   return (
-    <section className="bg-white py-14">
+    <section className="bg-[#f8f5f0] py-14">
       <div className="mx-auto max-w-[1400px] px-4">
-        <div className="mb-6 text-center">
-          <h2 className="font-raleway text-2xl font-normal tracking-[0.01em] text-stone-900 sm:text-[2rem]">
-            Produtos Destaques
-          </h2>
+        <div className="mb-6 flex items-end justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#477e8a] mb-1">
+              Em Destaque
+            </p>
+            <h2 className="font-display text-3xl sm:text-4xl font-black text-stone-900">
+              As mais desejadas
+            </h2>
+          </div>
+          <Link
+            to="/produtos"
+            className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-stone-500 hover:text-stone-900 transition-colors"
+          >
+            Ver todos
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
         </div>
       </div>
 
@@ -78,9 +93,15 @@ const FeaturedProductsSection: React.FC = () => {
           type="button"
           aria-label="Produtos anteriores"
           onClick={() => scrollProducts('prev')}
-          className="absolute left-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-[#0a1f3d] bg-white/95 text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
+          className="absolute left-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center bg-[#0a1f3d] text-white transition hover:bg-[#477e8a]"
         >
-          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            viewBox="0 0 24 24"
+            className="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
@@ -89,9 +110,15 @@ const FeaturedProductsSection: React.FC = () => {
           type="button"
           aria-label="Proximos produtos"
           onClick={() => scrollProducts('next')}
-          className="absolute right-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-[#0a1f3d] bg-white/95 text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
+          className="absolute right-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center bg-[#0a1f3d] text-white transition hover:bg-[#477e8a]"
         >
-          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            viewBox="0 0 24 24"
+            className="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
@@ -159,7 +186,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative aspect-[3/4] overflow-hidden bg-stone-100">
+      <div className="relative aspect-[3/4] overflow-hidden bg-stone-100 transition group-hover:shadow-md">
         {/* Primary Image */}
         <img
           src={primaryImage}
@@ -211,7 +238,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
           {product.variants.colors.length > 0 && (
             <p className="mt-2 text-[11px] text-white/80">
-              {product.variants.colors.length} {product.variants.colors.length === 1 ? 'cor' : 'cores'}
+              {product.variants.colors.length}{' '}
+              {product.variants.colors.length === 1 ? 'cor' : 'cores'}
             </p>
           )}
         </div>
@@ -225,11 +253,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <h3 className="text-sm font-medium text-stone-900 transition-colors group-hover:text-[#0a1f3d]">
           {product.name}
         </h3>
-        <p className="text-sm font-bold text-stone-900">
-          {formatPrice(product.price)}
-        </p>
+        <p className="text-sm font-bold text-stone-900">{formatPrice(product.price)}</p>
         <p className="text-[11px] text-stone-500">
-          ou 3x de {formatPrice(product.price / 3)}
+          ou 2x de {formatPrice(product.price / 2)}
         </p>
       </div>
     </Link>

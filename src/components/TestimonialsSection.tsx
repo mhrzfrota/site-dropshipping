@@ -74,7 +74,7 @@ const StarIcon: React.FC<{ filled: boolean }> = ({ filled }) => (
 )
 
 const TestimonialCard: React.FC<{ t: Testimonial }> = ({ t }) => (
-  <article className="flex w-[320px] shrink-0 flex-col justify-between rounded-2xl border border-stone-200 bg-white p-6 shadow-sm sm:w-[360px]">
+  <article className="flex w-[320px] shrink-0 flex-col justify-between rounded-2xl border border-stone-200 bg-[#f8f5f0] p-6 shadow-sm sm:w-[360px]">
     <div>
       <div className="flex items-center gap-1 text-amber-400">
         {Array.from({ length: 5 }).map((_, i) => (
@@ -83,13 +83,15 @@ const TestimonialCard: React.FC<{ t: Testimonial }> = ({ t }) => (
       </div>
       <p className="mt-4 text-sm leading-relaxed text-stone-700">"{t.text}"</p>
     </div>
-    <div className="mt-5 flex items-center gap-3 border-t border-stone-100 pt-4">
+    <div className="mt-5 flex items-center gap-3 border-t border-stone-200 pt-4">
       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#477e8a] text-sm font-bold text-white">
         {t.avatar}
       </span>
       <div>
         <p className="text-sm font-semibold text-ink">{t.name}</p>
-        <p className="text-xs text-stone-500">{t.location} · {t.product}</p>
+        <p className="text-xs text-stone-500">
+          {t.location} · {t.product}
+        </p>
       </div>
     </div>
   </article>
@@ -128,20 +130,24 @@ const TestimonialsSection: React.FC = () => {
   const doubled = [...testimonials, ...testimonials]
 
   const totalRatings = testimonials.length
-  const avgRating = (testimonials.reduce((s, t) => s + t.rating, 0) / totalRatings).toFixed(1)
+  const avgRating = (
+    testimonials.reduce((s, t) => s + t.rating, 0) / totalRatings
+  ).toFixed(1)
 
   return (
-    <section className="overflow-hidden bg-brand-sand py-16">
+    <section className="overflow-hidden bg-white py-16">
       <div className="mx-auto max-w-7xl px-4">
         {/* Header */}
         <div className="mb-10 flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-semibold tracking-[0.12em] text-stone-500 uppercase">Avaliações</p>
-            <h2 className="mt-2 font-display text-3xl font-black text-ink">
-              Quem já comprou, aprovou
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#477e8a] mb-2">
+              O que dizem sobre nós
+            </p>
+            <h2 className="font-display text-3xl font-black text-ink">
+              Clientes que voltam
             </h2>
           </div>
-          <div className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-white px-5 py-3 shadow-sm">
+          <div className="flex items-center gap-3 rounded-2xl border border-[#477e8a]/20 bg-white px-5 py-3 shadow-sm">
             <div>
               <p className="text-2xl font-black text-ink leading-none">{avgRating}</p>
               <div className="mt-1 flex items-center gap-0.5 text-amber-400">
@@ -167,9 +173,9 @@ const TestimonialsSection: React.FC = () => {
         onBlur={() => setIsPaused(false)}
       >
         {/* Left fade */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-brand-sand to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent" />
         {/* Right fade */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-brand-sand to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white to-transparent" />
 
         <div
           ref={trackRef}

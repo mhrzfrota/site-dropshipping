@@ -5,7 +5,7 @@ const benefits = [
     title: 'Produtos Originais',
     text: 'Garantimos qualidade e autenticidade em cada item!',
     icon: (
-      <svg viewBox="0 0 24 24" className="h-10 w-10" fill="none" aria-hidden="true">
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
         <path
           d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
           stroke="currentColor"
@@ -27,7 +27,7 @@ const benefits = [
     title: 'Envios Nacionais',
     text: 'Via Correios, transportadora ou retirada.',
     icon: (
-      <svg viewBox="0 0 24 24" className="h-10 w-10" fill="none" aria-hidden="true">
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
         <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
         <path
           d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
@@ -43,7 +43,7 @@ const benefits = [
     title: 'Compra Segura',
     text: 'Utilizamos as melhores tecnologias de proteção.',
     icon: (
-      <svg viewBox="0 0 24 24" className="h-10 w-10" fill="none" aria-hidden="true">
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
         <rect
           x="3"
           y="11"
@@ -68,7 +68,7 @@ const benefits = [
     title: 'Suporte WhatsApp',
     text: 'Nosso atendimento está disponível das 14 às 18hrs.',
     icon: (
-      <svg viewBox="0 0 24 24" className="h-10 w-10" fill="none" aria-hidden="true">
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
         <path
           d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
           stroke="currentColor"
@@ -88,39 +88,56 @@ const benefits = [
   },
 ]
 
-const BenefitItem: React.FC<{ title: string; text: string; icon: React.ReactNode }> = ({
-  title,
-  text,
-  icon,
-}) => (
-  <div className="flex items-center gap-4 px-8 whitespace-nowrap">
-    <span className="text-white flex-shrink-0">{icon}</span>
-    <div className="flex flex-col">
-      <span className="text-white font-bold text-sm">{title}</span>
-      <span className="text-white/80 text-xs">{text}</span>
+type BenefitItemProps = {
+  title: string
+  text: string
+  icon: React.ReactNode
+  separator?: boolean
+}
+
+const BenefitItem: React.FC<BenefitItemProps> = ({ title, text, icon, separator }) => (
+  <>
+    <div className="flex items-center gap-3 px-10 whitespace-nowrap">
+      <span className="text-white flex-shrink-0">{icon}</span>
+      <div className="flex flex-col">
+        <span className="text-white font-semibold text-xs uppercase tracking-[0.15em]">
+          {title}
+        </span>
+        <span className="text-white/60 text-xs">{text}</span>
+      </div>
     </div>
-  </div>
+    {separator && (
+      <span className="w-px h-4 bg-white/20 flex-shrink-0" aria-hidden="true" />
+    )}
+  </>
 )
 
 const BenefitsStripSection: React.FC = () => {
   return (
-    <section className="bg-black py-4 overflow-hidden">
-      <div className="benefits-marquee flex">
-        <div className="benefits-marquee-content flex animate-marquee">
-          {benefits.map((benefit) => (
-            <BenefitItem key={benefit.title} {...benefit} />
+    <section className="bg-[#0a1f3d] py-4 overflow-hidden border-t-2 border-[#477e8a]">
+      <div className="flex">
+        {/* Visible set */}
+        <div className="flex animate-marquee shrink-0">
+          {benefits.map((benefit, i) => (
+            <BenefitItem
+              key={benefit.title}
+              {...benefit}
+              separator={i < benefits.length - 1}
+            />
           ))}
-          {benefits.map((benefit) => (
-            <BenefitItem key={`${benefit.title}-2`} {...benefit} />
-          ))}
+          {/* trailing separator before loop */}
+          <span className="w-px h-4 bg-white/20 flex-shrink-0 self-center" aria-hidden="true" />
         </div>
-        <div className="benefits-marquee-content flex animate-marquee" aria-hidden="true">
-          {benefits.map((benefit) => (
-            <BenefitItem key={`${benefit.title}-3`} {...benefit} />
+        {/* Duplicate for seamless loop */}
+        <div className="flex animate-marquee shrink-0" aria-hidden="true">
+          {benefits.map((benefit, i) => (
+            <BenefitItem
+              key={`${benefit.title}-dup`}
+              {...benefit}
+              separator={i < benefits.length - 1}
+            />
           ))}
-          {benefits.map((benefit) => (
-            <BenefitItem key={`${benefit.title}-4`} {...benefit} />
-          ))}
+          <span className="w-px h-4 bg-white/20 flex-shrink-0 self-center" aria-hidden="true" />
         </div>
       </div>
     </section>
