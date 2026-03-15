@@ -58,7 +58,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ items, isLoading = false, ske
         <p className="mt-2 text-sm text-stone-600">
           Ajuste os filtros ou explore a coleção completa da Mar&Mov.
         </p>
-        <Link to="/produtos" className="btn-primary mt-5 inline-flex items-center justify-center">
+        <Link to="/sale" className="btn-primary mt-5 inline-flex items-center justify-center">
           Ver coleção completa
         </Link>
       </div>

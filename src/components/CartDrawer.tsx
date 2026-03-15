@@ -189,7 +189,7 @@ const CartDrawer: React.FC = () => {
               <p className="mt-2 text-sm text-stone-600">
                 Que tal começar pelos lançamentos mais desejados da Mar&Mov?
               </p>
-              <Link to="/produtos" onClick={handleCloseDrawer} className="btn-secondary !rounded-none mt-4">
+              <Link to="/sale" onClick={handleCloseDrawer} className="btn-secondary !rounded-none mt-4">
                 Explorar produtos
               </Link>
             </div>

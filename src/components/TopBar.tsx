@@ -173,7 +173,7 @@ const TopBar: React.FC = () => {
       },
       {
         label: 'MARCAS',
-        href: '/produtos',
+        href: '/sale',
         hasDropdown: true,
         sections: brandColumns.map((column, index) => ({
           title: index === 0 ? 'Marcas em destaque' : 'Outras marcas',
@@ -186,12 +186,12 @@ const TopBar: React.FC = () => {
       },
       {
         label: 'NOVIDADES',
-        href: '/produtos',
+        href: '/sale',
         sections: [],
       },
       {
         label: 'MAIS VENDIDOS',
-        href: '/produtos',
+        href: '/sale',
         sections: [],
       },
     ],

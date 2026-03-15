@@ -19,7 +19,7 @@ const slides: Slide[] = [
     title: ['Moda Praia', 'que te leva'],
     sub: 'Biquínis, maiôs e saídas de praia com qualidade de boutique.',
     cta: { label: 'Ver coleção', href: '/categoria/biquinis' },
-    ctaSecondary: { label: 'Explorar tudo', href: '/produtos' },
+    ctaSecondary: { label: 'Explorar tudo', href: '/sale' },
   },
   {
     image: '/images/home2.png',
@@ -28,7 +28,7 @@ const slides: Slide[] = [
     title: ['Performance', '& Estilo'],
     sub: 'Peças que acompanham seu ritmo do treino à praia.',
     cta: { label: 'Ver fitness', href: '/categoria/roupas' },
-    ctaSecondary: { label: 'Todas as peças', href: '/produtos' },
+    ctaSecondary: { label: 'Todas as peças', href: '/sale' },
   },
   {
     image: '/images/home3.png',

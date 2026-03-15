@@ -51,7 +51,7 @@ const ProductDetailPage: React.FC = () => {
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h1 className="font-display text-3xl font-black text-ink">Produto não encontrado</h1>
           <p className="mt-2 text-sm text-stone-600">Confira outras opções na vitrine completa.</p>
-          <Link to="/produtos" className="mt-6 inline-flex items-center gap-2 rounded bg-orange-500 px-6 py-3 font-semibold text-white hover:bg-orange-600">
+          <Link to="/sale" className="mt-6 inline-flex items-center gap-2 rounded bg-orange-500 px-6 py-3 font-semibold text-white hover:bg-orange-600">
             Ver todos os produtos
           </Link>
         </div>

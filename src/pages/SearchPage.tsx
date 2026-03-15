@@ -67,7 +67,7 @@ const SearchPage: React.FC = () => {
           <div className="mt-8 text-center space-y-4">
             <p className="text-stone-600">Tente um termo diferente ou explore nossa vitrine completa.</p>
             <Link
-              to="/produtos"
+              to="/sale"
               className="inline-flex items-center gap-2 rounded bg-orange-500 px-6 py-3 text-sm font-bold text-white hover:bg-orange-600 transition"
             >
               Ver todos os produtos

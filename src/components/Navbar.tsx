@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const navLinks = [
-  { label: 'Novidades', href: '/produtos' },
+  { label: 'Novidades', href: '/sale' },
   { label: 'Moda Praia', href: '/categoria/biquinis' },
   { label: 'Moda Íntima', href: '/categoria/maios' },
   { label: 'Marcas', href: '/marca/mar-mov' },
-  { label: 'Promoções', href: '/produtos' },
+  { label: 'Promoções', href: '/sale' },
 ]
 
 const Navbar: React.FC = () => {

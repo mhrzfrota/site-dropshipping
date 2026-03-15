@@ -77,7 +77,7 @@ const FeaturedProductsSection: React.FC = () => {
             </h2>
           </div>
           <Link
-            to="/produtos"
+            to="/sale"
             className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-stone-500 hover:text-stone-900 transition-colors"
           >
             Ver todos
@@ -142,7 +142,7 @@ const FeaturedProductsSection: React.FC = () => {
 
       <div className="mx-auto mt-8 max-w-[1400px] px-4 text-center">
         <Link
-          to="/produtos"
+          to="/sale"
           className="inline-flex min-h-[48px] items-center justify-center border border-[#0a1f3d] px-10 font-body text-[11px] font-semibold uppercase tracking-[0.28em] text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
         >
           Ver todos os produtos

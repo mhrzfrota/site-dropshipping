@@ -115,7 +115,7 @@ const HighlightsSection: React.FC = () => {
       {/* Bottom CTA */}
       <div className="mx-auto max-w-7xl px-6 mt-10 text-center">
         <Link
-          to="/produtos"
+          to="/sale"
           className="inline-flex items-center gap-2 text-sm font-semibold text-stone-500 hover:text-stone-900 transition-colors"
         >
           Explorar todos os produtos

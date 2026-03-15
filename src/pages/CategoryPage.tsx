@@ -39,7 +39,7 @@ const CategoryPage: React.FC = () => {
               : 'Escolha outra categoria para continuar explorando.'}
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm">
-            <Link to="/produtos" className="btn-primary">
+            <Link to="/sale" className="btn-primary">
               Ver todos os produtos
             </Link>
             {categoryInfo && (

@@ -1,5 +1,5 @@
 ﻿import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import SiteLayout from './layouts/SiteLayout'
 import AjudaPage from './pages/AjudaPage'
 import SearchPage from './pages/SearchPage'
@@ -12,7 +12,6 @@ import NotFoundPage from './pages/NotFoundPage'
 import PoliticaEnvioPage from './pages/PoliticaEnvioPage'
 import ProfilePage from './pages/ProfilePage'
 import ProductDetailPage from './pages/ProductDetailPage'
-import ProductsPage from './pages/ProductsPage'
 import SalePage from './pages/SalePage'
 import TermosPage from './pages/TermosPage'
 import TrocasDevolucaoPage from './pages/TrocasDevolucaoPage'
@@ -22,7 +21,7 @@ const App: React.FC = () => {
     <Routes>
       <Route path="/" element={<SiteLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="produtos" element={<ProductsPage />} />
+        <Route path="produtos" element={<Navigate to="/sale" replace />} />
         <Route path="sale" element={<SalePage />} />
         <Route path="categoria/:slug" element={<CategoryPage />} />
         <Route path="marca/:slug" element={<BrandPage />} />

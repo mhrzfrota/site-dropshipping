@@ -71,7 +71,7 @@ const NewArrivalsSection: React.FC = () => {
         {/* Bottom CTA */}
         <div className="mt-12 text-center">
           <Link
-            to="/produtos"
+            to="/sale"
             className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-[#0a1f3d] px-10 text-xs font-semibold uppercase tracking-[0.2em] text-[#0a1f3d] transition hover:bg-[#0a1f3d] hover:text-white"
           >
             Ver vitrine completa

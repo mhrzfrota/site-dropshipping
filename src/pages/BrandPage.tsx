@@ -53,7 +53,7 @@ const BrandPage: React.FC = () => {
               : 'Tente outra marca para continuar navegando.'}
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm">
-            <Link to="/produtos" className="btn-primary">
+            <Link to="/sale" className="btn-primary">
               Ver todos os produtos
             </Link>
             {brandLabel && (

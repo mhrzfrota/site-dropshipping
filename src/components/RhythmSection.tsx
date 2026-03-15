@@ -93,7 +93,7 @@ const RhythmSection: React.FC = () => {
         {/* CTA */}
         <div className="mt-12 text-center">
           <Link
-            to="/produtos"
+            to="/sale"
             className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-white px-10 text-sm font-semibold uppercase tracking-[0.15em] text-[#0a1f3d] transition hover:bg-white/90"
           >
             Ver toda a coleção
