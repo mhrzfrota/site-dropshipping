@@ -469,89 +469,126 @@ const TopBar: React.FC = () => {
                 <div
                   id="profile-menu"
                   ref={profileMenuRef}
-                  className="absolute right-0 top-[calc(100%+14px)] z-[90] w-[360px] max-w-[calc(100vw-2rem)] rounded-2xl border border-[#477e8a]/20 bg-white p-6 text-[#1a2430] shadow-[0_22px_50px_rgba(10,31,61,0.24)]"
+                  className="absolute right-0 top-[calc(100%+14px)] z-[90] w-[380px] max-w-[calc(100vw-2rem)] overflow-hidden border border-stone-200 bg-white text-stone-800 shadow-[0_22px_50px_rgba(10,31,61,0.18)]"
                 >
-                  <span
-                    aria-hidden="true"
-                    className="absolute -top-2 right-6 h-4 w-4 rotate-45 border-l border-t border-[#477e8a]/20 bg-white"
-                  />
-
                   {loggedProfile ? (
                     <>
-                      <div className="space-y-1.5">
-                        <p className="font-raleway text-[21px] font-semibold leading-none text-[#477e8a]">
-                          Ola, {getFirstName(loggedProfile.name)}
-                        </p>
-                        <p className="text-[11px] leading-snug text-[#477e8a]/85">{loggedProfile.email}</p>
-                        <p className="text-[11px] leading-snug text-[#477e8a]/85">{loggedProfile.phone}</p>
+                      <div className="flex items-start justify-between border-b border-stone-200 px-6 py-5">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-stone-500">
+                            Conta
+                          </p>
+                          <h3 className="mt-1 text-xl font-bold text-ink">Minha conta</h3>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setIsProfileMenuOpen(false)}
+                          className="btn-secondary !min-h-[40px] !rounded-none px-4"
+                        >
+                          Fechar
+                        </button>
                       </div>
 
-                      <div className="mt-5 space-y-2.5">
-                        <button
-                          type="button"
-                          onClick={handleOpenProfile}
-                          className="flex h-12 w-full items-center justify-center rounded-md bg-[#477e8a] text-[13px] font-semibold text-white transition hover:bg-[#3d6f7a]"
-                        >
-                          Minha conta
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleOpenOrders}
-                          className="flex h-12 w-full items-center justify-center rounded-md border border-[#477e8a]/45 bg-white text-[13px] font-semibold text-[#477e8a] transition hover:bg-[#477e8a]/5"
-                        >
-                          Meus pedidos
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleLogoutProfile}
-                          className="flex h-12 w-full items-center justify-center rounded-md bg-[#0a1f3d] text-[13px] font-semibold text-white transition hover:bg-[#091734]"
-                        >
-                          Sair
-                        </button>
+                      <div className="space-y-4 bg-stone-50/80 px-6 py-5">
+                        <div className="border border-stone-200 bg-white px-4 py-4">
+                          <p className="text-sm font-semibold uppercase tracking-[0.08em] text-stone-500">
+                            Perfil ativo
+                          </p>
+                          <p className="mt-3 text-lg font-bold text-[#477e8a]">
+                            Ola, {getFirstName(loggedProfile.name)}
+                          </p>
+                          <div className="mt-3 space-y-1.5 text-sm text-stone-600">
+                            <p>{loggedProfile.email}</p>
+                            <p>{loggedProfile.phone}</p>
+                          </div>
+                        </div>
+
+                        <div className="space-y-3">
+                          <button
+                            type="button"
+                            onClick={handleOpenProfile}
+                            className="btn-primary !rounded-none w-full"
+                          >
+                            Minha conta
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleOpenOrders}
+                            className="btn-secondary !rounded-none w-full"
+                          >
+                            Meus pedidos
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleLogoutProfile}
+                            className="flex min-h-[48px] w-full items-center justify-center border border-[#0a1f3d] bg-[#0a1f3d] px-6 text-sm font-semibold text-white transition hover:bg-[#091734]"
+                          >
+                            Sair
+                          </button>
+                        </div>
                       </div>
                     </>
                   ) : (
                     <>
-                      <div className="space-y-2">
-                        <p className="font-raleway text-[23px] font-semibold leading-none text-[#477e8a]">
-                          Ola, visitante
-                        </p>
-                        <p className="text-[11px] leading-snug text-[#477e8a]/85">
-                          Escolha uma das opcoes abaixo para acessar sua conta.
-                        </p>
-                      </div>
-
-                      <div className="mt-6 space-y-3">
+                      <div className="flex items-start justify-between border-b border-stone-200 px-6 py-5">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-stone-500">
+                            Conta
+                          </p>
+                          <h3 className="mt-1 text-xl font-bold text-ink">Acessar perfil</h3>
+                        </div>
                         <button
                           type="button"
-                          onClick={handleOpenLogin}
-                          className="flex h-14 w-full items-center justify-center rounded-md bg-[#477e8a] text-[13px] font-semibold text-white transition hover:bg-[#3d6f7a]"
+                          onClick={() => setIsProfileMenuOpen(false)}
+                          className="btn-secondary !min-h-[40px] !rounded-none px-4"
                         >
-                          Entrar com email e senha
-                        </button>
-                        <button
-                          type="button"
-                          className="flex h-14 w-full items-center justify-center rounded-md border border-[#477e8a]/45 bg-white text-[13px] font-semibold text-[#477e8a] transition hover:bg-[#477e8a]/5"
-                        >
-                          Receber codigo de acesso por email
+                          Fechar
                         </button>
                       </div>
 
-                      <div className="my-5 flex items-center gap-3">
-                        <span className="h-px flex-1 bg-[#477e8a]/20" />
-                        <span className="text-[12px] text-[#477e8a]/75">ou entre com</span>
-                        <span className="h-px flex-1 bg-[#477e8a]/20" />
-                      </div>
+                      <div className="space-y-4 bg-stone-50/80 px-6 py-5">
+                        <div className="border border-dashed border-stone-200 bg-white px-4 py-4">
+                          <p className="text-sm font-semibold uppercase tracking-[0.08em] text-stone-500">
+                            Visitante
+                          </p>
+                          <p className="mt-3 text-lg font-bold text-[#477e8a]">Ola, visitante</p>
+                          <p className="mt-2 text-sm leading-relaxed text-stone-600">
+                            Entre para acompanhar pedidos, salvar seus dados e finalizar compras com mais rapidez.
+                          </p>
+                        </div>
 
-                      <button
-                        type="button"
-                        className="flex h-14 w-full items-center justify-center gap-3 rounded-md border border-stone-300 bg-white text-[16px] font-semibold text-[#1f2b3a] transition hover:bg-stone-50"
-                      >
-                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-stone-300 text-[12px] font-bold text-[#4285f4]">
-                          G
-                        </span>
-                        Entrar com Google
-                      </button>
+                        <div className="space-y-3">
+                          <button
+                            type="button"
+                            onClick={handleOpenLogin}
+                            className="btn-primary !rounded-none w-full"
+                          >
+                            Entrar com email e senha
+                          </button>
+                          <button
+                            type="button"
+                            className="btn-secondary !rounded-none w-full"
+                          >
+                            Receber codigo de acesso por email
+                          </button>
+                        </div>
+
+                        <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.08em] text-stone-400">
+                          <span className="h-px flex-1 bg-stone-200" />
+                          <span>ou entre com</span>
+                          <span className="h-px flex-1 bg-stone-200" />
+                        </div>
+
+                        <button
+                          type="button"
+                          className="flex min-h-[48px] w-full items-center justify-center gap-3 border border-stone-200 bg-white px-6 text-sm font-semibold text-stone-800 transition hover:bg-stone-50"
+                        >
+                          <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-stone-300 text-[12px] font-bold text-[#4285f4]">
+                            G
+                          </span>
+                          Entrar com Google
+                        </button>
+                      </div>
                     </>
                   )}
                 </div>
